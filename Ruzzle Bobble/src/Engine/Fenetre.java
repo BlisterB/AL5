@@ -10,7 +10,8 @@ public class Fenetre extends JFrame {
 		//Propriétés
 	    this.setTitle("Ruzzle Bobble");
 	    this.setLocationRelativeTo(null);
-	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);             
+	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+	    this.setResizable(false);
 	    this.setVisible(true);
 	    
 	    //Conteneurs
