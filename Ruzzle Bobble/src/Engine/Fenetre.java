@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 
 public class Fenetre extends JFrame {
 	private GameScreen gamescreen = new GameScreen();
+	private Engine engine = new Engine();
 	
 	public Fenetre(){
 		//Propriétés

@@ -14,10 +14,20 @@ public class Sprite {
 	
 	public Sprite(String chemin){
 		try {
-			image = ImageIO.read(new File("img/template.jpg"));
+			this.image = ImageIO.read(new File(chemin));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("Erreur dans l'ouverture de l'image");
 		}
+	}
+	public Sprite(String chemin, int posX, int posY){
+		this(chemin);
+		this.posX = posX;
+		this.posY = posY;
+	}
+	public Sprite(String chemin, int posX, int posY, int zoom){
+		this(chemin, posX, posY);
+		this.zoom = zoom;
 	}
 }
