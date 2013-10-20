@@ -1,4 +1,4 @@
-package Engine;
+package Sequence;
 
 import java.util.LinkedList;
 
@@ -12,4 +12,5 @@ import Sprite.Sprite;
 public class Sequence {
 	private LinkedList liste_sprite = new LinkedList();
 	private Sprite background;
+	
 }
