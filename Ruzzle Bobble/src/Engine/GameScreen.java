@@ -1,8 +1,9 @@
 package Engine;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+
+import javax.swing.JPanel;
 
 import Sequence.Sequence;
 
@@ -11,7 +12,7 @@ import Sequence.Sequence;
  * @author Mehdi
  *
  */
-public class GameScreen extends Canvas{
+public class GameScreen extends JPanel{
 	private Sequence sequence;
 	
 	public GameScreen(){
@@ -20,13 +21,16 @@ public class GameScreen extends Canvas{
 	}
 	
 	/**La methode paintComponent recupere la liste de sprite de la sequence en cours et les affiches successivement**/
-	void paintComponent(Graphics g){
+	public void paintComponent(Graphics g){
 		if(sequence != null){
 			//Dessin du background
-			
+			g.drawImage(sequence.getBackground().getImage(), 0, 0, this);
 			//Dessin des sprite
 			
 			//Dessin de l'interface
+		}
+		else{
+			System.out.println("Pas de sequence chargee");
 		}
 	}
 

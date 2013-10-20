@@ -10,15 +10,17 @@ public class Fenetre extends JFrame {
 	public Fenetre(){
 		//Propriétés
 	    this.setTitle("Ruzzle Bobble");
+	    this.setSize(900, 500);
 	    this.setLocationRelativeTo(null);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 	    this.setResizable(false);
 	    this.setVisible(true);
 	    
 	    //Conteneurs
-		JPanel pannel = new JPanel();
-	    this.setContentPane(pannel);
-	    pannel.add(gamescreen);
-	    this.pack();
+	    this.setContentPane(gamescreen);
+	    
+	    gamescreen.setSequence(engine.getSequence());
+	    
+	    gamescreen.repaint();
 	}
 }

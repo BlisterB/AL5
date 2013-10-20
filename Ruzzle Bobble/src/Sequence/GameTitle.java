@@ -6,6 +6,6 @@ import Sprite.Sprite;
 public class GameTitle extends Sequence{
 	public GameTitle(){
 		//Generation du background
-		this.background = new Sprite("./img/template.png");
+		this.background = new Sprite("img/template.png");
 	}
 }
