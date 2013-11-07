@@ -1,4 +1,4 @@
-package Sprite;
+package com.mklr.graphics.sprite;
 
 import java.awt.Image;
 import java.io.File;
@@ -15,7 +15,7 @@ public class Sprite {
 	public Sprite(String chemin){
 		try {
 			this.image = ImageIO.read(new File(chemin));
-			System.out.println("Ca a marché\n");
+			System.out.println("Ca a marche\n");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

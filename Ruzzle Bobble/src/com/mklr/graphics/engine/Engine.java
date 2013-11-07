@@ -1,10 +1,10 @@
-package Engine;
+package com.mklr.graphics.engine;
 
-import Sequence.GameTitle;
-import Sequence.Sequence;
+import com.mklr.graphics.sequence.GameTitle;
+import com.mklr.graphics.sequence.Sequence;
 
-/**La classe Engine représente le moteur de jeu
- * C'est elle qui charge les séquences du jeu et commande le raffraichissement du GameScreen.
+/**La classe Engine represente le moteur de jeu
+ * C'est elle qui charge les sequences du jeu et commande le raffraichissement du GameScreen.
  * @author Mehdi
  *
  */

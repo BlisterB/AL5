@@ -1,11 +1,11 @@
-package Sequence;
+package com.mklr.graphics.sequence;
 
 import java.util.LinkedList;
 
-import Sprite.Sprite;
+import com.mklr.graphics.sprite.Sprite;
 
-/**La sequence est l'objet definissant la séquence de jeu : ecran de titre, ecran de jeu etc.
- * Elle contient la liste des sprites a l'ecran et gère leur apparence en fonction du contexte
+/**La sequence est l'objet definissant la sequence de jeu : ecran de titre, ecran de jeu etc.
+ * Elle contient la liste des sprites a l'ecran et gere leur apparence en fonction du contexte
  * @author Mehdi
  *
  */

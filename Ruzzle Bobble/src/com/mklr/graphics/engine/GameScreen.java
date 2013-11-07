@@ -1,14 +1,14 @@
-package Engine;
+package com.mklr.graphics.engine;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import Sequence.Sequence;
+import com.mklr.graphics.sequence.Sequence;
 
-/**Le GameScreen est l'écran du jeu.
- * C'est un Canvas affichant les différents sprites de la Sequence en cours.
+/**Le GameScreen est l'ecran du jeu.
+ * C'est un Canvas affichant les differents sprites de la Sequence en cours.
  * @author Mehdi
  *
  */
