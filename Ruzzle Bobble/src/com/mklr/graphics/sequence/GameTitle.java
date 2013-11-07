@@ -7,6 +7,7 @@ import com.mklr.graphics.sequence.Sequence;
 public class GameTitle extends Sequence{
 	public GameTitle(){
 		//Generation du background
-		this.background = new Sprite("../img/template.png");
+        //Switch to /path/to/template
+		this.background = new Sprite("img/template.png");
 	}
 }
