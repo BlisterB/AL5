@@ -19,7 +19,7 @@ public class Window extends JFrame {
 	    //Conteneurs
 	    this.setContentPane(gamescreen);
 	    
-	    gamescreen.setSequence(engine.getSequence());
+	    gamescreen.setStage(engine.getSequence());
 	    
 	    gamescreen.repaint();
 	}

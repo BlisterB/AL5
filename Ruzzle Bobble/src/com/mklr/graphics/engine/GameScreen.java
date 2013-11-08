@@ -5,7 +5,8 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import com.mklr.graphics.sequence.Sequence;
+import com.mklr.graphics.sequence.Stage;
+import com.mklr.graphics.sprite.Sprite;
 
 /**Le GameScreen est l'ecran du jeu.
  * C'est un Canvas affichant les differents sprites de la Sequence en cours.
@@ -13,7 +14,7 @@ import com.mklr.graphics.sequence.Sequence;
  *
  */
 public class GameScreen extends JPanel{
-	private Sequence sequence;
+	private Stage stage;
 	
 	public GameScreen(){
 		this.setSize(800, 450);
@@ -22,11 +23,15 @@ public class GameScreen extends JPanel{
 	
 	/**La methode paintComponent recupere la liste de sprite de la sequence en cours et les affiches successivement**/
 	public void paintComponent(Graphics g){
-		if(sequence != null){
+		Sprite sprite;//Tampon
+		if(stage != null){
 			//Dessin du background
-			g.drawImage(sequence.getBackground().getImage(), 0, 0, this);
+			g.drawImage(stage.getBackground().getImage(), 0, 0, this);
 			//Dessin des sprite
-			
+			for(int i = 0; i < stage.getSpriteList().size(); i++){
+				sprite = stage.getSpriteList().get(i);
+				g.drawImage(sprite.getImage(), sprite.getPosX(), sprite.getPosY(), this);
+			}
 			//Dessin de l'interface
 		}
 		else{
@@ -37,14 +42,14 @@ public class GameScreen extends JPanel{
 	/**
 	 * @return the sequence
 	 */
-	public Sequence getSequence() {
-		return sequence;
+	public Stage getStage() {
+		return stage;
 	}
 
 	/**
 	 * @param sequence the sequence to set
 	 */
-	public void setSequence(Sequence sequence) {
-		this.sequence = sequence;
+	public void setStage(Stage stage) {
+		this.stage = stage;
 	}
 }

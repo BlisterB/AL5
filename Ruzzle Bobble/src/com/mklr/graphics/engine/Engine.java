@@ -1,7 +1,8 @@
 package com.mklr.graphics.engine;
 
+import com.mklr.graphics.sequence.GameStage;
 import com.mklr.graphics.sequence.GameTitle;
-import com.mklr.graphics.sequence.Sequence;
+import com.mklr.graphics.sequence.Stage;
 
 /**La classe Engine represente le moteur de jeu
  * C'est elle qui charge les sequences du jeu et commande le raffraichissement du GameScreen.
@@ -9,17 +10,17 @@ import com.mklr.graphics.sequence.Sequence;
  *
  */
 public class Engine {
-	private Sequence sequence;
+	private Stage sequence;
 	
 	public Engine(){
-		this.sequence = new GameTitle();
+		this.sequence = new GameStage();
 	}
 
 
 	/**
 	 * @return the sequence
 	 */
-	public Sequence getSequence() {
+	public Stage getSequence() {
 		return sequence;
 	}
 
@@ -27,7 +28,7 @@ public class Engine {
 	/**
 	 * @param sequence the sequence to set
 	 */
-	public void setSequence(Sequence sequence) {
+	public void setSequence(Stage sequence) {
 		this.sequence = sequence;
 	}
 }

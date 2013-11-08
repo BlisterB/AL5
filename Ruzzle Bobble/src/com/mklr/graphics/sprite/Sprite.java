@@ -18,6 +18,7 @@ public class Sprite {
 	}
 	
 	public Sprite(String chemin){
+		this.image = openImage(chemin);
 	}
 	public Sprite(String chemin, int posX, int posY){
 		this(chemin);

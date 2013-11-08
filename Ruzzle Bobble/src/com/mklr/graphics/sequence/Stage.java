@@ -9,23 +9,23 @@ import com.mklr.graphics.sprite.Sprite;
  * @author Mehdi
  *
  */
-public class Sequence {
-	protected LinkedList <Sprite>liste_sprite;
+public class Stage {
+	protected LinkedList <Sprite> sprite_list;
 	protected Sprite background;
 
 	/**
 	 * @return the liste_sprite
 	 */
-	public LinkedList <Sprite> getListe_sprite() {
-		return liste_sprite;
+	public LinkedList <Sprite> getSpriteList() {
+		return sprite_list;
 	}
 
 
 	/**
 	 * @param liste_sprite the liste_sprite to set
 	 */
-	public void setListe_sprite(LinkedList <Sprite> liste_sprite) {
-		this.liste_sprite = liste_sprite;
+	public void setSpriteList(LinkedList <Sprite> liste_sprite) {
+		this.sprite_list = liste_sprite;
 	}
 
 
