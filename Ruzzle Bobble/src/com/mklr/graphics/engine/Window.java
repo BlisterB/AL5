@@ -3,11 +3,11 @@ package com.mklr.graphics.engine;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Fenetre extends JFrame {
+public class Window extends JFrame {
 	private GameScreen gamescreen = new GameScreen();
 	private Engine engine = new Engine();
 	
-	public Fenetre(){
+	public Window(){
 		//Proprietes
 	    this.setTitle("Ruzzle Bobble");
 	    this.setSize(900, 500);

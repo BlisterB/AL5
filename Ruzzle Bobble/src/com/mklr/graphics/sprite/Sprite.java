@@ -7,20 +7,17 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Sprite {
-	Image image;
-	int posX;
-	int posY;
-	int zoom;
+	protected Image image;
+	protected int posX;
+	protected int posY;
+	protected int zoom;
+	protected Image[] animation;
+	
+	public Sprite(){
+		
+	}
 	
 	public Sprite(String chemin){
-		try {
-			this.image = ImageIO.read(new File(chemin));
-			System.out.println("Ca a marche\n");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("Erreur dans l'ouverture de l'image");
-		}
 	}
 	public Sprite(String chemin, int posX, int posY){
 		this(chemin);
@@ -31,6 +28,24 @@ public class Sprite {
 		this(chemin, posX, posY);
 		this.zoom = zoom;
 	}
+	
+	/** Ouvre une image et gere l'exception
+	 * @return l'image
+	 */
+	public Image openImage(String path){
+		Image image;
+		try {
+			image = ImageIO.read(new File(path));
+			return image;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Erreur dans l'ouverture de " + path);
+		}
+		
+		return null;
+	}
+	
 	/**
 	 * @return the image
 	 */

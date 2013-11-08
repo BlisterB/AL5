@@ -1,7 +1,7 @@
-import com.mklr.graphics.engine.Fenetre;
+import com.mklr.graphics.engine.Window;
 
 public class Main {
 	public static void main(String[] args){
-		Fenetre fen = new Fenetre();
+		Window fen = new Window();
 	}
 }
