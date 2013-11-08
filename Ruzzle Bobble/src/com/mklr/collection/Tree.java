@@ -1,19 +1,23 @@
 package com.mklr.collection;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Tree<T> implements BasicTree<T>
 {
     private T nodeValue;
-    private ArrayList<Tree<T>> listOfChilds;
+    private HashMap<T, Tree<T>> listOfChilds;
 
     Tree() {
         this(null);
     }
 
     Tree(T nodeValue) {
+        this(nodeValue, new HashMap<T, Tree<T>>());
+    }
+
+    Tree(T nodeValue, HashMap<T, Tree<T>> listOfChilds) {
         this.nodeValue = nodeValue;
-        listOfChilds = new ArrayList<Tree<T>>();
+        this.listOfChilds = listOfChilds;
     }
 
     /**
@@ -33,33 +37,36 @@ public class Tree<T> implements BasicTree<T>
     /**
      * @return the listOfChilds
      */
-    public ArrayList<Tree<T>> getListOfChilds() {
+    public HashMap<T, Tree<T>> getListOfChilds() {
         return listOfChilds;
     }
 
     /**
      * @param listOfChilds the listOfChilds to set
      */
-    public void setListOfChilds(ArrayList<Tree<T>> listOfChilds) {
+    public void setListOfChilds(HashMap<T, Tree<T>> listOfChilds) {
         this.listOfChilds = listOfChilds;
     }
 
     @Override
     public void add(T newValue, BasicTree<T> newTree) {
-        // TODO Auto-generated method stub
-
+        if (newTree instanceof Tree<?>)
+            listOfChilds.put(newValue, (Tree<T>)newTree); 
     }
 
     @Override
     public void remove(T valueToRemove) {
-        // TODO Auto-generated method stub
-
+        listOfChilds.remove(valueToRemove);
     }
 
     @Override
-    public boolean search(T valueToSearch) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean childExist(T valueToSearch) {
+        return listOfChilds.containsKey(valueToSearch);
+    }
+
+    @Override
+    public Tree<T> getChild(T neededChild) {
+        return listOfChilds.get(neededChild);
     }
 
 }
