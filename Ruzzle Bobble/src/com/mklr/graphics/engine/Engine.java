@@ -10,14 +10,14 @@ import com.mklr.graphics.stage.Stage;
  *
  */
 public class Engine {
-	private Stage sequence;
+	private GameScreen gamescreen;
+	private Stage stage;
 	
-	public Engine(){
-		this.sequence = new GameStage();
-	    
-	    gamescreen.setStage(engine.getSequence());
-	    
-	    gamescreen.repaint();
+	public Engine(GameScreen gamescreen){
+		this.gamescreen = gamescreen;
+		
+		//LANCEMENT DU JEU
+		this.stage = new GameStage();
 	    
 	}
 
@@ -25,15 +25,15 @@ public class Engine {
 	/**
 	 * @return the sequence
 	 */
-	public Stage getSequence() {
-		return sequence;
+	public Stage getStage() {
+		return stage;
 	}
 
 
 	/**
 	 * @param sequence the sequence to set
 	 */
-	public void setSequence(Stage sequence) {
-		this.sequence = sequence;
+	public void setSequence(Stage stage) {
+		this.stage = stage;
 	}
 }

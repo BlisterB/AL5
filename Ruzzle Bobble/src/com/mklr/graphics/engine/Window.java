@@ -3,9 +3,9 @@ package com.mklr.graphics.engine;
 import javax.swing.JFrame;
 
 public class Window extends JFrame {
-	private GameScreen gamescreen = new GameScreen();
-	private Engine engine = new Engine();
-	private MenuBar menuBar = new MenuBar();
+	private GameScreen gamescreen;
+	private Engine engine;
+	private MenuBar menubar;
 	
 	public Window(){
 		//Proprietes
@@ -14,12 +14,22 @@ public class Window extends JFrame {
 	    this.setLocationRelativeTo(null);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
+	    //Initialisation des composants
+	    menubar = new MenuBar();
+	    gamescreen = new GameScreen();
+	    engine = new Engine(gamescreen);
+	    
 	    //Barre de menu
-	    this.setJMenuBar(menuBar);
+	    this.setJMenuBar(menubar);
 	    
 	    //Conteneurs
 	    this.setContentPane(gamescreen);
 
+
+	    
+	    
+	    
+	    //Affichage de la fenetre
 	    this.setVisible(true);
 	}
 }
