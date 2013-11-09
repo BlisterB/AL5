@@ -1,7 +1,8 @@
 package com.mklr.graphics.engine;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
@@ -13,12 +14,16 @@ import com.mklr.graphics.stage.Stage;
  * @author Mehdi
  *
  */
-public class GameScreen extends JPanel{
+public class GameScreen extends JPanel implements MouseListener{
 	private Stage stage;
 	
 	public GameScreen(){
 		this.setSize(800, 450);
+		addMouseListener(this);
 	}
+	   //////////////////////////////////////////////////////////////////
+	  ////////////////////////////// METHODES //////////////////////////
+	 //////////////////////////////////////////////////////////////////	
 	
 	/**La methode paintComponent recupere la liste de sprite de la sequence en cours et les affiches successivement**/
 	public void paintComponent(Graphics g){
@@ -68,6 +73,39 @@ public class GameScreen extends JPanel{
 		}
 	}
 
+    public void mousePressed(MouseEvent e) {
+        saySomething("Mouse pressed; # of clicks: "
+                     + e.getClickCount(), e);
+     }
+
+     public void mouseReleased(MouseEvent e) {
+        saySomething("Mouse released; # of clicks: "
+                     + e.getClickCount(), e);
+     }
+
+     public void mouseEntered(MouseEvent e) {
+        saySomething("Mouse entered", e);
+     }
+
+     public void mouseExited(MouseEvent e) {
+        saySomething("Mouse exited", e);
+     }
+
+     public void mouseClicked(MouseEvent e) {
+        saySomething("Mouse clicked (# of clicks: "
+                     + e.getClickCount() + ")", e);
+     }
+
+     void saySomething(String eventDescription, MouseEvent e) {
+         System.out.println(eventDescription + " detected on "
+                         + e.getComponent().getClass().getName()
+                         + "." );
+     }
+	
+	   //////////////////////////////////////////////////////////////////
+	  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
+	 //////////////////////////////////////////////////////////////////
+	
 	/**
 	 * @return the sequence
 	 */
