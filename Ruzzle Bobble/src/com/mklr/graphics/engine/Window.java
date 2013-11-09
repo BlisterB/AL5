@@ -10,7 +10,7 @@ public class Window extends JFrame {
 	public Window(){
 		//Proprietes
 	    this.setTitle("Ruzzle Bobble");
-	    this.setSize(1000, 600);
+	    this.setSize(800, 500);//A MODIFIER
 	    this.setLocationRelativeTo(null);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    

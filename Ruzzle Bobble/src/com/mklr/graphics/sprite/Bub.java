@@ -7,7 +7,7 @@ public class Bub extends Sprite {
 	
 	
 	public Bub(){
-		rect = new Rectangle(650, 330, 100, 100);
+		rect = new Rectangle(550, 330, 100, 100);
 		
 		//Chargement des images
 		this.sprite_list = new Image[4];

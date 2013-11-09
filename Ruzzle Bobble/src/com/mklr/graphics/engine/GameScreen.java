@@ -1,7 +1,7 @@
 package com.mklr.graphics.engine;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import javax.swing.JPanel;
 
@@ -31,7 +31,37 @@ public class GameScreen extends JPanel{
 				sprite = stage.getSpriteList().get(i);
 				g.drawImage(sprite.getImage(), sprite.getRect().x, sprite.getRect().y, this);
 			}
-			//Dessin de l'interface
+			//Test d'agencement des lettres
+			//Ligne - Colonne
+			//Ligne 1
+			g.drawRect(104, 60, 40, 40);
+			g.drawRect(204, 60, 40, 40);
+			g.drawRect(304, 60, 40, 40);
+			g.drawRect(154, 30, 40, 40);
+			g.drawRect(254, 30, 40, 40);
+			//Ligne 2
+			g.drawRect(104, 110, 40, 40);
+			g.drawRect(204, 110, 40, 40);
+			g.drawRect(304, 110, 40, 40);
+			g.drawRect(54, 140, 40, 40);
+			g.drawRect(154, 140, 40, 40);
+			g.drawRect(254, 140, 40, 40);
+			g.drawRect(354, 140, 40, 40);
+			//Ligne 3
+			g.drawRect(104, 222, 40, 40);
+			g.drawRect(204, 222, 40, 40);
+			g.drawRect(304, 222, 40, 40);
+			g.drawRect(54, 192, 40, 40);
+			g.drawRect(154, 192, 40, 40);
+			g.drawRect(254, 192, 40, 40);
+			g.drawRect(354, 192, 40, 40);
+			//Ligne 4
+			g.drawRect(104, 272, 40, 40);
+			g.drawRect(204, 272, 40, 40);
+			g.drawRect(304, 272, 40, 40);
+			g.drawRect(154, 305, 40, 40);
+			g.drawRect(254, 305, 40, 40);
+			
 		}
 		else{
 			System.out.println("Pas de sequence chargee");
