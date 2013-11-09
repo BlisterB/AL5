@@ -1,4 +1,4 @@
-package com.mklr.graphics.sequence;
+package com.mklr.graphics.stage;
 
 import java.util.LinkedList;
 

@@ -5,8 +5,8 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import com.mklr.graphics.sequence.Stage;
 import com.mklr.graphics.sprite.Sprite;
+import com.mklr.graphics.stage.Stage;
 
 /**Le GameScreen est l'ecran du jeu.
  * C'est un Canvas affichant les differents sprites de la Sequence en cours.
@@ -17,7 +17,7 @@ public class GameScreen extends JPanel{
 	private Stage stage;
 	
 	public GameScreen(){
-		this.setSize(900, 450);
+		this.setSize(800, 450);
 	}
 	
 	/**La methode paintComponent recupere la liste de sprite de la sequence en cours et les affiches successivement**/

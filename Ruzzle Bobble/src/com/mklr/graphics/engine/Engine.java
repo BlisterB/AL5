@@ -1,8 +1,8 @@
 package com.mklr.graphics.engine;
 
-import com.mklr.graphics.sequence.GameStage;
-import com.mklr.graphics.sequence.GameTitle;
-import com.mklr.graphics.sequence.Stage;
+import com.mklr.graphics.stage.GameStage;
+import com.mklr.graphics.stage.GameTitle;
+import com.mklr.graphics.stage.Stage;
 
 /**La classe Engine represente le moteur de jeu
  * C'est elle qui charge les sequences du jeu et commande le raffraichissement du GameScreen.
@@ -14,6 +14,11 @@ public class Engine {
 	
 	public Engine(){
 		this.sequence = new GameStage();
+	    
+	    gamescreen.setStage(engine.getSequence());
+	    
+	    gamescreen.repaint();
+	    
 	}
 
 

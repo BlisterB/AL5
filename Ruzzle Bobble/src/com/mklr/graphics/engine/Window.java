@@ -1,28 +1,25 @@
 package com.mklr.graphics.engine;
 
-import java.awt.Color;
-
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 public class Window extends JFrame {
 	private GameScreen gamescreen = new GameScreen();
 	private Engine engine = new Engine();
+	private MenuBar menuBar = new MenuBar();
 	
 	public Window(){
 		//Proprietes
 	    this.setTitle("Ruzzle Bobble");
-	    this.setSize(900, 500);
+	    this.setSize(1000, 600);
 	    this.setLocationRelativeTo(null);
-	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-	    this.setResizable(false);
-	    this.setVisible(true);
+	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    
+	    //Barre de menu
+	    this.setJMenuBar(menuBar);
 	    
 	    //Conteneurs
 	    this.setContentPane(gamescreen);
-	    
-	    gamescreen.setStage(engine.getSequence());
-	    
-	    gamescreen.repaint();
+
+	    this.setVisible(true);
 	}
 }
