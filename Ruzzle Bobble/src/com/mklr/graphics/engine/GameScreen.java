@@ -17,8 +17,7 @@ public class GameScreen extends JPanel{
 	private Stage stage;
 	
 	public GameScreen(){
-		this.setSize(800, 450);
-		this.setBackground(Color.orange);
+		this.setSize(900, 450);
 	}
 	
 	/**La methode paintComponent recupere la liste de sprite de la sequence en cours et les affiches successivement**/
@@ -30,7 +29,7 @@ public class GameScreen extends JPanel{
 			//Dessin des sprite
 			for(int i = 0; i < stage.getSpriteList().size(); i++){
 				sprite = stage.getSpriteList().get(i);
-				g.drawImage(sprite.getImage(), sprite.getPosX(), sprite.getPosY(), this);
+				g.drawImage(sprite.getImage(), sprite.getRect().x, sprite.getRect().y, this);
 			}
 			//Dessin de l'interface
 		}

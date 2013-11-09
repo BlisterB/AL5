@@ -1,34 +1,35 @@
 package com.mklr.graphics.sprite;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
 public class Sprite {
-	protected Image image;
-	protected int posX;
-	protected int posY;
-	protected int zoom;
-	protected Image[] animation;
-	
+	protected Image image;//L'image actuelle du sprite
+	protected Rectangle rect;//Le rectangle symbolisant l'image dans le JPanel
+	protected Image[] sprite_list;//Le tableau des images du sprite
+
 	public Sprite(){
 		
 	}
-	
+	public Sprite(int posX, int posY, int width, int height){
+		this.rect = new Rectangle(posX, posY, width, height);
+	}
 	public Sprite(String chemin){
 		this.image = openImage(chemin);
+		this.rect = new Rectangle(0, 0, 0, 0);
 	}
-	public Sprite(String chemin, int posX, int posY){
-		this(chemin);
-		this.posX = posX;
-		this.posY = posY;
+	public Sprite(String chemin, int posX, int posY, int width, int height){
+		this.image = openImage(chemin);
+		this.rect = new Rectangle(posX, posY, width, height);
 	}
-	public Sprite(String chemin, int posX, int posY, int zoom){
-		this(chemin, posX, posY);
-		this.zoom = zoom;
-	}
+
+   //////////////////////////////////////////////////////////////////
+  ////////////////////////////// METHODES //////////////////////////
+ //////////////////////////////////////////////////////////////////	
 	
 	/** Ouvre une image et gere l'exception
 	 * @return l'image
@@ -47,6 +48,16 @@ public class Sprite {
 		return null;
 	}
 	
+	/**@return Test de collision entre les deux sprites **/
+	
+	public boolean isInCollision(Sprite s){
+		return rect.intersects(s.rect);
+	}
+	
+	
+   //////////////////////////////////////////////////////////////////
+  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
+ //////////////////////////////////////////////////////////////////
 	/**
 	 * @return the image
 	 */
@@ -60,39 +71,16 @@ public class Sprite {
 		this.image = image;
 	}
 	/**
-	 * @return the posX
+	 * @return the rect
 	 */
-	public int getPosX() {
-		return posX;
+	public Rectangle getRect() {
+		return rect;
 	}
 	/**
-	 * @param posX the posX to set
+	 * @param rect the rect to set
 	 */
-	public void setPosX(int posX) {
-		this.posX = posX;
+	public void setRect(Rectangle rect) {
+		this.rect = rect;
 	}
-	/**
-	 * @return the posY
-	 */
-	public int getPosY() {
-		return posY;
-	}
-	/**
-	 * @param posY the posY to set
-	 */
-	public void setPosY(int posY) {
-		this.posY = posY;
-	}
-	/**
-	 * @return the zoom
-	 */
-	public int getZoom() {
-		return zoom;
-	}
-	/**
-	 * @param zoom the zoom to set
-	 */
-	public void setZoom(int zoom) {
-		this.zoom = zoom;
-	}
+	
 }

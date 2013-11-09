@@ -1,17 +1,22 @@
 package com.mklr.graphics.sprite;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 
 public class Bub extends Sprite {
+	
+	
 	public Bub(){
-		this.animation = new Image[4];
+		rect = new Rectangle(650, 330, 100, 100);
+		
 		//Chargement des images
-		animation[0] = openImage("img/Bub/Bub-standing_pose1.png");
-		animation[1] = openImage("img/Bub/Bub-standing_pose2.png");
-		animation[2] = openImage("img/Bub/Bub-standing_pose3.png");
-		animation[3] = openImage("img/Bub/Bub-standing_pose4.png");
+		this.sprite_list = new Image[4];
+		sprite_list[0] = openImage("img/Bub/Bub-standing_pose1.png");
+		sprite_list[1] = openImage("img/Bub/Bub-standing_pose2.png");
+		sprite_list[2] = openImage("img/Bub/Bub-standing_pose3.png");
+		sprite_list[3] = openImage("img/Bub/Bub-standing_pose4.png");
 		
 		//Image par defaut
-		this.image = animation[1];
+		this.image = sprite_list[0];
 	}
 }
