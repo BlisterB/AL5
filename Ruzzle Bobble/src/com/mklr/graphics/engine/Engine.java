@@ -1,7 +1,6 @@
 package com.mklr.graphics.engine;
 
 import com.mklr.graphics.stage.GameStage;
-import com.mklr.graphics.stage.GameTitle;
 import com.mklr.graphics.stage.Stage;
 
 /**La classe Engine represente le moteur de jeu
@@ -18,10 +17,29 @@ public class Engine {
 		
 		//LANCEMENT DU JEU
 		this.stage = new GameStage();
+		gamescreen.setStage(stage);
 	    
 	}
+	
+	
+	   //////////////////////////////////////////////////////////////////
+	  ////////////////////////////// METHODES //////////////////////////
+	 //////////////////////////////////////////////////////////////////	
 
-
+	public void refresh_gamescreen(){
+		while(true){
+			gamescreen.repaint();
+			try{
+				  Thread.sleep(1000); //Ici, une pause d'une seconde
+			}catch(InterruptedException e) {
+			  e.printStackTrace();
+			}
+		}
+	}
+	
+	   //////////////////////////////////////////////////////////////////
+	  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
+	 //////////////////////////////////////////////////////////////////
 	/**
 	 * @return the sequence
 	 */

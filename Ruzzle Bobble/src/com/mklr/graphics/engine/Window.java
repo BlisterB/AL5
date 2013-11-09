@@ -24,12 +24,10 @@ public class Window extends JFrame {
 	    
 	    //Conteneurs
 	    this.setContentPane(gamescreen);
-
-
-	    
-	    
 	    
 	    //Affichage de la fenetre
 	    this.setVisible(true);
+	    
+	    engine.refresh_gamescreen();
 	}
 }
