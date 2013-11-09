@@ -74,8 +74,7 @@ public class GameScreen extends JPanel implements MouseListener{
 	}
 
     public void mousePressed(MouseEvent e) {
-        saySomething("Mouse pressed; # of clicks: "
-                     + e.getClickCount(), e);
+        saySomething("Mouse pressed; # of clicks: " + e.getClickCount(), e);
      }
 
      public void mouseReleased(MouseEvent e) {
