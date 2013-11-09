@@ -1,6 +1,7 @@
 package com.mklr.graphics.engine;
 
 import com.mklr.graphics.stage.GameStage;
+import com.mklr.graphics.stage.GameTitle;
 import com.mklr.graphics.stage.Stage;
 
 /**La classe Engine represente le moteur de jeu
@@ -14,11 +15,6 @@ public class Engine {
 	
 	public Engine(GameScreen gamescreen){
 		this.gamescreen = gamescreen;
-		
-		//LANCEMENT DU JEU
-		this.stage = new GameStage();
-		gamescreen.setStage(stage);
-	    
 	}
 	
 	
@@ -26,6 +22,11 @@ public class Engine {
 	  ////////////////////////////// METHODES //////////////////////////
 	 //////////////////////////////////////////////////////////////////	
 
+	public void setGameTitle(){
+		this.stage = new GameTitle();
+		gamescreen.setStage(stage);
+	}
+	
 	public void refresh_gamescreen(){
 		while(true){
 			gamescreen.repaint();

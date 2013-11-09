@@ -27,7 +27,49 @@ public class Window extends JFrame {
 	    
 	    //Affichage de la fenetre
 	    this.setVisible(true);
-	    
-	    engine.refresh_gamescreen();
 	}
+
+	/**
+	 * @return the gamescreen
+	 */
+	public GameScreen getGamescreen() {
+		return gamescreen;
+	}
+
+	/**
+	 * @param gamescreen the gamescreen to set
+	 */
+	public void setGamescreen(GameScreen gamescreen) {
+		this.gamescreen = gamescreen;
+	}
+
+	/**
+	 * @return the engine
+	 */
+	public Engine getEngine() {
+		return engine;
+	}
+
+	/**
+	 * @param engine the engine to set
+	 */
+	public void setEngine(Engine engine) {
+		this.engine = engine;
+	}
+
+	/**
+	 * @return the menubar
+	 */
+	public MenuBar getMenubar() {
+		return menubar;
+	}
+
+	/**
+	 * @param menubar the menubar to set
+	 */
+	public void setMenubar(MenuBar menubar) {
+		this.menubar = menubar;
+	}
+	
+	
 }

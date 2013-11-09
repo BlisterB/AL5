@@ -32,9 +32,11 @@ public class GameScreen extends JPanel implements MouseListener{
 			//Dessin du background
 			g.drawImage(stage.getBackground().getImage(), 0, 0, this);
 			//Dessin des sprite
-			for(int i = 0; i < stage.getSpriteList().size(); i++){
-				sprite = stage.getSpriteList().get(i);
-				g.drawImage(sprite.getImage(), sprite.getRect().x, sprite.getRect().y, this);
+			if(stage.getSpriteList() != null){
+				for(int i = 0; i < stage.getSpriteList().size(); i++){
+					sprite = stage.getSpriteList().get(i);
+					g.drawImage(sprite.getImage(), sprite.getRect().x, sprite.getRect().y, this);
+				}
 			}
 			//Test d'agencement des lettres
 			//Ligne - Colonne
@@ -74,31 +76,27 @@ public class GameScreen extends JPanel implements MouseListener{
 	}
 
     public void mousePressed(MouseEvent e) {
-        saySomething("Mouse pressed; # of clicks: " + e.getClickCount(), e);
+        //saySomething("Mouse pressed; # of clicks: " + e.getClickCount(), e);
      }
 
      public void mouseReleased(MouseEvent e) {
-        saySomething("Mouse released; # of clicks: "
-                     + e.getClickCount(), e);
+       saySomething("Mouse released; # of clicks: " + e.getClickCount(), e);
      }
 
      public void mouseEntered(MouseEvent e) {
-        saySomething("Mouse entered", e);
+        //saySomething("Mouse entered", e);
      }
 
      public void mouseExited(MouseEvent e) {
-        saySomething("Mouse exited", e);
+       // saySomething("Mouse exited", e);
      }
 
      public void mouseClicked(MouseEvent e) {
-        saySomething("Mouse clicked (# of clicks: "
-                     + e.getClickCount() + ")", e);
+        saySomething("Mouse clicked (# of clicks: " + e.getClickCount() + ")", e);
      }
 
      void saySomething(String eventDescription, MouseEvent e) {
-         System.out.println(eventDescription + " detected on "
-                         + e.getComponent().getClass().getName()
-                         + "." );
+         System.out.println(eventDescription + " detected on " + e.getComponent().getClass().getName() + "." );
      }
 	
 	   //////////////////////////////////////////////////////////////////

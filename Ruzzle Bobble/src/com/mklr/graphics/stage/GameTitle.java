@@ -8,6 +8,6 @@ public class GameTitle extends Stage{
 	public GameTitle(){
 		//Generation du background
         //Switch to /path/to/template
-		this.background = new Sprite("img/template.png");
+		this.background = new Sprite("img/background/game_title.png");
 	}
 }
