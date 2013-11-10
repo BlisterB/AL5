@@ -1,6 +1,9 @@
 package com.mklr.graphics.engine;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+
+
 
 public class Window extends JFrame {
 	private GameScreen gamescreen;
@@ -11,6 +14,7 @@ public class Window extends JFrame {
 		//Proprietes
 	    this.setTitle("Ruzzle Bobble");
 	    this.setSize(800, 500);//A MODIFIER
+	    this.setIconImage(new ImageIcon(Launcher.PATH + "img/interface/icone.png").getImage());
 	    this.setLocationRelativeTo(null);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    

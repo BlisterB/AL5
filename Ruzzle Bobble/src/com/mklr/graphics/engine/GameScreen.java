@@ -6,6 +6,9 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
+import com.mklr.graphics.sprite.Bub;
+import com.mklr.graphics.sprite.InterfaceSprite;
+import com.mklr.graphics.sprite.LetterSprite;
 import com.mklr.graphics.sprite.Sprite;
 import com.mklr.graphics.stage.GameStage;
 import com.mklr.graphics.stage.Stage;
@@ -94,19 +97,36 @@ public class GameScreen extends JPanel implements MouseListener{
      }
 
      public void mouseClicked(MouseEvent e) {
-        saySomething("Mouse clicked (# of clicks: " + e.getClickCount() + ")", e);
+        //saySomething("Mouse clicked (# of clicks: " + e.getClickCount() + ")", e);
         if(stage.getSpriteList() != null){
+        	Sprite s;
 	        for(int i = 0; i < stage.getSpriteList().size(); i++){
-	        	if(stage.getSpriteList().get(i).isInCollision(e.getX(), e.getY())){
-	        		System.out.println("VOUS AVEZ CLIQUER SUR L OBJET DE REF" + stage.getSpriteList().get(i));
-	        		System.out.println("Souris : X "+ e.getX() + "Y " + e.getY() + "\nBub : " + stage.getSpriteList().get(i).getRect().toString());
+	        	s = stage.getSpriteList().get(i);
+	        	if(s.isInCollision(e.getX(), e.getY())){
+	        		s = stage.getSpriteList().get(i);
+	        		//System.out.println("VOUS AVEZ CLIQUER SUR L OBJET DE REF" + stage.getSpriteList().get(i));
+	        		//System.out.println("Souris : X "+ e.getX() + "Y " + e.getY() + "\nBub : " + stage.getSpriteList().get(i).getRect().toString());
+	        		if(s instanceof Bub){
+	        			System.out.println("Bub !");
+	        		}
+	        		if(s instanceof InterfaceSprite){
+	        			if(((InterfaceSprite)s).getFunction() == 1){
+	        				System.out.println("Valider");
+	        			}
+	        			else if(((InterfaceSprite)s).getFunction() == 2){
+	        				System.out.println("Retour");
+	        			}
+	        		}
+	        		if(s instanceof LetterSprite){
+	        			
+	        		}
 	        	}
 	        }
         }
      }
 
      void saySomething(String eventDescription, MouseEvent e) {
-         System.out.println(eventDescription + " detected on " + e.getComponent().getClass().getName() + "." );
+         //System.out.println(eventDescription + " detected on " + e.getComponent().getClass().getName() + "." );
      }
 	
 	   //////////////////////////////////////////////////////////////////
