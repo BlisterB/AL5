@@ -1,27 +1,53 @@
 package com.mklr.graphics.engine;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 public class MenuBar extends JMenuBar {
-	public MenuBar(){
+	Engine engine;
+	
+	//Fichier
+	private JMenu mFichier = new JMenu("Fichier");
+	private JMenuItem iLancerPartie = new JMenuItem("Lancer une partie");
+	private JMenuItem iQuitter = new JMenuItem("Quitter");
+	
+	//Algorithme
+	private JMenu mAlgorithme = new JMenu("Algorithme");
+	private JMenuItem iConnasse = new JMenuItem("Truc de la conasse");
+	
+	public MenuBar(Engine engine){
 		super();
+		this.engine = engine;
 		
-		//Menu
-		JMenu fichier = new JMenu("Fichier");
-		JMenu algo = new JMenu("Algorithme");
+		//Menu Fichier
+		this.add(mFichier);
+		mFichier.add(iLancerPartie);
+		iLancerPartie.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
+		mFichier.add(iQuitter);
 		
-		//Item de Fichier
-		JMenuItem quitter = new JMenuItem("Quitter");
-		fichier.add(quitter);
+		//Menu Algorithme
+		this.add(mAlgorithme);
+		mAlgorithme.add(iConnasse);
 		
-		//Item de Algo
-		JMenuItem algoitem = new JMenuItem("Truc de la conasse");
-		algo.add(algoitem);
-		
-		//Ajout des elements
-		this.add(fichier);
-		this.add(algo);
+		//Ajout des Action Listener
+        iLancerPartie.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent arg0){
+                        run_game();
+                }
+        });
+        iQuitter.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent arg0){
+                System.exit(0);
+            }
+        });
+	}
+	
+	public void run_game(){
+		iLancerPartie.setEnabled(false);
+		engine.run_game();
 	}
 }

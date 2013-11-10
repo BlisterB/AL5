@@ -15,9 +15,9 @@ public class Window extends JFrame {
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 	    //Initialisation des composants
-	    menubar = new MenuBar();
 	    gamescreen = new GameScreen();
 	    engine = new Engine(gamescreen);
+	    menubar = new MenuBar(engine);
 	    
 	    //Barre de menu
 	    this.setJMenuBar(menubar);

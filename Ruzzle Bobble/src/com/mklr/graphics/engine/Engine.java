@@ -22,11 +22,18 @@ public class Engine {
 	  ////////////////////////////// METHODES //////////////////////////
 	 //////////////////////////////////////////////////////////////////	
 
+	//Methode de chargement des sequences
 	public void setGameTitle(){
 		this.stage = new GameTitle();
 		gamescreen.setStage(stage);
 	}
+	public void run_game(){
+		this.stage = new GameStage();
+		gamescreen.setStage(stage);
+		gamescreen.repaint();
+	}
 	
+	//Methode de raffraichissement
 	public void refresh_gamescreen(){
 		while(true){
 			gamescreen.repaint();
