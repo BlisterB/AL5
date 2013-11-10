@@ -82,7 +82,7 @@ public class GameScreen extends JPanel implements MouseListener{
      }
 
      public void mouseReleased(MouseEvent e) {
-       saySomething("Mouse released; # of clicks: " + e.getClickCount(), e);
+       //saySomething("Mouse released; # of clicks: " + e.getClickCount(), e);
      }
 
      public void mouseEntered(MouseEvent e) {
@@ -95,6 +95,14 @@ public class GameScreen extends JPanel implements MouseListener{
 
      public void mouseClicked(MouseEvent e) {
         saySomething("Mouse clicked (# of clicks: " + e.getClickCount() + ")", e);
+        if(stage.getSpriteList() != null){
+	        for(int i = 0; i < stage.getSpriteList().size(); i++){
+	        	if(stage.getSpriteList().get(i).isInCollision(e.getX(), e.getY())){
+	        		System.out.println("VOUS AVEZ CLIQUER SUR L OBJET DE REF" + stage.getSpriteList().get(i));
+	        		System.out.println("Souris : X "+ e.getX() + "Y " + e.getY() + "\nBub : " + stage.getSpriteList().get(i).getRect().toString());
+	        	}
+	        }
+        }
      }
 
      void saySomething(String eventDescription, MouseEvent e) {

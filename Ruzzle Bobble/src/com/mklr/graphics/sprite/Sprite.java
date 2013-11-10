@@ -51,9 +51,12 @@ public class Sprite {
 	/**@return Test de collision entre les deux sprites **/
 	
 	public boolean isInCollision(Sprite s){
-		return rect.intersects(s.rect);
+		return this.rect.intersects(s.rect);
 	}
-	
+	public boolean isInCollision(int x, int y){
+		Rectangle rect = new Rectangle(x, y, 1, 1);
+		return this.rect.intersects(rect);
+	}
 	
    //////////////////////////////////////////////////////////////////
   ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
