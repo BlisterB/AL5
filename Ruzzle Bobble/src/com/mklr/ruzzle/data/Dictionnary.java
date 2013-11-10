@@ -1,6 +1,10 @@
 package com.mklr.ruzzle.data;
 
+import java.io.File;
+import java.text.Normalizer;
 import java.util.Locale;
+import java.util.Scanner;
+
 import com.mklr.collection.Tree;
 
 public class Dictionnary {
@@ -65,6 +69,53 @@ public class Dictionnary {
     }
 
     public void init() {
+        try {
+            File f = new File(dictionnaryPath);
+            Scanner sc = new Scanner(f);
 
+            while (sc.hasNextLine()) {
+                Tree<Character> cur_pos = dictionnaryTree;
+                String line = sc.nextLine();
+                int length = line.length();
+
+                line = normalizeWord(line);
+                for (int i = 0; i <length; i++) {
+                    Character c = line.charAt(i);
+
+                    if (!cur_pos.childExist(c))
+                        cur_pos.add(c, new Tree<Character>(c));
+
+                    cur_pos = cur_pos.getChild(c);
+                }
+                
+                cur_pos.setStatus(Tree.TERMINAL);
+            }
+
+            sc.close();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean searchWord(String word) {
+        Tree<Character> cur_pos = dictionnaryTree;
+        int length = word.length();
+
+        for (int i = 0; i < length; i++) {
+            Character c = word.charAt(i);
+
+            if (cur_pos.childExist(c))
+                cur_pos = cur_pos.getChild(c);
+            else
+                return false;
+        }
+
+        return cur_pos.isTerminal();
+    }
+
+    private String normalizeWord(String s) {
+        return Normalizer.normalize(s, Normalizer.Form.NFD)
+            .replaceAll("[\u0300-\u036F]", "");
     }
 }

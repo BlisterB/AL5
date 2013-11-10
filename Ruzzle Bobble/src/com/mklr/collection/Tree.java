@@ -4,19 +4,32 @@ import java.util.HashMap;
 
 public class Tree<T> implements BasicTree<T>
 {
+    public static final int NON_TERMINAL    = 0;
+    public static final int TERMINAL        = 1;
+
     private T nodeValue;
     private HashMap<T, Tree<T>> listOfChilds;
+    private int status;
 
     public Tree() {
         this(null);
     }
 
     public Tree(T nodeValue) {
-        this(nodeValue, new HashMap<T, Tree<T>>());
+        this(nodeValue, NON_TERMINAL, new HashMap<T, Tree<T>>());
+    }
+
+    public Tree(T nodeValue, int status) {
+        this(nodeValue, status, new HashMap<T, Tree<T>>());
     }
 
     public Tree(T nodeValue, HashMap<T, Tree<T>> listOfChilds) {
+        this(nodeValue, NON_TERMINAL, listOfChilds);
+    }
+
+    public Tree(T nodeValue, int status, HashMap<T, Tree<T>> listOfChilds) {
         this.nodeValue = nodeValue;
+        this.status = status;
         this.listOfChilds = listOfChilds;
     }
 
@@ -46,6 +59,24 @@ public class Tree<T> implements BasicTree<T>
      */
     public void setListOfChilds(HashMap<T, Tree<T>> listOfChilds) {
         this.listOfChilds = listOfChilds;
+    }
+
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public boolean isTerminal() {
+        return status == TERMINAL;
     }
 
     @Override
