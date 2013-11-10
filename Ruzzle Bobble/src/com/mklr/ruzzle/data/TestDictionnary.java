@@ -12,7 +12,7 @@ public class TestDictionnary {
         System.out.printf("TIME (s) : %d\n", (new Date()).getTime() - beg);
 
         beg2 = (new Date()).getTime();
-        if (d.searchWord("corsepresent")) {
+        if (d.searchWord("corseeapresent")) {
             System.out.printf("EXIST\n");
         } else {
             System.out.printf("DOESN'T EXIST\n");

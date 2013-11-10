@@ -115,6 +115,7 @@ public class Dictionnary {
     }
 
     private String normalizeWord(String s) {
+        s = s.toLowerCase();
         return Normalizer.normalize(s, Normalizer.Form.NFD)
             .replaceAll("[\u0300-\u036F]", "");
     }
