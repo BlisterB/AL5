@@ -9,12 +9,16 @@ import com.mklr.graphics.stage.Stage;
  * @author Mehdi
  *
  */
-public class Engine {
+public class Engine implements Runnable{
 	private GameScreen gamescreen;
 	private Stage stage;
 	
 	public Engine(GameScreen gamescreen){
 		this.gamescreen = gamescreen;
+		
+		//On cree lance le thread de raffraichissement de l'ecran
+		Thread t = new Thread(this);
+		t.start();
 	}
 	
 	
@@ -33,12 +37,24 @@ public class Engine {
 		gamescreen.repaint();
 	}
 	
+	public void run(){
+		while(true){
+			gamescreen.repaint();
+			try{
+				  Thread.sleep(1000); //Ici, une pause d'une seconde
+			}catch(InterruptedException e) {
+			  e.printStackTrace();
+			}
+		}
+		//refresh_gamescreen();
+	}
+	
 	//Methode de raffraichissement
 	public void refresh_gamescreen(){
 		while(true){
 			gamescreen.repaint();
 			try{
-				  Thread.sleep(1000); //Ici, une pause d'une seconde
+				  Thread.sleep(1); //Ici, une pause d'une seconde
 			}catch(InterruptedException e) {
 			  e.printStackTrace();
 			}

@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 
 import com.mklr.graphics.engine.Launcher;
 
-public class Bub extends Sprite{
+public class Bub extends Sprite implements Runnable{
 	public Bub(){
 		rect = new Rectangle(550, 330, 100, 100);
 		
@@ -20,6 +20,7 @@ public class Bub extends Sprite{
 		this.image = sprite_list[0];
 	}
 	
+	/*
 	public void animation(){
 		new Thread(new Runnable(){
 			public void run(){
@@ -34,5 +35,23 @@ public class Bub extends Sprite{
 				System.out.println("Sortie de run");
 			}
 		}).start();
+	}
+	*/
+	
+	public void animation(){
+		Thread t = new Thread(this);
+		t.start();
+	}
+	
+	public void run(){
+		while(true)
+		for(int i = 0; i < 4; i++){
+			image = sprite_list[i];
+		      try {
+		          Thread.sleep(500);
+		        } catch (InterruptedException e) {
+		          e.printStackTrace();
+		        }
+		}
 	}
 }
