@@ -11,6 +11,8 @@ public class Sprite {
 	protected Image image;//L'image actuelle du sprite
 	protected Rectangle rect;//Le rectangle symbolisant l'image dans le JPanel
 	protected Image[] sprite_list;//Le tableau des images du sprite
+	boolean animated;
+	int animation;
 
 	public Sprite(){
 		
@@ -84,6 +86,42 @@ public class Sprite {
 	 */
 	public void setRect(Rectangle rect) {
 		this.rect = rect;
+	}
+	/**
+	 * @return the sprite_list
+	 */
+	public Image[] getSprite_list() {
+		return sprite_list;
+	}
+	/**
+	 * @param sprite_list the sprite_list to set
+	 */
+	public void setSprite_list(Image[] sprite_list) {
+		this.sprite_list = sprite_list;
+	}
+	/**
+	 * @return the animated
+	 */
+	public boolean isAnimated() {
+		return animated;
+	}
+	/**
+	 * @param animated the animated to set
+	 */
+	public void setAnimated(boolean animated) {
+		this.animated = animated;
+	}
+	/**
+	 * @return the animation
+	 */
+	public int getAnimation() {
+		return animation;
+	}
+	/**
+	 * @param animation the animation to set
+	 */
+	public void setAnimation(int animation) {
+		this.animation = animation;
 	}
 	
 }

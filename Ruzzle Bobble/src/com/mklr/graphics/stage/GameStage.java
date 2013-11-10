@@ -21,6 +21,10 @@ public class GameStage extends Stage {
 		
 		//Personnages
 		sprite_list.add(bub);
+		/*Thread bubAnimation = new Thread(new Animation(bub));
+		bubAnimation.run();*/
+		bub.animation();
+		System.out.println("Sortie de bub");
 		
 		//Lettres
 	}
