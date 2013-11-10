@@ -1,37 +1,31 @@
 package com.mklr.ruzzle.data;
 
 import java.util.HashSet;
+import java.util.Locale;
 
 public class LetterSet extends HashSet<Letter>
 {
-    public static final String ENGLISH = "en.EN";
-    public static final String FRENCH  = "fr.FR";
-
-    private String locale;
+    private Locale locale;
 
     public LetterSet() {
-        this(ENGLISH);
+        this(Locale.ENGLISH);
     }
 
-    public LetterSet(String locale) {
+    public LetterSet(Locale locale) {
         this.locale = locale;
     }
 
     /**
      * @return the locale
      */
-    public String getLocale() {
+    public Locale getLocale() {
         return locale;
     }
 
     /**
      * @param locale the locale to set
      */
-    public void setLocale(String locale) {
+    public void setLocale(Locale locale) {
         this.locale = locale;
-    }
-
-    public void add(Character c, int value) {
-        super.add(new Letter(c, value));
     }
 }

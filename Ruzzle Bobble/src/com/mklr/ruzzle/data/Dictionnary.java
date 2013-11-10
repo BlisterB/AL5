@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 import com.mklr.collection.Tree;
 
-public class Dictionnary {
+public class Dictionnary implements Runnable {
     private final String dictionnaryPath;
     private Locale locale;
     private Tree<Character> dictionnaryTree;
@@ -118,5 +118,10 @@ public class Dictionnary {
         s = s.toLowerCase();
         return Normalizer.normalize(s, Normalizer.Form.NFD)
             .replaceAll("[\u0300-\u036F]", "");
+    }
+
+    @Override
+    public void run() {
+        init();
     }
 }

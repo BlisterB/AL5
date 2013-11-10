@@ -1,5 +1,9 @@
 package com.mklr.ruzzle.engine;
 
+import java.util.Locale;
+
+import com.mklr.ruzzle.data.Dictionnary;
+
 public class Board {
     public static final int WHITE = 0;
     public static final int GREY  = 1;
@@ -8,19 +12,31 @@ public class Board {
     private int row;
     private int state;
     private Marble[][] board;
+    private Locale locale;
+    private Dictionnary dico;
 
     public Board() {
         this(2);
     }
 
     public Board(int row) {
-        this(row, false);
+        this(row, Locale.ENGLISH);
     }
 
-    public Board(int row, boolean init) {
+    public Board(int row, Locale locale) {
+        this(row, locale, null);
+    }
+    
+    public Board(int row, Locale locale, Dictionnary dico) {
+        this(row, locale, dico, false);
+    }
+
+    public Board(int row, Locale locale, Dictionnary dico, boolean init) {
         this.row = row;
+        this.dico = dico;
         state = WHITE;
-        
+        this.locale = locale;
+
         board = new Marble[2 * row][];
         for(int i = 0; i < row/2; i++) {
             board[i] = new Marble[(2 * row) + (2 * i) + 1];
@@ -73,7 +89,42 @@ public class Board {
         this.board = board;
     }
     
+    /**
+     * @return the locale
+     */
+    public Locale getLocale() {
+        return locale;
+    }
+
+    /**
+     * @param locale the locale to set
+     */
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+
+    /**
+     * @return the dico
+     */
+    public Dictionnary getDico() {
+        return dico;
+    }
+
+    /**
+     * @param dico the dico to set
+     */
+    public void setDico(Dictionnary dico) {
+        this.dico = dico;
+    }
+
     private void init() {
         // TODO
+        int cpt_star = 2;
+        int cpt_word_count_double = 2;
+        int cpt_word_count_triple = 1;
+        int cpt_letter_count_double = 2;
+        int cpt_letter_count_triple = 1;
+
+
     }
 }
