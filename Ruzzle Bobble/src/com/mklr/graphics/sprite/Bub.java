@@ -48,7 +48,7 @@ public class Bub extends Sprite implements Runnable{
 		for(int i = 0; i < 4; i++){
 			image = sprite_list[i];
 		      try {
-		          Thread.sleep(500);
+		          Thread.sleep(200);
 		        } catch (InterruptedException e) {
 		          e.printStackTrace();
 		        }

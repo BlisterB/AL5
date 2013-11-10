@@ -38,15 +38,7 @@ public class Engine implements Runnable{
 	}
 	
 	public void run(){
-		while(true){
-			gamescreen.repaint();
-			try{
-				  Thread.sleep(1000); //Ici, une pause d'une seconde
-			}catch(InterruptedException e) {
-			  e.printStackTrace();
-			}
-		}
-		//refresh_gamescreen();
+		refresh_gamescreen();
 	}
 	
 	//Methode de raffraichissement
@@ -54,7 +46,7 @@ public class Engine implements Runnable{
 		while(true){
 			gamescreen.repaint();
 			try{
-				  Thread.sleep(1); //Ici, une pause d'une seconde
+				  Thread.sleep(32); //Ici, une pause d'une seconde
 			}catch(InterruptedException e) {
 			  e.printStackTrace();
 			}

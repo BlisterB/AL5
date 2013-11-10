@@ -24,7 +24,6 @@ public class GameStage extends Stage {
 		/*Thread bubAnimation = new Thread(new Animation(bub));
 		bubAnimation.run();*/
 		bub.animation();
-		System.out.println("Sortie de bub");
 		
 		//Lettres
 	}
