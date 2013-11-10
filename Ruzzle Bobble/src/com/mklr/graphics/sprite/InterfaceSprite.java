@@ -1,7 +1,7 @@
 package com.mklr.graphics.sprite;
 
 
-/** Instancie des Sprite représentant un élément d'interface graphique*/
+/** Instancie des Sprite representant un element d'interface graphique*/
 public class InterfaceSprite extends Sprite {
 	private int function; //1 : Valider, 2 : Retour
 	

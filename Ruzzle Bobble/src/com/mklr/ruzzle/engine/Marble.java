@@ -1,6 +1,7 @@
 package com.mklr.ruzzle.engine;
 
 import java.util.ArrayList;
+import com.mklr.ruzzle.data.Letter;
 
 public class Marble {
     public static final byte NO_BONUS = 0;
