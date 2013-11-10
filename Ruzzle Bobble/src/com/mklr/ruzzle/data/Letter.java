@@ -1,26 +1,26 @@
-package com.mklr.ruzzle.engine;
+package com.mklr.ruzzle.data;
 
 public class Letter {
     private int value;
     private Character letter;
 
-    Letter () {
+    public Letter () {
         this(null, 0);
     }
 
-    Letter (char letter) {
+    public Letter (char letter) {
         this(new Character(letter), 1);
     }
 
-    Letter (Character letter) {
+    public Letter (Character letter) {
         this(letter, 1);
     }
 
-    Letter (char letter, int value) {
+    public Letter (char letter, int value) {
         this(new Character(letter), value);
     }
 
-    Letter (Character letter, int value) {
+    public Letter (Character letter, int value) {
         this.letter = letter;
         this.value = value;
     }

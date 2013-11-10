@@ -7,15 +7,15 @@ public class Tree<T> implements BasicTree<T>
     private T nodeValue;
     private HashMap<T, Tree<T>> listOfChilds;
 
-    Tree() {
+    public Tree() {
         this(null);
     }
 
-    Tree(T nodeValue) {
+    public Tree(T nodeValue) {
         this(nodeValue, new HashMap<T, Tree<T>>());
     }
 
-    Tree(T nodeValue, HashMap<T, Tree<T>> listOfChilds) {
+    public Tree(T nodeValue, HashMap<T, Tree<T>> listOfChilds) {
         this.nodeValue = nodeValue;
         this.listOfChilds = listOfChilds;
     }
