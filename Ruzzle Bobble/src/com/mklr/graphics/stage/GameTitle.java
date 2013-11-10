@@ -1,5 +1,6 @@
 package com.mklr.graphics.stage;
 
+import com.mklr.graphics.engine.Launcher;
 import com.mklr.graphics.sprite.Sprite;
 import com.mklr.graphics.stage.Stage;
 
@@ -8,6 +9,6 @@ public class GameTitle extends Stage{
 	public GameTitle(){
 		//Generation du background
         //Switch to /path/to/template
-		this.background = new Sprite("img/background/game_title.png");
+		this.background = new Sprite(Launcher.PATH + "img/background/game_title.png");
 	}
 }

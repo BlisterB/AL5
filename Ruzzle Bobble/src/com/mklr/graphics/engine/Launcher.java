@@ -2,6 +2,8 @@ package com.mklr.graphics.engine;
 import com.mklr.graphics.stage.GameTitle;
 
 public class Launcher {
+	public static String PATH = "";//Variable dont on se sert pour ajuster le repertoire courant
+	
 	public static void main(String[] args){
 		Engine engine; 
 		
