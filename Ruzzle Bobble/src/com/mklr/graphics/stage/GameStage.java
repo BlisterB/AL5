@@ -11,8 +11,6 @@ public class GameStage extends Stage {
 	private Bub bub = new Bub();
 	
 	public GameStage(){
-		sprite_list = new LinkedList <Sprite>();
-		
 		//Background et interface
 		background = new Sprite(Launcher.PATH + "img/template.png");
 		sprite_list.add(new InterfaceSprite(Launcher.PATH + "img/interface/valider.png", 50, 375, 275, 50, 1)); //Bouton Valider

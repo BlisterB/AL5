@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Sprite {
+public class Sprite{
 	protected Image image;//L'image actuelle du sprite
 	protected Rectangle rect;//Le rectangle symbolisant l'image dans le JPanel
 	protected Image[] sprite_list;//Le tableau des images du sprite
@@ -58,6 +58,28 @@ public class Sprite {
 	public boolean isInCollision(int x, int y){
 		Rectangle rect = new Rectangle(x, y, 1, 1);
 		return this.rect.intersects(rect);
+	}
+	
+	public void move(final int x, final int y, final int periode){
+		new Thread(new Runnable(){
+			public void run(){
+				while(rect.x != x || rect.y != y){
+					int tempX = rect.x, tempY = rect.y;
+					if(rect.x > x) tempX--;
+					else if(rect.x < x)	tempX++;
+					if(rect.y > y) tempY--;
+					else if(rect.y < y)	tempY++;
+
+					rect = new Rectangle(tempX, tempY, (int)rect.getWidth(), (int)rect.getHeight());
+					try{
+						Thread.sleep(periode);
+					}
+					catch(InterruptedException e){
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
 	}
 	
    //////////////////////////////////////////////////////////////////

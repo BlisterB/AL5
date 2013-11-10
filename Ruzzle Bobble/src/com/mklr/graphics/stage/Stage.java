@@ -10,7 +10,7 @@ import com.mklr.graphics.sprite.Sprite;
  *
  */
 public class Stage {
-	protected LinkedList <Sprite> sprite_list;
+	protected LinkedList <Sprite> sprite_list = new LinkedList <Sprite>();
 	protected Sprite background;
 
 	/**

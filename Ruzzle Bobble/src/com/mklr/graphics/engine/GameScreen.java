@@ -75,9 +75,6 @@ public class GameScreen extends JPanel implements MouseListener{
 				g.drawRect(254, 305, 40, 40);
 			}
 		}
-		else{
-			System.out.println("Pas de sequence chargee");
-		}
 	}
 
     public void mousePressed(MouseEvent e) {

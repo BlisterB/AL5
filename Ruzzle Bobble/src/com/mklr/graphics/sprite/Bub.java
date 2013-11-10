@@ -20,24 +20,6 @@ public class Bub extends Sprite implements Runnable{
 		this.image = sprite_list[0];
 	}
 	
-	/*
-	public void animation(){
-		new Thread(new Runnable(){
-			public void run(){
-				for(int i = 0; i < 4; i++){
-					image = sprite_list[i];
-				      try {
-				          Thread.sleep(1000);
-				        } catch (InterruptedException e) {
-				          e.printStackTrace();
-				        }
-				}
-				System.out.println("Sortie de run");
-			}
-		}).start();
-	}
-	*/
-	
 	public void animation(){
 		Thread t = new Thread(this);
 		t.start();
@@ -45,10 +27,10 @@ public class Bub extends Sprite implements Runnable{
 	
 	public void run(){
 		while(true)
-		for(int i = 0; i < 4; i++){
+		for(int i = 0; i < 3; i++){
 			image = sprite_list[i];
 		      try {
-		          Thread.sleep(200);
+		          Thread.sleep(180);
 		        } catch (InterruptedException e) {
 		          e.printStackTrace();
 		        }
