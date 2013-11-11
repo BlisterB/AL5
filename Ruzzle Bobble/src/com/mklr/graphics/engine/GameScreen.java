@@ -1,5 +1,6 @@
 package com.mklr.graphics.engine;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -23,6 +24,9 @@ public class GameScreen extends JPanel implements MouseListener{
 	
 	public GameScreen(){
 		this.setSize(800, 450);
+		this.setPreferredSize(new Dimension(800, 450));
+		this.setMaximumSize(new Dimension(800, 450));
+		this.setMinimumSize(new Dimension(800, 450));
 		addMouseListener(this);
 	}
 	   //////////////////////////////////////////////////////////////////

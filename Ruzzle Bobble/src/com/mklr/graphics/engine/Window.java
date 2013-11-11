@@ -1,7 +1,11 @@
 package com.mklr.graphics.engine;
 
+import java.awt.Dimension;
+
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 
 
@@ -13,9 +17,8 @@ public class Window extends JFrame {
 	public Window(){
 		//Proprietes
 	    this.setTitle("Ruzzle Bobble");
-	    this.setSize(800, 500);//A MODIFIER
+	    //this.setSize(800, 500);//A MODIFIER
 	    this.setIconImage(new ImageIcon(Launcher.PATH + "img/interface/icone.png").getImage());
-	    this.setLocationRelativeTo(null);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 	    //Initialisation des composants
@@ -27,10 +30,16 @@ public class Window extends JFrame {
 	    this.setJMenuBar(menubar);
 	    
 	    //Conteneurs
-	    this.setContentPane(gamescreen);
+	    JPanel conteneur = new JPanel();
+	    conteneur.setLayout(new BoxLayout(conteneur, BoxLayout.PAGE_AXIS));
+	    conteneur.add(gamescreen);
+	    this.getContentPane().add(conteneur);
 	    
-	    //Affichage de la fenetre
+	    //Affichage de la fenetre et ajustement de sa taille
+	    setResizable(false);
 	    this.setVisible(true);
+	    setSize(800,450 + this.getHeight());
+	    this.setLocationRelativeTo(null);
 	}
 
 	/**
