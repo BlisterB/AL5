@@ -9,7 +9,7 @@ public class Bub extends Sprite implements Runnable{
 	public static int STANDING = 1, FEAR = 2, CRY = 3;
 	
 	public Bub(int x, int y){
-		rect = new Rectangle(x, y, 100, 100);
+		super(x, y, 100, 100);
 		
 		//Chargement des images
 		this.sprite_list = new Image[17];

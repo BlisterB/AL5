@@ -46,7 +46,7 @@ public class Engine implements Runnable{
 		while(true){
 			gamescreen.repaint();
 			try{
-				  Thread.sleep(32); //Ici, une pause d'une seconde
+				  Thread.sleep(16); //Ici, une pause d'une seconde
 			}catch(InterruptedException e) {
 			  e.printStackTrace();
 			}

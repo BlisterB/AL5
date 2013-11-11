@@ -3,12 +3,14 @@ package com.mklr.graphics.stage;
 import java.awt.Rectangle;
 
 import com.mklr.graphics.engine.Launcher;
+import com.mklr.graphics.sprite.Bob;
 import com.mklr.graphics.sprite.Bub;
 import com.mklr.graphics.sprite.Sprite;
 
 /**Sequence correspondant a la phase d'ecran de titre**/
 public class GameTitle extends Stage{
 	private Bub bub;
+	private Bob bob;
 	private Sprite titleSprite;
 	private boolean animation;//Definie si on continue a bouger les elements a l'ecran ou non
 	
@@ -17,10 +19,12 @@ public class GameTitle extends Stage{
 		this.background = new Sprite(Launcher.PATH + "img/background/game_title.png");
 		titleSprite = new Sprite(Launcher.PATH + "img/interface/title.png", 300, -150, 200, 150);
 		bub = new Bub(800, 150, Bub.FEAR);
+		bob = new Bob(850, 150, Bob.BUBBLE_LEFT);
 		
 		//Ajout des composants ˆ la sprite_list
 		sprite_list.add(titleSprite);
 		sprite_list.add(bub);
+		sprite_list.add(bob);
 		
 		//Mise en mouvement des composants
 		animation = true;
@@ -38,12 +42,16 @@ public class GameTitle extends Stage{
 					//Aller
 					bub.setAnimation(Bub.FEAR);
 					bub.move(-100, 150, 8);
+					bob.setAnimation(Bob.BUBBLE_LEFT);
+					bob.move(-150, 150, 8);
 					sleep(10000);
 					
 					//Retour
 					if(animation){
 						bub.setAnimation(Bub.CRY);
 						bub.move(800, 150, 8);
+						bob.setAnimation(Bob.BUBBLE_RIGHT);
+						bob.move(850, 150, 8);
 						sleep(10000);
 					}
 				}
