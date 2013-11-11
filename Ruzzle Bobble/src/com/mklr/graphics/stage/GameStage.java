@@ -8,7 +8,7 @@ import com.mklr.graphics.sprite.InterfaceSprite;
 import com.mklr.graphics.sprite.Sprite;
 
 public class GameStage extends Stage {
-	private Bub bub = new Bub();
+	private Bub bub = new Bub(550, 330, Bub.STANDING);
 	
 	public GameStage(){
 		//Background et interface

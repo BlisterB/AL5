@@ -6,18 +6,37 @@ import java.awt.Rectangle;
 import com.mklr.graphics.engine.Launcher;
 
 public class Bub extends Sprite implements Runnable{
-	public Bub(){
-		rect = new Rectangle(550, 330, 100, 100);
+	public static int STANDING = 1, FEAR = 2, CRY = 3;
+	
+	public Bub(int x, int y){
+		rect = new Rectangle(x, y, 100, 100);
 		
 		//Chargement des images
-		this.sprite_list = new Image[4];
-		sprite_list[0] = openImage(Launcher.PATH + "img/Bub/Bub-standing_pose1.png");
-		sprite_list[1] = openImage(Launcher.PATH + "img/Bub/Bub-standing_pose2.png");
-		sprite_list[2] = openImage(Launcher.PATH + "img/Bub/Bub-standing_pose3.png");
-		sprite_list[3] = openImage(Launcher.PATH + "img/Bub/Bub-standing_pose4.png");
-		
-		//Image par defaut
-		this.image = sprite_list[0];
+		this.sprite_list = new Image[17];
+		sprite_list[0] = openImage(Launcher.PATH + "img/bub/bub-standing1.png");
+		sprite_list[1] = openImage(Launcher.PATH + "img/bub/bub-standing2.png");
+		sprite_list[2] = openImage(Launcher.PATH + "img/bub/bub-standing3.png");
+		sprite_list[3] = openImage(Launcher.PATH + "img/bub/bub-standing4.png");
+		sprite_list[4] = openImage(Launcher.PATH + "img/bub/bub-fear1.png");
+		sprite_list[5] = openImage(Launcher.PATH + "img/bub/bub-fear2.png");
+		sprite_list[6] = openImage(Launcher.PATH + "img/bub/bub-fear4.png");
+		sprite_list[7] = openImage(Launcher.PATH + "img/bub/bub-fear5.png");
+		sprite_list[8] = openImage(Launcher.PATH + "img/bub/bub-fear6.png");
+		sprite_list[9] = openImage(Launcher.PATH + "img/bub/bub-cry1.png");
+		sprite_list[10] = openImage(Launcher.PATH + "img/bub/bub-cry2.png");
+		sprite_list[11] = openImage(Launcher.PATH + "img/bub/bub-cry3.png");
+		sprite_list[12] = openImage(Launcher.PATH + "img/bub/bub-cry4.png");
+		sprite_list[13] = openImage(Launcher.PATH + "img/bub/bub-cry5.png");
+		sprite_list[14] = openImage(Launcher.PATH + "img/bub/bub-cry6.png");
+		sprite_list[15] = openImage(Launcher.PATH + "img/bub/bub-cry7.png");
+		sprite_list[16] = openImage(Launcher.PATH + "img/bub/bub-cry8.png");
+	}
+	
+	public Bub(int x, int y,int animation){
+		this(x,y);
+		this.animated = true;
+		this.animation = animation;
+		animation();
 	}
 	
 	public void animation(){
@@ -26,14 +45,34 @@ public class Bub extends Sprite implements Runnable{
 	}
 	
 	public void run(){
-		while(true)
-		for(int i = 0; i < 3; i++){
-			image = sprite_list[i];
-		      try {
-		          Thread.sleep(180);
-		        } catch (InterruptedException e) {
-		          e.printStackTrace();
-		        }
+		while(animated){
+			while(animated && animation == STANDING)
+				for(int i = 0; i < 3 && animation == STANDING; i++){
+					image = sprite_list[i];
+					sleep(180);
+				}
+			while(animated && animation == FEAR)
+				for(int i = 4; i < 9 && animation == FEAR; i++){
+					image = sprite_list[i];
+				    sleep(180);
+				}
+			if(animated && animation == CRY){
+				//Retient ses larme (on repete l'animation deux fois)
+				image = sprite_list[9];
+				sleep(180);
+				image = sprite_list[10];
+				sleep(180);
+				for(int i = 9; i < 14 && animation == CRY; i++){
+					image = sprite_list[i];
+					sleep(180);
+				}
+				//Pleure indefiniment
+				while(animated && animation == CRY)
+					for(int i = 14; i < 17 && animation == CRY; i++){
+						image = sprite_list[i];
+						sleep(180);
+					}
+			}
 		}
 	}
 }

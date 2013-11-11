@@ -13,6 +13,15 @@ public class Stage {
 	protected LinkedList <Sprite> sprite_list = new LinkedList <Sprite>();
 	protected Sprite background;
 
+	public void sleep(int temps){
+		try{
+			Thread.sleep(temps);
+		}
+		catch(InterruptedException e){
+			e.printStackTrace();
+		}	
+	}
+	
 	/**
 	 * @return the liste_sprite
 	 */

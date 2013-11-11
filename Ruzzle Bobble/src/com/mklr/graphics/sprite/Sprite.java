@@ -13,6 +13,7 @@ public class Sprite{
 	protected Image[] sprite_list;//Le tableau des images du sprite
 	boolean animated;
 	int animation;
+	boolean inMove;
 
 	public Sprite(){
 		
@@ -61,6 +62,7 @@ public class Sprite{
 	}
 	
 	public void move(final int x, final int y, final int periode){
+		inMove = true;
 		new Thread(new Runnable(){
 			public void run(){
 				while(rect.x != x || rect.y != y){
@@ -70,16 +72,22 @@ public class Sprite{
 					if(rect.y > y) tempY--;
 					else if(rect.y < y)	tempY++;
 
+					sleep(periode);
 					rect = new Rectangle(tempX, tempY, (int)rect.getWidth(), (int)rect.getHeight());
-					try{
-						Thread.sleep(periode);
-					}
-					catch(InterruptedException e){
-						e.printStackTrace();
-					}
 				}
+				System.out.println("Fin du mouvement de " + this);
 			}
 		}).start();
+		inMove = false;
+	}
+	
+	public void sleep(int temps){
+		try{
+			Thread.sleep(temps);
+		}
+		catch(InterruptedException e){
+			e.printStackTrace();
+		}	
 	}
 	
    //////////////////////////////////////////////////////////////////
@@ -144,6 +152,12 @@ public class Sprite{
 	 */
 	public void setAnimation(int animation) {
 		this.animation = animation;
+	}
+	/**
+	 * @return the inMove
+	 */
+	public boolean isInMove() {
+		return inMove;
 	}
 	
 }
