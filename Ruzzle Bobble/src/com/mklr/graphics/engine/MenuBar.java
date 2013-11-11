@@ -48,6 +48,6 @@ public class MenuBar extends JMenuBar {
 	
 	public void run_game(){
 		iLancerPartie.setEnabled(false);
-		engine.run_game();
+		engine.setGameStage();
 	}
 }

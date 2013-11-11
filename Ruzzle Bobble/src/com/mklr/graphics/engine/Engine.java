@@ -28,13 +28,16 @@ public class Engine implements Runnable{
 
 	//Methode de chargement des sequences
 	public void setGameTitle(){
-		this.stage = new GameTitle();
+		this.stage = new GameTitle(this);
 		gamescreen.setStage(stage);
 	}
-	public void run_game(){
-		this.stage = new GameStage();
+	public void setGameStage(){
+		//Arret des Thread de GameTitle
+		this.stage.close();
+		
+		//Lancement de la phase de jeu
+		this.stage = new GameStage(this);
 		gamescreen.setStage(stage);
-		gamescreen.repaint();
 	}
 	
 	public void run(){

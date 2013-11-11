@@ -103,19 +103,8 @@ public class GameScreen extends JPanel implements MouseListener{
 	        		s = stage.getSpriteList().get(i);
 	        		//System.out.println("VOUS AVEZ CLIQUER SUR L OBJET DE REF" + stage.getSpriteList().get(i));
 	        		//System.out.println("Souris : X "+ e.getX() + "Y " + e.getY() + "\nBub : " + stage.getSpriteList().get(i).getRect().toString());
-	        		if(s instanceof Bub){
-	        			System.out.println("Bub !");
-	        		}
-	        		if(s instanceof InterfaceSprite){
-	        			if(((InterfaceSprite)s).getFunction() == 1){
-	        				System.out.println("Valider");
-	        			}
-	        			else if(((InterfaceSprite)s).getFunction() == 2){
-	        				System.out.println("Retour");
-	        			}
-	        		}
-	        		if(s instanceof LetterSprite){
-	        			
+	        		if(s instanceof Sprite){
+	        			s.onClick();
 	        		}
 	        	}
 	        }

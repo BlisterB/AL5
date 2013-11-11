@@ -2,6 +2,7 @@ package com.mklr.graphics.stage;
 
 import java.util.LinkedList;
 
+import com.mklr.graphics.engine.Engine;
 import com.mklr.graphics.sprite.Sprite;
 
 /**La sequence est l'objet definissant la sequence de jeu : ecran de titre, ecran de jeu etc.
@@ -10,9 +11,14 @@ import com.mklr.graphics.sprite.Sprite;
  *
  */
 public class Stage {
+	protected Engine engine;
 	protected LinkedList <Sprite> sprite_list = new LinkedList <Sprite>();
 	protected Sprite background;
-
+	
+	public Stage(Engine engine){
+		this.engine = engine;
+	}
+	
 	public void sleep(int temps){
 		try{
 			Thread.sleep(temps);
@@ -20,6 +26,14 @@ public class Stage {
 		catch(InterruptedException e){
 			e.printStackTrace();
 		}	
+	}
+	
+	public void interaction(int function){
+		
+	}
+	
+	public void close(){
+		
 	}
 	
 	/**
