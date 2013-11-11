@@ -40,6 +40,7 @@ public class Bub extends Sprite implements Runnable{
 	}
 	
 	public void animation(){
+		this.animated = true;
 		Thread t = new Thread(this);
 		t.start();
 	}

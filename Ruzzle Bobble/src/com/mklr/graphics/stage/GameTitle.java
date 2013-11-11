@@ -25,7 +25,7 @@ public class GameTitle extends Stage{
 		bub = new Bub(800, 150, Bub.FEAR);
 		bob = new Bob(850, 150, Bob.BUBBLE_LEFT);
 		
-		//Ajout des composants � la sprite_list
+		//Ajout des composants a la sprite_list
 		sprite_list.add(titleSprite);
 		sprite_list.add(jouerInterface);
 		sprite_list.add(bub);

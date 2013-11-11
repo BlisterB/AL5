@@ -13,7 +13,7 @@ public class GameStage extends Stage {
 		super(engine);
 		
 		//Background et interface
-		background = new Sprite(Launcher.PATH + "img/template.png");
+		background = new Sprite(Launcher.PATH + "img/background/game_title.png");
 		sprite_list.add(new InterfaceSprite(Launcher.PATH + "img/interface/valider.png", 50, 375, 275, 50, 1, this)); //Bouton Valider
 		sprite_list.add(new InterfaceSprite(Launcher.PATH + "img/interface/retour.png", 350, 375, 50, 50, 2, this)); //Bouton Valider
 		
