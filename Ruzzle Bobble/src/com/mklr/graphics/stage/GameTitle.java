@@ -1,10 +1,9 @@
 package com.mklr.graphics.stage;
 
-import java.awt.Rectangle;
-
 import com.mklr.graphics.engine.Launcher;
 import com.mklr.graphics.sprite.Bob;
 import com.mklr.graphics.sprite.Bub;
+import com.mklr.graphics.sprite.InterfaceSprite;
 import com.mklr.graphics.sprite.Sprite;
 
 /**Sequence correspondant a la phase d'ecran de titre**/
@@ -12,17 +11,20 @@ public class GameTitle extends Stage{
 	private Bub bub;
 	private Bob bob;
 	private Sprite titleSprite;
+	private InterfaceSprite jouerInterface;
 	private boolean animation;//Definie si on continue a bouger les elements a l'ecran ou non
 	
 	public GameTitle(){
 		//Initialisation des composants
 		this.background = new Sprite(Launcher.PATH + "img/background/game_title.png");
 		titleSprite = new Sprite(Launcher.PATH + "img/interface/title.png", 300, -150, 200, 150);
+		jouerInterface = new InterfaceSprite(Launcher.PATH + "img/interface/jouer.png", 200, 450, 400, 100, 1);
 		bub = new Bub(800, 150, Bub.FEAR);
 		bob = new Bob(850, 150, Bob.BUBBLE_LEFT);
 		
-		//Ajout des composants ˆ la sprite_list
+		//Ajout des composants ï¿½ la sprite_list
 		sprite_list.add(titleSprite);
+		sprite_list.add(jouerInterface);
 		sprite_list.add(bub);
 		sprite_list.add(bob);
 		
@@ -36,6 +38,7 @@ public class GameTitle extends Stage{
 			public void run(){
 				//Arrive de l'ecran et du bouton jouer
 				titleSprite.move(300, 0, 5);
+				jouerInterface.move(200, 325, 5);
 				
 				//Boucle du gag de Bub et Bob
 				while(animation){
