@@ -5,12 +5,14 @@ import java.text.Normalizer;
 import java.util.Locale;
 import java.util.Scanner;
 
+import com.mklr.graphics.engine.Launcher;
 import com.mklr.collection.Tree;
 
 public class Dictionnary implements Runnable {
     private final String dictionnaryPath;
     private Locale locale;
     private Tree<Character> dictionnaryTree;
+    private LetterSet letterSet;
 
     public Dictionnary() {
         this(Locale.ENGLISH);
@@ -68,7 +70,19 @@ public class Dictionnary implements Runnable {
         this.dictionnaryTree = dictionnaryTree;
     }
 
+    /**
+     * @return the letterSet
+     */
+    public LetterSet getLetterSet() {
+        return letterSet;
+    }
+
     public void init() {
+        createLetterSet();
+        createTree();
+    }
+
+    private void createTree() {
         try {
             File f = new File(dictionnaryPath);
             Scanner sc = new Scanner(f);
@@ -95,6 +109,74 @@ public class Dictionnary implements Runnable {
         }
         catch(Exception e) {
             e.printStackTrace();
+        }
+
+    }
+
+    private void createLetterSet() {
+        letterSet = new LetterSet(locale);
+        boolean success = true;
+    
+        if ((locale.getCountry()).equals(Locale.FRENCH)) {
+
+        } else {
+            try {
+                File f = new File(Launcher.PATH + "config/lang/enEN.set");
+                Scanner sc = new Scanner(f);
+
+                while (sc.hasNextLine()) {
+                    int value;
+                    double percentage;
+
+                    String line = sc.nextLine();
+                    System.out.println(line);
+                    line = line.trim().replace(" ", "");
+                    String splittedLine[] = line.split(":");
+
+                    if (line.equals(""))
+                        continue;
+
+                    if (splittedLine.length != 3
+                            && (splittedLine[0].length() > 1)) {
+                        System.err.println("Arg error" + line);
+                        success = false;
+                        break;
+                    }
+
+                    Character c = splittedLine[0].charAt(0);
+                    
+                    try {
+                        value = Integer.parseInt(splittedLine[1]);
+                        percentage = Double.parseDouble(splittedLine[2]);
+                    } catch(Exception e) {
+                        System.err.println("Arg error" + line);
+                        success = false;
+                        break;
+                    }
+
+                    Letter newOne = new Letter(c, value, percentage);
+                    if (letterSet.contains(newOne)) {
+                        System.err.println("Letter " + c + " already exist");
+                        success = false;
+                        break;
+                    }
+
+                    letterSet.add(newOne);
+                }
+
+                sc.close();
+            } catch (Exception e) {
+                success = false;
+                System.err.println("Le fichier de configuration de la langue "
+                        + "anglaise n'est pas disponible : "
+                        + e.getMessage());
+            } finally {
+                if (success == false) {
+                    letterSet = new LetterSet(locale);
+                    //TODO
+                    //DEFAULT VALUE IF CONFIG FILE DOESN'T EXIST
+                }
+            }
         }
     }
 
