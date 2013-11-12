@@ -173,8 +173,11 @@ public class Dictionnary implements Runnable {
             } finally {
                 if (success == false) {
                     letterSet = new LetterSet(locale);
-                    //TODO
-                    //DEFAULT VALUE IF CONFIG FILE DOESN'T EXIST
+                
+                    for(int i = 97; i < 123; i++) {
+                        letterSet.add(
+                                new Letter((char)i, 1, 100.0/26.0));
+                    }
                 }
             }
         }

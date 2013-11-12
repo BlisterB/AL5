@@ -129,7 +129,7 @@ public class Board {
         int cpt_letter_count_double = 2;
         int cpt_letter_count_triple = 1;
 
-        if (dico == null) {
+        if (dico != null) {
             //TODO temporary, change condition after
         }
         else {
@@ -137,7 +137,7 @@ public class Board {
                     + " with random letters...");
             for (int i = 0; i < board.length; i++) {
                 for (int j = 0; j < board[i].length; j++) {
-                    int random = r.nextInt(27) + 97;
+                    int random = r.nextInt(26) + 97;
      /*               System.out.println((char)random + " " + random);
                     System.out.println("found : " + dico.getLetterSet().getLetter((char)random));
                     board[i][j] = new Marble(

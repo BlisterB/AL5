@@ -5,14 +5,19 @@ import com.mklr.ruzzle.data.Letter;
 
 public class Marble {
     public static final byte NO_BONUS = 0;
-    public static final byte LETTER_COUNT_DOUBLE = 1;
-    public static final byte LETTER_COUNT_TRIPLE = 2;
-    public static final byte WORD_COUNT_DOUBLE = 4;
-    public static final byte WORD_COUNT_TRIPLE = 8;
+    public static final byte LETTER_COUNT_DOUBLE    = 1;
+    public static final byte LETTER_COUNT_TRIPLE    = 2;
+    public static final byte WORD_COUNT_DOUBLE      = 4;
+    public static final byte WORD_COUNT_TRIPLE      = 8;
     
+    public static final byte WHITE_STATE    = 0;
+    public static final byte GREY_STATE     = 1;
+    public static final byte BLACK_STATE    = 2;
+    
+
     private Letter letter;
-    private byte bonus; 
-    private boolean selected;
+    private byte bonus;
+    private byte state;
     private ArrayList<Marble> neighbours;
 
     public Marble() {
@@ -28,10 +33,10 @@ public class Marble {
     }
 
     public Marble(Letter letter, byte bonus, ArrayList<Marble> neighbours) {
-        this.letter = letter;
-        this.bonus = bonus;
+        this.letter     = letter;
+        this.bonus      = bonus;
+        this.state      = WHITE_STATE;
         this.neighbours = neighbours;
-        selected = false;
     }
 
     /**
@@ -63,17 +68,17 @@ public class Marble {
     }
 
     /**
-     * @return the selected
+     * @return the state
      */
-    public boolean isSelected() {
-        return selected;
+    public byte getState() {
+        return state;
     }
 
     /**
-     * @param selected the selected to set
+     * @param state the state to set
      */
-    public void setSelected(boolean selected) {
-        this.selected = selected;
+    public void setState(byte state) {
+        this.state = state;
     }
 
     /**
