@@ -2,6 +2,8 @@ package com.mklr.ruzzle.engine;
 
 import java.util.Locale;
 
+import java.util.Random;
+
 import com.mklr.ruzzle.data.Dictionnary;
 
 public class Board {
@@ -38,9 +40,9 @@ public class Board {
         this.locale = locale;
 
         board = new Marble[2 * row][];
-        for(int i = 0; i < row/2; i++) {
+        for(int i = 0; i <= row/2; i++) {
             board[i] = new Marble[(2 * row) + (2 * i) + 1];
-            board[row - i - 1] = new Marble[(2 * row) + (2 * i) + 1];
+            board[(2 * row) - i - 1] = new Marble[(2 * row) + (2 * i) + 1];
         }
 
         if (init)
@@ -117,14 +119,49 @@ public class Board {
         this.dico = dico;
     }
 
-    private void init() {
+    public void init() {
         // TODO
+        Random r = new Random();
         int cpt_star = 2;
         int cpt_word_count_double = 2;
         int cpt_word_count_triple = 1;
         int cpt_letter_count_double = 2;
         int cpt_letter_count_triple = 1;
 
+        if (dico == null) {
+            //TODO temporary, change condition after
+        }
+        else {
+            System.err.println("No dictionnary found... Board will be created"
+                    + " with random letters...");
+            for (int i = 0; i < board.length; i++) {
+                for (int j = 0; j < board[i].length; j++) {
+                    int random = r.nextInt(27) + 97;
+                    System.out.println((char)random + " " + random);
+                    System.out.println("found : " + dico.getLetterSet().getLetter((char)random));
+                    board[i][j] = new Marble(
+                        dico.getLetterSet()
+                        .getLetter((char)random));
 
+                    //TODO Gérer les bonus
+                    //TODO Gérer les voisins (trouver formules...)
+                }   
+            }
+        }
+    }
+
+    public String toString() {
+        String result = new String();
+
+        result += "\n";
+        for(Marble[] m1 : board) {
+            for (Marble m2 : m1) {
+                System.out.print(m2);
+            }
+            System.out.println();
+        }
+
+        result += "\n";
+        return result;
     }
 }

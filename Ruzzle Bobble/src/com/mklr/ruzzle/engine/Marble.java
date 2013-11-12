@@ -89,4 +89,9 @@ public class Marble {
     public void setNeighbours(ArrayList<Marble> neighbours) {
         this.neighbours = neighbours;
     }
+
+    public String toString() {
+        return "[" + letter.getLetter() + "] ";
+    }
+
 }
