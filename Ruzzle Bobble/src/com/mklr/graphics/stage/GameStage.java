@@ -2,16 +2,17 @@ package com.mklr.graphics.stage;
 
 import com.mklr.graphics.engine.Engine;
 import com.mklr.graphics.engine.Launcher;
+import com.mklr.graphics.sprite.Bob;
 import com.mklr.graphics.sprite.Bub;
 import com.mklr.graphics.sprite.InterfaceSprite;
 import com.mklr.graphics.sprite.LetterSprite;
 import com.mklr.graphics.sprite.Sprite;
-import com.mklr.ruzzle.data.Letter;
 import com.mklr.ruzzle.engine.Board;
 import com.mklr.ruzzle.engine.Marble;
 
 public class GameStage extends Stage {
 	private Bub bub = new Bub(550, 330, Bub.STANDING);
+	private Bob bob = new Bob(600, 330, Bob.STANDING);
 	private Board board;
 	
 	public GameStage(Engine engine, Board board){
@@ -37,9 +38,9 @@ public class GameStage extends Stage {
 		
 		//Personnages
 		sprite_list.add(bub);
+		sprite_list.add(bob);
 		bub.animation();
-		
-		//Lettres
+		bob.animation();
 	}
 	
 	public int getLetterY(int i, int j){
