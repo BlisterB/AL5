@@ -114,10 +114,6 @@ public class GameScreen extends JPanel implements MouseListener{
 	        }
         }
      }
-
-     void saySomething(String eventDescription, MouseEvent e) {
-         //System.out.println(eventDescription + " detected on " + e.getComponent().getClass().getName() + "." );
-     }
 	
 	   //////////////////////////////////////////////////////////////////
 	  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
