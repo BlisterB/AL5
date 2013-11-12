@@ -45,6 +45,10 @@ public class Bub extends Sprite implements Runnable{
 		t.start();
 	}
 	
+	public void onClick(){
+		System.out.println("Bub !");
+	}
+	
 	public void run(){
 		while(animated){
 			while(animated && animation == STANDING){
