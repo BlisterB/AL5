@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Random;
 
 import com.mklr.ruzzle.data.Dictionnary;
+import com.mklr.ruzzle.data.Letter;
 
 public class Board {
     public static final int WHITE = 0;
@@ -137,11 +138,15 @@ public class Board {
             for (int i = 0; i < board.length; i++) {
                 for (int j = 0; j < board[i].length; j++) {
                     int random = r.nextInt(27) + 97;
-                    System.out.println((char)random + " " + random);
+     /*               System.out.println((char)random + " " + random);
                     System.out.println("found : " + dico.getLetterSet().getLetter((char)random));
                     board[i][j] = new Marble(
                         dico.getLetterSet()
                         .getLetter((char)random));
+                    */
+
+                    board[i][j] = new Marble(
+                            new Letter((char)random, 1, 0.0));
 
                     //TODO Gérer les bonus
                     //TODO Gérer les voisins (trouver formules...)
