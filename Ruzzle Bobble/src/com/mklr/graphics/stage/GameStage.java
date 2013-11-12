@@ -30,9 +30,8 @@ public class GameStage extends Stage {
 		int k = 0;
 		for(int i = 0; i < tab.length; i++){
 			for(int j = 0; j < tab[i].length; j++){
-				System.out.println(Launcher.PATH + "img/fonts/" + tab[i][j].getLetter().getLetter().toString().toUpperCase()+".png");
-				letter_array[k++] = new LetterSprite(Launcher.PATH + "img/fonts/" + tab[i][j].getLetter().getLetter().toString().toUpperCase()+".png",
-						getLetterX(i,j), getLetterY(i,j), 40,40, tab[i][j].getLetter().getLetter(), tab[i][j]);
+				sprite_list.add(new LetterSprite(Launcher.PATH + "img/fonts/" + tab[i][j].getLetter().getLetter().toString().toUpperCase()+".png",
+						getLetterX(i,j), getLetterY(i,j), 40,40, tab[i][j].getLetter().getLetter(), tab[i][j]));
 			}
 		}
 		
@@ -43,25 +42,25 @@ public class GameStage extends Stage {
 		//Lettres
 	}
 	
-	public int getLetterX(int i, int j){
+	public int getLetterY(int i, int j){
 		switch(i){
 			case 0 :
-				if(j == 0 || j == 2 || j == 3)
+				if(j == 0 || j == 2 || j == 4)
 					return 60;
 				else
 					return 30;
 			case 1 :
-				if(j == 0 || j == 2 || j == 3 || j == 4)
+				if(j == 0 || j == 2 || j == 4|| j == 6)
 					return 140;
 				else
 					return 110;
 			case 2 :
-				if(j == 0 || j == 2 || j == 3 || j == 4)
+				if(j == 0 || j == 2 || j == 4 || j == 6)
 					return 192;
 				else
 					return 222;
 			case 3 :
-				if(j == 0 || j == 2 || j == 3)
+				if(j == 0 || j == 2 || j == 4)
 					return 272;
 				else
 					return 305;
@@ -70,7 +69,7 @@ public class GameStage extends Stage {
 		}
 	}
 	
-	public int getLetterY(int i, int j){
+	public int getLetterX(int i, int j){
 		if(i == 0 || i == 3){
 			switch(j){
 				case 0 :
@@ -101,6 +100,8 @@ public class GameStage extends Stage {
 					return 254;
 				case 5 :
 					return 304;
+				case 6 :
+					return 354;
 				default :
 					return 0;
 			}
