@@ -50,6 +50,7 @@ public class GameScreen extends JPanel implements MouseListener{
 			if(stage instanceof GameStage){
 				//Ligne - Colonne
 				//Ligne 1
+				/*
 				g.drawRect(104, 60, 40, 40);
 				g.drawRect(204, 60, 40, 40);
 				g.drawRect(304, 60, 40, 40);
@@ -77,6 +78,7 @@ public class GameScreen extends JPanel implements MouseListener{
 				g.drawRect(304, 272, 40, 40);
 				g.drawRect(154, 305, 40, 40);
 				g.drawRect(254, 305, 40, 40);
+				*/
 			}
 		}
 	}
@@ -113,10 +115,6 @@ public class GameScreen extends JPanel implements MouseListener{
 	        	}
 	        }
         }
-     }
-
-     void saySomething(String eventDescription, MouseEvent e) {
-         //System.out.println(eventDescription + " detected on " + e.getComponent().getClass().getName() + "." );
      }
 	
 	   //////////////////////////////////////////////////////////////////

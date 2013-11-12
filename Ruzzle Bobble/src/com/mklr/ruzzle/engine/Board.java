@@ -145,8 +145,7 @@ public class Board {
                         .getLetter((char)random));
                     */
 
-                    board[i][j] = new Marble(
-                            new Letter((char)random, 1, 0.0));
+                    board[i][j] = new Marble(new Letter((char)random, 1));
 
                     //TODO Gérer les bonus
                     //TODO Gérer les voisins (trouver formules...)

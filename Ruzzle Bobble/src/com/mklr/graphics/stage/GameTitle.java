@@ -47,18 +47,18 @@ public class GameTitle extends Stage{
 				while(animation){
 					//Aller
 					bub.setAnimation(Bub.FEAR);
-					bub.move(-100, 150, 8);
+					bub.move(-100, 150, 7);
 					bob.setAnimation(Bob.BUBBLE_LEFT);
-					bob.move(-150, 150, 8);
-					sleep(10000);
+					bob.move(-150, 150, 7);
+					sleep(9000);
 					
 					//Retour
 					if(animation){
 						bub.setAnimation(Bub.CRY);
-						bub.move(800, 150, 8);
+						bub.move(800, 150, 7);
 						bob.setAnimation(Bob.BUBBLE_RIGHT);
-						bob.move(850, 150, 8);
-						sleep(10000);
+						bob.move(850, 150, 7);
+						sleep(9000);
 					}
 				}
 			}

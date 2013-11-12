@@ -3,6 +3,7 @@ package com.mklr.graphics.engine;
 import com.mklr.graphics.stage.GameStage;
 import com.mklr.graphics.stage.GameTitle;
 import com.mklr.graphics.stage.Stage;
+import com.mklr.ruzzle.engine.Board;
 
 /**La classe Engine represente le moteur de jeu
  * C'est elle qui charge les sequences du jeu et commande le raffraichissement du GameScreen.
@@ -35,8 +36,14 @@ public class Engine implements Runnable{
 		//Arret des Thread de GameTitle
 		this.stage.close();
 		
+		//Creation du jeu PROVISOIRE
+		Board d = new Board();
+		d.init();
+		System.out.println(d);
+		
+		
 		//Lancement de la phase de jeu
-		this.stage = new GameStage(this);
+		this.stage = new GameStage(this, d);
 		gamescreen.setStage(stage);
 	}
 	
