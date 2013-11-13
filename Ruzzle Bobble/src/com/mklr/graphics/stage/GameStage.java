@@ -32,7 +32,10 @@ public class GameStage extends Stage {
 		for(int i = 0; i < tab.length; i++){
 			for(int j = 0; j < tab[i].length; j++){
 				letter_array[k] = new LetterSprite(Launcher.PATH + "img/fonts/" + tab[i][j].getLetter().getLetter().toString()+".png", getLetterX(i,j), getLetterY(i,j), 30,30, tab[i][j].getLetter().getLetter(), tab[i][j], this);
+
+				//Ajout de la lettre
 				sprite_list.add(letter_array[k]);
+				
 				//Ajout de la vignette Bonus
 				String bonus_path = "";
 				if(letter_array[k].getMarble().getBonus() == Marble.LETTER_COUNT_DOUBLE){
@@ -48,7 +51,7 @@ public class GameStage extends Stage {
 					bonus_path = Launcher.PATH + "img/interface/yellow_buble.png";
 				}
 				if(!(letter_array[k].getMarble().getBonus() == Marble.NO_BONUS)){
-					sprite_list.add(new Sprite(bonus_path, 30 + getLetterX(i,j), 30 + getLetterY(i,j), 25, 25));
+					sprite_list.add(new Sprite(bonus_path, 20 + getLetterX(i,j), getLetterY(i,j) - 10, 25, 25));
 				}
 				k++;
 			}
