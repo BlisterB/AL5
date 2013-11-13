@@ -2,14 +2,13 @@ package com.mklr.graphics.engine;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
-import com.mklr.graphics.sprite.Bub;
-import com.mklr.graphics.sprite.InterfaceSprite;
-import com.mklr.graphics.sprite.LetterSprite;
 import com.mklr.graphics.sprite.Sprite;
 import com.mklr.graphics.stage.GameStage;
 import com.mklr.graphics.stage.Stage;
@@ -19,7 +18,7 @@ import com.mklr.graphics.stage.Stage;
  * @author Mehdi
  *
  */
-public class GameScreen extends JPanel implements MouseListener{
+public class GameScreen extends JPanel implements MouseMotionListener, MouseListener {
 	private Stage stage;
 	
 	public GameScreen(){
@@ -28,6 +27,7 @@ public class GameScreen extends JPanel implements MouseListener{
 		this.setMaximumSize(new Dimension(800, 450));
 		this.setMinimumSize(new Dimension(800, 450));
 		addMouseListener(this);
+		addMouseMotionListener(this);
 	}
 	   //////////////////////////////////////////////////////////////////
 	  ////////////////////////////// METHODES //////////////////////////
@@ -84,20 +84,18 @@ public class GameScreen extends JPanel implements MouseListener{
 	}
 
     public void mousePressed(MouseEvent e) {
-        //saySomething("Mouse pressed; # of clicks: " + e.getClickCount(), e);
-     }
+    }
 
-     public void mouseReleased(MouseEvent e) {
-       //saySomething("Mouse released; # of clicks: " + e.getClickCount(), e);
-     }
+	public void mouseReleased(MouseEvent e) {
+	}
 
-     public void mouseEntered(MouseEvent e) {
-        //saySomething("Mouse entered", e);
-     }
-
-     public void mouseExited(MouseEvent e) {
-       // saySomething("Mouse exited", e);
-     }
+	public void mouseEntered(MouseEvent e) {
+	    //saySomething("Mouse entered", e);
+	}
+	
+	public void mouseExited(MouseEvent e) {
+	   // saySomething("Mouse exited", e);
+	}
 
      public void mouseClicked(MouseEvent e) {
         //saySomething("Mouse clicked (# of clicks: " + e.getClickCount() + ")", e);
@@ -116,7 +114,30 @@ public class GameScreen extends JPanel implements MouseListener{
 	        }
         }
      }
-	
+     
+ 	//Controle du mouvement de la souris
+     //Clic continue (avec mouvement) de la souris (ne concerne que le clic gauche)
+     public void mouseDragged(final MouseEvent e) {
+		new Thread(new Runnable(){
+			public void run(){
+		        if(stage.getSpriteList() != null){
+		        	Sprite s;
+			        for(int i = 0; i < stage.getSpriteList().size(); i++){
+			        	s = stage.getSpriteList().get(i);
+			        	if(s.isInCollision(e.getX(), e.getY())){
+			        		s = stage.getSpriteList().get(i);
+			        		if(s instanceof Sprite){
+			        			s.onMousePressedWay();
+			        		}
+			        	}
+			        }
+		        }
+			}
+		}).start();
+     }
+
+     public void mouseMoved(MouseEvent e) {
+     }
 	   //////////////////////////////////////////////////////////////////
 	  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
 	 //////////////////////////////////////////////////////////////////

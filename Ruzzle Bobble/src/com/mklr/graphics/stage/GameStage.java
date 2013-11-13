@@ -14,6 +14,7 @@ public class GameStage extends Stage {
 	private Bub bub = new Bub(550, 330, Bub.STANDING);
 	private Bob bob = new Bob(600, 330, Bob.STANDING);
 	private Board board;
+	private String currentWorld = "";
 	
 	public GameStage(Engine engine, Board board){
 		super(engine);
@@ -32,7 +33,7 @@ public class GameStage extends Stage {
 		for(int i = 0; i < tab.length; i++){
 			for(int j = 0; j < tab[i].length; j++){
 				sprite_list.add(new LetterSprite(Launcher.PATH + "img/fonts/" + tab[i][j].getLetter().getLetter().toString()+".png",
-						getLetterX(i,j), getLetterY(i,j), 30,30, tab[i][j].getLetter().getLetter(), tab[i][j]));
+						getLetterX(i,j), getLetterY(i,j), 30,30, tab[i][j].getLetter().getLetter(), tab[i][j], this));
 			}
 		}
 		
@@ -42,7 +43,9 @@ public class GameStage extends Stage {
 		bub.animation();
 		bob.animation();
 	}
-	
+	   //////////////////////////////////////////////////////////////////
+	  ////////////////////////////// METHODES //////////////////////////
+	 //////////////////////////////////////////////////////////////////	
 	public int getLetterY(int i, int j){
 		switch(i){
 			case 0 :
@@ -108,4 +111,12 @@ public class GameStage extends Stage {
 			}
 		}
 	}
+	
+	public void addToCurrentWord(char letter){
+		currentWorld = currentWorld + letter;
+	}
+	   //////////////////////////////////////////////////////////////////
+	  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
+	 //////////////////////////////////////////////////////////////////
+	
 }
