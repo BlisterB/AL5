@@ -11,7 +11,6 @@ import com.mklr.ruzzle.data.Letter;
 
 public class Board {
     private int row;
-    private int state;
     private int score;
     private Marble[][] board;
     private Locale locale;
@@ -36,7 +35,6 @@ public class Board {
     public Board(int row, Locale locale, Dictionnary dico, boolean init) {
         this.row = row;
         this.dico = dico;
-        state = WHITE;
         score = 0;
         this.locale = locale;
 
@@ -173,9 +171,9 @@ public class Board {
         board[1][2].setBonus(Marble.LETTER_COUNT_TRIPLE);
         board[3][2].setBonus(Marble.WORD_COUNT_DOUBLE);
         board[2][1].setBonus(Marble.WORD_COUNT_TRIPLE);
-
+/*
         addNeighbours();
-        System.out.println("BOARD DONE IN " + ((new Date().getTime()) - beg) + "s.");
+        System.out.println("BOARD DONE IN " + ((new Date().getTime()) - beg) + "s.");*/
     }
 
     private void addNeighbours() {
@@ -189,12 +187,17 @@ public class Board {
                             : ((j&1) == 0 ? i+1 : i-1));
 
                 for (int k = i-1; k < i+2; k++) {
-                    if (k < 0 || k > (2 * row))
+                    if (k < 0 || k >= board.length)
                         continue;
 
                     System.out.println("FOR board["+i+"]["+j+"]");
                     for (int cpt = j-2; cpt < j+3; cpt++) {
-                       
+                        if (cpt < 0 
+                                || cpt >= board[k].length 
+                                || (k == i && cpt == j)
+                                || !toAdd(k == ligneATrois, k, cpt, i, j))
+                            continue;
+/*
                         if ( ((k == ligneATrois)
                                 && ((i < (row-1) && cpt < j || cpt > (j+2))
                                     || ((i == row-1 && cpt < j-1 || cpt > j+1))
@@ -203,7 +206,7 @@ public class Board {
                                 || (cpt >= board[i].length)
                                 || (k == i && cpt == j))
                             continue;
-
+*/
                         System.out.println("\tadd board["+k+"]["+cpt+"] ~~"
                                 + " i: " + i 
                                 + " l: " + (board[i].length - 1));
@@ -213,6 +216,16 @@ public class Board {
 
                 board[i][j].setNeighbours(neighbours);
             }
+        }
+    }
+
+    private boolean toAdd(boolean tline, int line, int cpt, int i, int j) {
+        System.out.println("\ttline : " + tline + "\ti : " + i + "\tj : " + j
+                +"\tcpt : " + cpt);
+        if (tline) {
+            return cpt >= (j-i-1) && cpt <= (j+1-i);
+        } else {
+            return cpt >= (j-1-i) && cpt <= (j+3-i);
         }
     }
 
