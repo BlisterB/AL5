@@ -1,6 +1,9 @@
 package com.mklr.ruzzle.engine;
 
 import java.util.ArrayList;
+
+import java.util.Arrays;
+
 import com.mklr.ruzzle.data.Letter;
 
 public class Marble {
@@ -18,7 +21,7 @@ public class Marble {
     private Letter letter;
     private byte bonus;
     private byte state;
-    private ArrayList<Marble> neighbours;
+    private ArrayList<Integer[]> neighbours;
 
     public Marble() {
         this(null, NO_BONUS);
@@ -29,10 +32,10 @@ public class Marble {
     }
 
     public Marble(Letter letter, byte bonus) {
-        this(letter, bonus, new ArrayList<Marble>());
+        this(letter, bonus, new ArrayList<Integer[]>());
     }
 
-    public Marble(Letter letter, byte bonus, ArrayList<Marble> neighbours) {
+    public Marble(Letter letter, byte bonus, ArrayList<Integer[]> neighbours) {
         this.letter     = letter;
         this.bonus      = bonus;
         this.state      = WHITE_STATE;
@@ -84,16 +87,27 @@ public class Marble {
     /**
      * @return the neighbours
      */
-    public ArrayList<Marble> getNeighbours() {
+    public ArrayList<Integer[]> getNeighbours() {
         return neighbours;
     }
 
     /**
      * @param neighbours the neighbours to set
      */
-    public void setNeighbours(ArrayList<Marble> neighbours) {
+    public void setNeighbours(ArrayList<Integer[]> neighbours) {
         this.neighbours = neighbours;
     }
+
+    public boolean isNeighbour(Integer[] place) {
+        for (Integer[] i : neighbours) {
+            if (Arrays.equals(place, i)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     public String toString() {
         return "[" + letter.getLetter() + "] ";
