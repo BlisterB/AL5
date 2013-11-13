@@ -21,7 +21,7 @@ public class GameTitle extends Stage{
 		//Initialisation des composants
 		this.background = new Sprite(Launcher.PATH + "img/background/game_title.png");
 		titleSprite = new Sprite(Launcher.PATH + "img/interface/title.png", 300, -150, 200, 150);
-		jouerInterface = new InterfaceSprite(Launcher.PATH + "img/interface/jouer.png", 200, 450, 400, 100, 1, this);
+		jouerInterface = new InterfaceSprite(Launcher.PATH + "img/interface/jouer.png", 200, 450, 400, 100, Stage.VALIDATE, this);
 		bub = new Bub(800, 150, Bub.FEAR);
 		bob = new Bob(850, 150, Bob.BUBBLE_LEFT);
 		

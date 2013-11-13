@@ -75,7 +75,6 @@ public class Sprite{
 					sleep(periode);
 					rect = new Rectangle(tempX, tempY, (int)rect.getWidth(), (int)rect.getHeight());
 				}
-				System.out.println("Fin du mouvement de " + this);
 			}
 		}).start();
 		inMove = false;
