@@ -46,40 +46,6 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
 					g.drawImage(sprite.getImage(), sprite.getRect().x, sprite.getRect().y, this);
 				}
 			}
-			//Agencement des lettres
-			if(stage instanceof GameStage){
-				//Ligne - Colonne
-				//Ligne 1
-				/*
-				g.drawRect(104, 60, 40, 40);
-				g.drawRect(204, 60, 40, 40);
-				g.drawRect(304, 60, 40, 40);
-				g.drawRect(154, 30, 40, 40);
-				g.drawRect(254, 30, 40, 40);
-				//Ligne 2
-				g.drawRect(104, 110, 40, 40);
-				g.drawRect(204, 110, 40, 40);
-				g.drawRect(304, 110, 40, 40);
-				g.drawRect(54, 140, 40, 40);
-				g.drawRect(154, 140, 40, 40);
-				g.drawRect(254, 140, 40, 40);
-				g.drawRect(354, 140, 40, 40);
-				//Ligne 3
-				g.drawRect(104, 222, 40, 40);
-				g.drawRect(204, 222, 40, 40);
-				g.drawRect(304, 222, 40, 40);
-				g.drawRect(54, 192, 40, 40);
-				g.drawRect(154, 192, 40, 40);
-				g.drawRect(254, 192, 40, 40);
-				g.drawRect(354, 192, 40, 40);
-				//Ligne 4
-				g.drawRect(104, 272, 40, 40);
-				g.drawRect(204, 272, 40, 40);
-				g.drawRect(304, 272, 40, 40);
-				g.drawRect(154, 305, 40, 40);
-				g.drawRect(254, 305, 40, 40);
-				*/
-			}
 		}
 	}
 
@@ -87,6 +53,11 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
     }
 
 	public void mouseReleased(MouseEvent e) {
+		if(stage instanceof GameStage){
+			System.out.println(((GameStage) stage).getCurrentWorld());
+			((GameStage) stage).setCurrentWorld("");
+			((GameStage) stage).flushSelectedLetter();
+		}
 	}
 
 	public void mouseEntered(MouseEvent e) {
@@ -118,7 +89,7 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
  	//Controle du mouvement de la souris
      //Clic continue (avec mouvement) de la souris (ne concerne que le clic gauche)
      public void mouseDragged(final MouseEvent e) {
-		new Thread(new Runnable(){
+    	 new Thread(new Runnable(){
 			public void run(){
 		        if(stage.getSpriteList() != null){
 		        	Sprite s;

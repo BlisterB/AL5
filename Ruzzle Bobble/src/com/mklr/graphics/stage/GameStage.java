@@ -15,6 +15,7 @@ public class GameStage extends Stage {
 	private Bob bob = new Bob(600, 330, Bob.STANDING);
 	private Board board;
 	private String currentWorld = "";
+	private LetterSprite[] letter_array = new LetterSprite[24];
 	
 	public GameStage(Engine engine, Board board){
 		super(engine);
@@ -22,18 +23,34 @@ public class GameStage extends Stage {
 		
 		//Background et interface
 		background = new Sprite(Launcher.PATH + "img/background/game_stage.png");
-		sprite_list.add(new InterfaceSprite(Launcher.PATH + "img/interface/valider.png", 50, 375, 275, 50, 1, this)); //Bouton Valider
-		sprite_list.add(new InterfaceSprite(Launcher.PATH + "img/interface/retour.png", 350, 375, 50, 50, 2, this)); //Bouton Valider
+		sprite_list.add(new InterfaceSprite(Launcher.PATH + "img/interface/afficher_les_mots.png", 50, 375, 275, 50, 1, this)); //Bouton Valider
 		sprite_list.add(new Sprite(Launcher.PATH + "img/interface/interface_game.png", 0, 0, 0, 0));
 		
 		//Chargement des lettres
-		LetterSprite[] letter_array = new LetterSprite[24];
 		Marble[][] tab = board.getBoard();
 		int k = 0;
 		for(int i = 0; i < tab.length; i++){
 			for(int j = 0; j < tab[i].length; j++){
-				sprite_list.add(new LetterSprite(Launcher.PATH + "img/fonts/" + tab[i][j].getLetter().getLetter().toString()+".png",
-						getLetterX(i,j), getLetterY(i,j), 30,30, tab[i][j].getLetter().getLetter(), tab[i][j], this));
+				letter_array[k] = new LetterSprite(Launcher.PATH + "img/fonts/" + tab[i][j].getLetter().getLetter().toString()+".png", getLetterX(i,j), getLetterY(i,j), 30,30, tab[i][j].getLetter().getLetter(), tab[i][j], this);
+				sprite_list.add(letter_array[k]);
+				//Ajout de la vignette Bonus
+				String bonus_path = "";
+				if(letter_array[k].getMarble().getBonus() == Marble.LETTER_COUNT_DOUBLE){
+					bonus_path = Launcher.PATH + "img/interface/green_buble.png";
+				}
+				else if(letter_array[k].getMarble().getBonus() == Marble.LETTER_COUNT_TRIPLE){
+					bonus_path = Launcher.PATH + "img/interface/blue_buble.png";
+				}
+				else if(letter_array[k].getMarble().getBonus() == Marble.WORD_COUNT_DOUBLE){
+					bonus_path = Launcher.PATH + "img/interface/red_buble.png";
+				}
+				else if(letter_array[k].getMarble().getBonus() == Marble.WORD_COUNT_TRIPLE){
+					bonus_path = Launcher.PATH + "img/interface/yellow_buble.png";
+				}
+				if(!(letter_array[k].getMarble().getBonus() == Marble.NO_BONUS)){
+					sprite_list.add(new Sprite(bonus_path, 30 + getLetterX(i,j), 30 + getLetterY(i,j), 25, 25));
+				}
+				k++;
 			}
 		}
 		
@@ -115,8 +132,39 @@ public class GameStage extends Stage {
 	public void addToCurrentWord(char letter){
 		currentWorld = currentWorld + letter;
 	}
+	
+	public void flushSelectedLetter(){
+        for(int i = 0; i < letter_array.length; i++){
+        	letter_array[i].setSelected(false);
+        }
+
+	}
 	   //////////////////////////////////////////////////////////////////
 	  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
 	 //////////////////////////////////////////////////////////////////
+	/**
+	 * @return the currentWorld
+	 */
+	public String getCurrentWorld() {
+		return currentWorld;
+	}
+	/**
+	 * @param currentWorld the currentWorld to set
+	 */
+	public void setCurrentWorld(String currentWorld) {
+		this.currentWorld = currentWorld;
+	}
+	/**
+	 * @return the letter_array
+	 */
+	public LetterSprite[] getLetter_array() {
+		return letter_array;
+	}
+	/**
+	 * @param letter_array the letter_array to set
+	 */
+	public void setLetter_array(LetterSprite[] letter_array) {
+		this.letter_array = letter_array;
+	}
 	
 }

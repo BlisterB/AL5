@@ -23,6 +23,10 @@ public class LetterSprite extends Sprite {
 			gamestage.addToCurrentWord(letter);
 		}
 	}
+
+	   //////////////////////////////////////////////////////////////////
+	  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
+	 //////////////////////////////////////////////////////////////////
 	
 	public boolean isSelected(){
 		return selected;
@@ -30,4 +34,33 @@ public class LetterSprite extends Sprite {
 	public char getLetter(){
 		return letter;
 	}
+
+	/**
+	 * @param selected the selected to set
+	 */
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
+	/**
+	 * @return the marble
+	 */
+	public Marble getMarble() {
+		return marble;
+	}
+
+	/**
+	 * @param marble the marble to set
+	 */
+	public void setMarble(Marble marble) {
+		this.marble = marble;
+	}
+
+	/**
+	 * @param letter the letter to set
+	 */
+	public void setLetter(char letter) {
+		this.letter = letter;
+	}
+	
 }
