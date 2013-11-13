@@ -10,12 +10,9 @@ import com.mklr.ruzzle.data.Dictionnary;
 import com.mklr.ruzzle.data.Letter;
 
 public class Board {
-    public static final int WHITE = 0;
-    public static final int GREY  = 1;
-    public static final int BLACK = 2;
-
     private int row;
     private int state;
+    private int score;
     private Marble[][] board;
     private Locale locale;
     private Dictionnary dico;
@@ -40,6 +37,7 @@ public class Board {
         this.row = row;
         this.dico = dico;
         state = WHITE;
+        score = 0;
         this.locale = locale;
 
         board = new Marble[2 * row][];
@@ -78,6 +76,20 @@ public class Board {
      */
     public void setState(int state) {
         this.state = state;
+    }
+
+    /**
+     * @return the score
+     */
+    public int getScore() {
+        return score;
+    }
+
+    /**
+     * @param score the score to set
+     */
+    public void setScore(int score) {
+        this.score = score;
     }
 
     /**
@@ -157,15 +169,13 @@ public class Board {
             }
         }
 
-        //TEMP BONUS
         board[0][1].setBonus(Marble.LETTER_COUNT_DOUBLE);
         board[1][2].setBonus(Marble.LETTER_COUNT_TRIPLE);
         board[3][2].setBonus(Marble.WORD_COUNT_DOUBLE);
         board[2][1].setBonus(Marble.WORD_COUNT_TRIPLE);
 
-/*
         addNeighbours();
-        System.out.println("BOARD DONE IN " + ((new Date().getTime()) - beg) + "s."); */
+        System.out.println("BOARD DONE IN " + ((new Date().getTime()) - beg) + "s.");
     }
 
     private void addNeighbours() {
@@ -183,11 +193,14 @@ public class Board {
                         continue;
 
                     System.out.println("FOR board["+i+"]["+j+"]");
-                    for (int cpt = j-2; cpt < j+4; cpt++) {
-                        
-                        if (    (k == ligneATrois && (cpt < (j-1) || cpt > (j+1)))
-                                || (cpt < 0 
-                                || cpt > board[i].length)
+                    for (int cpt = j-2; cpt < j+3; cpt++) {
+                       
+                        if ( ((k == ligneATrois)
+                                && ((i < (row-1) && cpt < j || cpt > (j+2))
+                                    || ((i == row-1 && cpt < j-1 || cpt > j+1))
+                                    || ((i >= row && cpt < j-2 || cpt > j))))
+                                || (cpt < 0)
+                                || (cpt >= board[i].length)
                                 || (k == i && cpt == j))
                             continue;
 
