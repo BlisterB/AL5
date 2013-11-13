@@ -16,7 +16,7 @@ public class TestDictionnary {
     public static void main(String[] args) {
         long beg = new Date().getTime();
 /*
-        Dictionnary d = new Dictionnary();
+        RuzzleDictionary d = new RuzzleDictionary();
         Thread t = new Thread(d);
         t.start();
         while (t.isAlive());

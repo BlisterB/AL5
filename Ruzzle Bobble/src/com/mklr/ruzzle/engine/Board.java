@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
-import com.mklr.ruzzle.data.Dictionnary;
+import com.mklr.ruzzle.data.RuzzleDictionary;
 import com.mklr.ruzzle.data.Letter;
 
 public class Board {
@@ -14,7 +14,7 @@ public class Board {
     private int score;
     private Marble[][] board;
     private Locale locale;
-    private Dictionnary dico;
+    private RuzzleDictionary dico;
 
     public Board() {
         this(2);
@@ -28,11 +28,11 @@ public class Board {
         this(row, locale, null);
     }
     
-    public Board(int row, Locale locale, Dictionnary dico) {
+    public Board(int row, Locale locale, RuzzleDictionary dico) {
         this(row, locale, dico, false);
     }
 
-    public Board(int row, Locale locale, Dictionnary dico, boolean init) {
+    public Board(int row, Locale locale, RuzzleDictionary dico, boolean init) {
         this.row = row;
         this.dico = dico;
         score = 0;
@@ -107,14 +107,14 @@ public class Board {
     /**
      * @return the dico
      */
-    public Dictionnary getDico() {
+    public RuzzleDictionary getDico() {
         return dico;
     }
 
     /**
      * @param dico the dico to set
      */
-    public void setDico(Dictionnary dico) {
+    public void setDico(RuzzleDictionary dico) {
         this.dico = dico;
     }
 
@@ -133,7 +133,7 @@ public class Board {
             //TODO temporary, change condition after
         }
         else {
-            System.err.println("No dictionnary found... Board will be created"
+            System.err.println("No Dictionary found... Board will be created"
                     + " with random letters...");
             for (int i = 0; i < board.length; i++) {
                 for (int j = 0; j < board[i].length; j++) {
