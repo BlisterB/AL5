@@ -2,6 +2,7 @@ package com.mklr.graphics.stage;
 
 import com.mklr.graphics.engine.Engine;
 import com.mklr.graphics.engine.Launcher;
+import com.mklr.graphics.engine.MusicPlayer;
 import com.mklr.graphics.sprite.Bob;
 import com.mklr.graphics.sprite.Bub;
 import com.mklr.graphics.sprite.InterfaceSprite;
@@ -17,6 +18,7 @@ public class GameTitle extends Stage{
 	
 	public GameTitle(Engine engine){
 		super(engine);
+		MusicPlayer.playMusic("music/puzzle_bobble.wav");
 		
 		//Initialisation des composants
 		this.background = new Sprite(Launcher.PATH + "img/background/game_title.png");
