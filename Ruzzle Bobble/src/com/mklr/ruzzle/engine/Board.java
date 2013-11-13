@@ -1,7 +1,9 @@
 package com.mklr.ruzzle.engine;
 
-import java.util.Locale;
+import java.util.ArrayList;
 
+import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 import com.mklr.ruzzle.data.Dictionnary;
@@ -129,6 +131,8 @@ public class Board {
         int cpt_letter_count_double = 2;
         int cpt_letter_count_triple = 1;
 
+        long beg = (new Date().getTime());
+
         if (dico != null) {
             //TODO temporary, change condition after
         }
@@ -150,6 +154,51 @@ public class Board {
                     //TODO Gérer les bonus
                     //TODO Gérer les voisins (trouver formules...)
                 }   
+            }
+        }
+
+        //TEMP BONUS
+        board[0][1].setBonus(Marble.LETTER_COUNT_DOUBLE);
+        board[1][2].setBonus(Marble.LETTER_COUNT_TRIPLE);
+        board[3][2].setBonus(Marble.WORD_COUNT_DOUBLE);
+        board[2][1].setBonus(Marble.WORD_COUNT_TRIPLE);
+
+/*
+        addNeighbours();
+        System.out.println("BOARD DONE IN " + ((new Date().getTime()) - beg) + "s."); */
+    }
+
+    private void addNeighbours() {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                ArrayList<Marble> neighbours = new ArrayList<Marble>(6);
+
+                int ligneATrois = 
+                        ((i < row) 
+                            ? ((j&1) == 0 ? i-1 : i+1)
+                            : ((j&1) == 0 ? i+1 : i-1));
+
+                for (int k = i-1; k < i+2; k++) {
+                    if (k < 0 || k > (2 * row))
+                        continue;
+
+                    System.out.println("FOR board["+i+"]["+j+"]");
+                    for (int cpt = j-2; cpt < j+4; cpt++) {
+                        
+                        if (    (k == ligneATrois && (cpt < (j-1) || cpt > (j+1)))
+                                || (cpt < 0 
+                                || cpt > board[i].length)
+                                || (k == i && cpt == j))
+                            continue;
+
+                        System.out.println("\tadd board["+k+"]["+cpt+"] ~~"
+                                + " i: " + i 
+                                + " l: " + (board[i].length - 1));
+                        neighbours.add(board[k][cpt]);
+                    }
+                }
+
+                board[i][j].setNeighbours(neighbours);
             }
         }
     }

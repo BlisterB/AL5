@@ -1,6 +1,8 @@
 package com.mklr.ruzzle.data;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.text.Normalizer;
 import java.util.Locale;
 import java.util.Scanner;
@@ -84,16 +86,16 @@ public class Dictionnary implements Runnable {
 
     private void createTree() {
         try {
-            File f = new File(dictionnaryPath);
-            Scanner sc = new Scanner(f);
-
-            while (sc.hasNextLine()) {
+            FileReader fr = new FileReader(dictionnaryPath);
+            BufferedReader br = new BufferedReader(fr);
+            
+            String line = br.readLine();
+            while (line != null) {
                 Tree<Character> cur_pos = dictionnaryTree;
-                String line = sc.nextLine();
                 int length = line.length();
 
                 line = normalizeWord(line);
-                for (int i = 0; i <length; i++) {
+                for (int i = 0; i < length; i++) {
                     Character c = line.charAt(i);
 
                     if (!cur_pos.childExist(c))
@@ -103,14 +105,14 @@ public class Dictionnary implements Runnable {
                 }
                 
                 cur_pos.setStatus(Tree.TERMINAL);
-            }
 
-            sc.close();
-        }
-        catch(Exception e) {
+                line = br.readLine();
+            }
+            fr.close();
+            br.close();
+        } catch(Exception e) {
             e.printStackTrace();
         }
-
     }
 
     private void createLetterSet() {
@@ -121,15 +123,15 @@ public class Dictionnary implements Runnable {
 
         } else {
             try {
-                File f = new File(Launcher.PATH + "config/lang/enEN.set");
-                Scanner sc = new Scanner(f);
+                FileReader fr = 
+                    new FileReader(Launcher.PATH + "config/lang/enEN.set");
+                BufferedReader br = new BufferedReader(fr);
 
-                while (sc.hasNextLine()) {
+                String line = br.readLine();
+                while (line != null) {
                     int value;
                     double percentage;
 
-                    String line = sc.nextLine();
-                    System.out.println(line);
                     line = line.trim().replace(" ", "");
                     String splittedLine[] = line.split(":");
 
@@ -162,9 +164,12 @@ public class Dictionnary implements Runnable {
                     }
 
                     letterSet.add(newOne);
+
+                    line = br.readLine();
                 }
 
-                sc.close();
+                fr.close();
+                br.close();
             } catch (Exception e) {
                 success = false;
                 System.err.println("Le fichier de configuration de la langue "
