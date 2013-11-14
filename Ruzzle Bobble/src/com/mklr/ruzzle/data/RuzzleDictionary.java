@@ -10,25 +10,25 @@ import java.util.Scanner;
 import com.mklr.graphics.engine.Launcher;
 import com.mklr.collection.Tree;
 
-public class Dictionnary implements Runnable {
+public class RuzzleDictionary implements Runnable {
     private final String dictionnaryPath;
     private Locale locale;
     private Tree<Character> dictionnaryTree;
     private LetterSet letterSet;
 
-    public Dictionnary() {
+    public RuzzleDictionary() {
         this(Locale.ENGLISH);
     }
 
-    public Dictionnary(Locale locale) {
+    public RuzzleDictionary(Locale locale) {
         this(Locale.ENGLISH, "/usr/share/dict/words");
     }
 
-    public Dictionnary(Locale locale, String dictionnaryPath) {
+    public RuzzleDictionary(Locale locale, String dictionnaryPath) {
         this(Locale.ENGLISH, dictionnaryPath, false);
     }
 
-    public Dictionnary(Locale locale, String dictionnaryPath, boolean init) {
+    public RuzzleDictionary(Locale locale, String dictionnaryPath, boolean init) {
         this.locale = locale;
         this.dictionnaryPath = dictionnaryPath;
         dictionnaryTree = new Tree<Character>();
