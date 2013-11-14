@@ -14,9 +14,9 @@ public class Stage {
 	protected Engine engine;
 	protected LinkedList <Sprite> sprite_list = new LinkedList <Sprite>();
 	protected Sprite background;
-	public static int VALIDATE = 1;
-	public static int CANCEL = 2;
-	public static int TIMMER_END = 2;
+	public static final int VALIDATE = 1;
+	public static final int CANCEL = 2;
+	public static final int TIMMER_END = 2;
 	
 	public Stage(Engine engine){
 		this.engine = engine;

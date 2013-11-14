@@ -18,7 +18,7 @@ public class GameTitle extends Stage{
 	
 	public GameTitle(Engine engine){
 		super(engine);
-		MusicPlayer.playMusic("music/puzzle_bobble.wav");
+		//MusicPlayer.playMusic("music/title.mid");
 		
 		//Initialisation des composants
 		this.background = new Sprite(Launcher.PATH + "img/background/game_title.png");

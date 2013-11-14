@@ -14,8 +14,8 @@ public class Engine implements Runnable{
 	private GameScreen gamescreen;
 	private Stage stage;
 	
-	public Engine(GameScreen gamescreen){
-		this.gamescreen = gamescreen;
+	public Engine(){
+		this.gamescreen = new GameScreen();
 		
 		//On cree lance le thread de raffraichissement de l'ecran
 		Thread t = new Thread(this);
@@ -72,12 +72,27 @@ public class Engine implements Runnable{
 	public Stage getStage() {
 		return stage;
 	}
-
-
 	/**
 	 * @param sequence the sequence to set
 	 */
 	public void setSequence(Stage stage) {
 		this.stage = stage;
 	}
+
+
+	/**
+	 * @return the gamescreen
+	 */
+	public GameScreen getGamescreen() {
+		return gamescreen;
+	}
+
+
+	/**
+	 * @param gamescreen the gamescreen to set
+	 */
+	public void setGamescreen(GameScreen gamescreen) {
+		this.gamescreen = gamescreen;
+	}
+	
 }
