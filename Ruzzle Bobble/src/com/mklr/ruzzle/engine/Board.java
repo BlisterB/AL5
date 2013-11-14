@@ -149,7 +149,7 @@ public class Board {
 
                     //TODO Gérer les bonus
                     //TODO Gérer les voisins (trouver formules...)
- //                   addNeighbours(i, j);
+                    addNeighbours(i, j);
                 }   
             }
         }
@@ -159,7 +159,7 @@ public class Board {
         board[1][2].setBonus(Marble.LETTER_COUNT_TRIPLE);
         board[3][2].setBonus(Marble.WORD_COUNT_DOUBLE);
         board[2][1].setBonus(Marble.WORD_COUNT_TRIPLE);
-        addNeighbours();
+//        addNeighbours();
         System.out.println("BOARD DONE IN " + ((new Date().getTime()) - beg) + "s.");
     }
 
@@ -174,8 +174,9 @@ public class Board {
             if (currentLine < 0 || currentLine >= board.length)
                 continue;
 
-            for (int currentMarble = j-2; 
-                    currentMarble < j+3; currentMarble++) {
+            System.out.println("ADD FOR board["+i+"]["+j+"] :");
+            for (int currentMarble = j-(2*row); 
+                    currentMarble <= j+(2*row); currentMarble++) {
                 if (currentMarble < 0 
                         || currentMarble >= board[currentLine].length
                         || (currentLine == i && currentMarble == j)
@@ -186,47 +187,16 @@ public class Board {
                     continue;
                 }
 
+                        System.out.println("\tadd board["+currentLine+"]["+currentMarble+"] ~~"
+                                + " i: " + i 
+                                + " l: " + (board[i].length - 1));
                 newNeighbours.add(new Integer[]{currentLine, currentMarble});
             }
         }
 
         board[i][j].setNeighbours(newNeighbours);
     }
-
-    private void addNeighbours() {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                ArrayList<Integer[]> neighbours = new ArrayList<Integer[]>(6);
-
-                int ligneATrois = 
-                        ((i < row) 
-                            ? ((j&1) == 0 ? i-1 : i+1)
-                            : ((j&1) == 0 ? i+1 : i-1));
-
-                for (int k = i-1; k < i+2; k++) {
-                    if (k < 0 || k >= board.length)
-                        continue;
-
-                    System.out.println("FOR board["+i+"]["+j+"]");
-                    for (int cpt = j-2; cpt < j+3; cpt++) {
-                        if (cpt < 0 
-                                || cpt >= board[k].length 
-                                || (k == i && cpt == j)
-                                || !toAdd(k == ligneATrois, k, cpt, i, j))
-                            continue;
-                        
-                        System.out.println("\tadd board["+k+"]["+cpt+"] ~~"
-                                + " i: " + i 
-                                + " l: " + (board[i].length - 1));
-                        neighbours.add(new Integer[]{k, cpt});
-                    }
-                }
-
-                board[i][j].setNeighbours(neighbours);
-            }
-        }
-    }
-
+    
     private boolean toAdd(boolean tline, int line, int cpt, int i, int j) {
         System.out.println("\ttline : " + tline + "\ti : " + i + "\tj : " + j
                 +"\tcpt : " + cpt + "\tline : " + line);
@@ -239,8 +209,18 @@ public class Board {
                 return cpt >= (j-i) && cpt <= (j+2-i);
             }
         } else {
-            System.out.println("\t\tNOT tline so ELSE");
-            return cpt >= (j-2) && cpt <= (j+2);
+            if (line == i) {
+                System.out.println("\t\tNOT tline AND line == i");
+                return cpt >= (j-2) && cpt <= (j+2);
+            } else {
+                if (line == i-1) {
+                    System.out.println("\t\tNOT tline AND NOT line == i-1");
+                    return cpt >= (j-4+i) && cpt <= (j+i);
+                } else {
+                    System.out.println("\t\tNOT tline AND NOT line == i+1");
+                    return cpt >= (j-i-1) && cpt <= (j+3-i);
+                }
+            }
         }
     }
 
