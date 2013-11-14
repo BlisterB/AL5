@@ -3,7 +3,7 @@ import com.mklr.graphics.engine.Window;
 
 
 
-public class Launcher {
+public class RuzzleBobble {
 	public static final String PATH = "";
 	
 	public static void main(String[] args){
