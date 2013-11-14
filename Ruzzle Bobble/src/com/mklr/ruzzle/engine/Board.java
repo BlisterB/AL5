@@ -138,33 +138,22 @@ public class Board {
             for (int i = 0; i < board.length; i++) {
                 for (int j = 0; j < board[i].length; j++) {
                     int random = r.nextInt(26) + 97;
-     /*               System.out.println((char)random + " " + random);
-                    System.out.println("found : " + dico.getLetterSet().getLetter((char)random));
-                    board[i][j] = new Marble(
-                        dico.getLetterSet()
-                        .getLetter((char)random));
-                    */
-
                     board[i][j] = new Marble(new Letter((char)random, 1));
 
                     //TODO Gérer les bonus
-                    //TODO Gérer les voisins (trouver formules...)
                     addNeighbours(i, j);
                 }   
             }
         }
-        
+        board[board.length-1][board[board.length-1].length-1] = new Marble(new Letter('*', 1));
 
         board[0][1].setBonus(Marble.LETTER_COUNT_DOUBLE);
         board[1][2].setBonus(Marble.LETTER_COUNT_TRIPLE);
         board[3][2].setBonus(Marble.WORD_COUNT_DOUBLE);
         board[2][1].setBonus(Marble.WORD_COUNT_TRIPLE);
-//        addNeighbours();
-        System.out.println("BOARD DONE IN " + ((new Date().getTime()) - beg) + "s.");
     }
 
     private void addNeighbours(int i, int j) {
-        System.out.println("ENTER IN addNeighbours(int, int)");
         ArrayList<Integer[]> newNeighbours = new ArrayList<Integer[]>(6);
         int lineOfTheTop = 
             ((i < row)  ? ((j&1) == 0 ? i-1 : i+1)
@@ -174,7 +163,6 @@ public class Board {
             if (currentLine < 0 || currentLine >= board.length)
                 continue;
 
-            System.out.println("ADD FOR board["+i+"]["+j+"] :");
             for (int currentMarble = j-(2*row); 
                     currentMarble <= j+(2*row); currentMarble++) {
                 if (currentMarble < 0 
@@ -187,9 +175,6 @@ public class Board {
                     continue;
                 }
 
-                        System.out.println("\tadd board["+currentLine+"]["+currentMarble+"] ~~"
-                                + " i: " + i 
-                                + " l: " + (board[i].length - 1));
                 newNeighbours.add(new Integer[]{currentLine, currentMarble});
             }
         }
@@ -198,26 +183,19 @@ public class Board {
     }
     
     private boolean toAdd(boolean tline, int line, int cpt, int i, int j) {
-        System.out.println("\ttline : " + tline + "\ti : " + i + "\tj : " + j
-                +"\tcpt : " + cpt + "\tline : " + line);
         if (tline) {
             if (line == i-1) {
-                System.out.println("\t\ttline with (LINE==i-1)");
                 return cpt >= (j-3+i) && cpt <= (j+i-1);
             } else {
-                System.out.println("\t\ttline ELSE");
                 return cpt >= (j-i) && cpt <= (j+2-i);
             }
         } else {
             if (line == i) {
-                System.out.println("\t\tNOT tline AND line == i");
                 return cpt >= (j-2) && cpt <= (j+2);
             } else {
                 if (line == i-1) {
-                    System.out.println("\t\tNOT tline AND NOT line == i-1");
                     return cpt >= (j-4+i) && cpt <= (j+i);
                 } else {
-                    System.out.println("\t\tNOT tline AND NOT line == i+1");
                     return cpt >= (j-i-1) && cpt <= (j+3-i);
                 }
             }

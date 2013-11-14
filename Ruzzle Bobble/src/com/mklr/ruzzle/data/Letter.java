@@ -65,13 +65,17 @@ public class Letter {
         this.percentage = percentage;
     }
 
-    public boolean equals(Letter l) {
-        if (!(l instanceof Letter))
-            return false;
-        return (l.letter == letter) && (l.value == value) 
-            && (l.percentage == percentage);
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Letter) {
+            return (((Letter)o).letter == letter
+                && ((Letter)o).value == value
+                && ((Letter)o).percentage == percentage);
+        }
+        return false;
     }
 
+    @Override
     public String toString() {
         return "\t" + letter + " : " + value + " : " + percentage + "%\n";
     }

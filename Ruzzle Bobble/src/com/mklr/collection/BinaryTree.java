@@ -4,7 +4,7 @@ public class BinaryTree<T> implements BasicTree<T>
 {
     public final static byte ORDINARY   = 0x0000;
     public final static byte ABRTREE    = 0x0001;
-    public final static byte AVLTREE    = 0x0002;
+    public final static byte AVLTREE    = 0x0010;
 
     T nodeValue;
     BinaryTree<T> leftNode;

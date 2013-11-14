@@ -2,10 +2,27 @@ package com.mklr.collection;
 
 import java.util.HashMap;
 
+
+/**
+ * The Tree class take an element...
+ * It keep a node value, a list of childs and the status.
+ * @author Loic Runarvot
+ * @author Mehdi Khelifi
+ */
 public class Tree<T> implements BasicTree<T>
 {
+    /**
+     *  Some algorithm could use this constant to determine if the current
+     *  tree is non terminal (ie. finish nothing in the tree).
+     *  It's the default value when creating a tree
+     */
     public static final int NON_TERMINAL    = 0;
-    public static final int TERMINAL        = 1;
+    
+    /**
+     *  Some algorithm could use this constant to determine if the current
+     *  tree is terminal (ie. could finish something in the tree)
+     */
+    public static final int TERMINAL = 1;
 
     private T nodeValue;
     private HashMap<T, Tree<T>> listOfChilds;
@@ -75,6 +92,9 @@ public class Tree<T> implements BasicTree<T>
         this.status = status;
     }
 
+    /**
+     * @return true if the current status is terminal
+     */
     public boolean isTerminal() {
         return status == TERMINAL;
     }
