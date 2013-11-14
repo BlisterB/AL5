@@ -1,12 +1,9 @@
 package com.mklr.graphics.engine;
 
-import java.awt.Dimension;
-
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 
 
 public class Window extends JFrame {
@@ -14,16 +11,16 @@ public class Window extends JFrame {
 	private Engine engine;
 	private MenuBar menubar;
 	
-	public Window(){
+	public Window(Engine engine){
 		//Proprietes
 	    this.setTitle("Ruzzle Bobble");
 	    //this.setSize(800, 500);//A MODIFIER
-	    this.setIconImage(new ImageIcon(Launcher.PATH + "img/interface/icone.png").getImage());
+	    this.setIconImage(new ImageIcon(Engine.PATH + "img/interface/icone.png").getImage());
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 	    //Initialisation des composants
-	    gamescreen = new GameScreen();
-	    engine = new Engine(gamescreen);
+	    this.engine = engine;
+	    this.gamescreen = engine.getGamescreen();
 	    menubar = new MenuBar(engine);
 	    
 	    //Barre de menu

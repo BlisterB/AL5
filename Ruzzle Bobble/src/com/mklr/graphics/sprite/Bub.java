@@ -1,9 +1,8 @@
 package com.mklr.graphics.sprite;
 
 import java.awt.Image;
-import java.awt.Rectangle;
 
-import com.mklr.graphics.engine.Launcher;
+import com.mklr.graphics.engine.Engine;
 
 public class Bub extends Sprite implements Runnable{
 	public static int STANDING = 1, FEAR = 2, CRY = 3;
@@ -13,23 +12,23 @@ public class Bub extends Sprite implements Runnable{
 		
 		//Chargement des images
 		this.sprite_list = new Image[17];
-		sprite_list[0] = openImage(Launcher.PATH + "img/bub/bub-standing1.png");
-		sprite_list[1] = openImage(Launcher.PATH + "img/bub/bub-standing2.png");
-		sprite_list[2] = openImage(Launcher.PATH + "img/bub/bub-standing3.png");
-		sprite_list[3] = openImage(Launcher.PATH + "img/bub/bub-standing4.png");
-		sprite_list[4] = openImage(Launcher.PATH + "img/bub/bub-fear1.png");
-		sprite_list[5] = openImage(Launcher.PATH + "img/bub/bub-fear2.png");
-		sprite_list[6] = openImage(Launcher.PATH + "img/bub/bub-fear4.png");
-		sprite_list[7] = openImage(Launcher.PATH + "img/bub/bub-fear5.png");
-		sprite_list[8] = openImage(Launcher.PATH + "img/bub/bub-fear6.png");
-		sprite_list[9] = openImage(Launcher.PATH + "img/bub/bub-cry1.png");
-		sprite_list[10] = openImage(Launcher.PATH + "img/bub/bub-cry2.png");
-		sprite_list[11] = openImage(Launcher.PATH + "img/bub/bub-cry3.png");
-		sprite_list[12] = openImage(Launcher.PATH + "img/bub/bub-cry4.png");
-		sprite_list[13] = openImage(Launcher.PATH + "img/bub/bub-cry5.png");
-		sprite_list[14] = openImage(Launcher.PATH + "img/bub/bub-cry6.png");
-		sprite_list[15] = openImage(Launcher.PATH + "img/bub/bub-cry7.png");
-		sprite_list[16] = openImage(Launcher.PATH + "img/bub/bub-cry8.png");
+		sprite_list[0] = openImage(Engine.PATH + "img/bub/bub-standing1.png");
+		sprite_list[1] = openImage(Engine.PATH + "img/bub/bub-standing2.png");
+		sprite_list[2] = openImage(Engine.PATH + "img/bub/bub-standing3.png");
+		sprite_list[3] = openImage(Engine.PATH + "img/bub/bub-standing4.png");
+		sprite_list[4] = openImage(Engine.PATH + "img/bub/bub-fear1.png");
+		sprite_list[5] = openImage(Engine.PATH + "img/bub/bub-fear2.png");
+		sprite_list[6] = openImage(Engine.PATH + "img/bub/bub-fear4.png");
+		sprite_list[7] = openImage(Engine.PATH + "img/bub/bub-fear5.png");
+		sprite_list[8] = openImage(Engine.PATH + "img/bub/bub-fear6.png");
+		sprite_list[9] = openImage(Engine.PATH + "img/bub/bub-cry1.png");
+		sprite_list[10] = openImage(Engine.PATH + "img/bub/bub-cry2.png");
+		sprite_list[11] = openImage(Engine.PATH + "img/bub/bub-cry3.png");
+		sprite_list[12] = openImage(Engine.PATH + "img/bub/bub-cry4.png");
+		sprite_list[13] = openImage(Engine.PATH + "img/bub/bub-cry5.png");
+		sprite_list[14] = openImage(Engine.PATH + "img/bub/bub-cry6.png");
+		sprite_list[15] = openImage(Engine.PATH + "img/bub/bub-cry7.png");
+		sprite_list[16] = openImage(Engine.PATH + "img/bub/bub-cry8.png");
 	}
 	
 	public Bub(int x, int y,int animation){
