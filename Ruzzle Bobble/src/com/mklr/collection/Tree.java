@@ -2,8 +2,6 @@ package com.mklr.collection;
 
 import java.util.HashMap;
 
-import javax.management.BadAttributeValueExpException;
-
 
 /**
  * The Tree class take an element...
@@ -11,9 +9,9 @@ import javax.management.BadAttributeValueExpException;
  * @author Loic Runarvot
  * @author Mehdi Khelifi
  */
-public class Tree<T>  implements BasicTree<T>  {
-    
-	/**
+public class Tree<T> implements BasicTree<T>
+{
+    /**
      *  Some algorithm could use this constant to determine if the current
      *  tree is non terminal (ie. finish nothing in the tree).
      *  It's the default value when creating a tree
@@ -30,62 +28,23 @@ public class Tree<T>  implements BasicTree<T>  {
     private HashMap<T, Tree<T>> listOfChilds;
     private int status;
 
-    /**
-     *	Create an empty tree without value, childs.
-     *	The status is set on non terminal value. 
-     */
     public Tree() {
         this(null);
     }
 
-    /**
-     * Create a tree with a value.
-     * It has no childs, and the status is set on non terminal.
-     * @param nodeValue value of the new tree
-     */
     public Tree(T nodeValue) {
-        this(nodeValue, NON_TERMINAL, null);
+        this(nodeValue, NON_TERMINAL, new HashMap<T, Tree<T>>());
     }
 
-    /**
-     * Create a tree with a value, and a status.
-     * It has no childs.
-     * @param nodeValue value of the new tree
-     * @param status status of the current tree
-     */
     public Tree(T nodeValue, int status) {
-        this(nodeValue, status, null);
+        this(nodeValue, status, new HashMap<T, Tree<T>>());
     }
 
-    /**
-     * Create a tree with a value, and a list of childs.
-     * The status is set as non terminal.
-     * @param nodeValue value of the new tree
-     * @param listOfChilds childs of the new tree
-     */
     public Tree(T nodeValue, HashMap<T, Tree<T>> listOfChilds) {
         this(nodeValue, NON_TERMINAL, listOfChilds);
     }
 
-    /**
-     * Create a tree with a value, a status and a list of childs.
-     * @param nodeValue value of the new tree
-     * @param status status of the new tree
-     * @param listOfChilds childs of the new tree
-     */
-    public Tree(T nodeValue, int status, HashMap<T, Tree<T>> listOfChilds)  {
-    	try {
-    		testStatus(status);
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    		System.out.println("STATUS VALUE WILL BE SET AS `NON_TERMINAL`");
-    		this.status = NON_TERMINAL;
-    	}
-    	
-    	if (listOfChilds == null) {
-    		listOfChilds = new HashMap<T, Tree<T>>();
-    	}
-    	
+    public Tree(T nodeValue, int status, HashMap<T, Tree<T>> listOfChilds) {
         this.nodeValue = nodeValue;
         this.status = status;
         this.listOfChilds = listOfChilds;
@@ -161,15 +120,4 @@ public class Tree<T>  implements BasicTree<T>  {
         return listOfChilds.get(neededChild);
     }
 
-    /**
-     * It test the status values, to see if it correspond to one of 
-     * the available constants
-     * @param status
-     * @throws BadAttributeValueExpException
-     */
-    private void testStatus(int status) 
-    		throws BadAttributeValueExpException {  
-    	if (status != TERMINAL || status != NON_TERMINAL)
-    		throw new BadAttributeValueExpException(status);
-    }
 }

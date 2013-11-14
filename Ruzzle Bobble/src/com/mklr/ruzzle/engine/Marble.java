@@ -6,13 +6,6 @@ import java.util.Arrays;
 
 import com.mklr.ruzzle.data.Letter;
 
-/**
- * This class represent a Marble of the ruzzle game.
- * It represent a letter for the game, with or without any
- * bonuses.
- * @author Loic Runarvot
- * @author Mehdi Khelifi
- */
 public class Marble {
     public static final byte NO_BONUS = 0;
     public static final byte LETTER_COUNT_DOUBLE    = 1;
@@ -24,6 +17,7 @@ public class Marble {
     public static final byte GREY_STATE     = 1;
     public static final byte BLACK_STATE    = 2;
     
+
     private Letter letter;
     private byte bonus;
     private byte state;
@@ -104,21 +98,17 @@ public class Marble {
         this.neighbours = neighbours;
     }
 
-    /**
-     * Test if it's a neighbour
-     * @param place array of marble's coordinate to test
-     * @return true if it's a neighbour
-     */
     public boolean isNeighbour(Integer[] place) {
         for (Integer[] i : neighbours) {
             if (Arrays.equals(place, i)) {
                 return true;
             }
         }
+
         return false;
     }
 
-    @Override
+
     public String toString() {
         return "[" + letter.getLetter() + "] ";
     }
