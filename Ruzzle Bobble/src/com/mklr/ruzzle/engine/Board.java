@@ -9,6 +9,12 @@ import java.util.Random;
 import com.mklr.ruzzle.data.RuzzleDictionary;
 import com.mklr.ruzzle.data.Letter;
 
+/**
+ * Create the board for the ruzzle game.
+ * The board is an hexagon. The default value is 2.
+ * @author Loic Runarvot
+ * @author Mehdi Khelifi
+ */
 public class Board {
     private int row;
     private int score;
@@ -16,23 +22,37 @@ public class Board {
     private Locale locale;
     private RuzzleDictionary dico;
 
+    /**
+     * Create the board with default value.
+     */
     public Board() {
         this(2);
     }
 
+    /**
+     * Create the board with row size.
+     * @param row
+     */
     public Board(int row) {
         this(row, Locale.ENGLISH);
     }
 
+    /**
+     * Create the board with row size, and the langage.
+     * @param row
+     * @param locale
+     */
     public Board(int row, Locale locale) {
         this(row, locale, null);
     }
     
+    /**
+     * Create the board with row size, the langage and the dictionary.
+     * @param row
+     * @param locale
+     * @param dico
+     */
     public Board(int row, Locale locale, RuzzleDictionary dico) {
-        this(row, locale, dico, false);
-    }
-
-    public Board(int row, Locale locale, RuzzleDictionary dico, boolean init) {
         this.row = row;
         this.dico = dico;
         score = 0;
@@ -43,9 +63,6 @@ public class Board {
             board[i] = new Marble[(2 * row) + (2 * i) + 1];
             board[(2 * row) - i - 1] = new Marble[(2 * row) + (2 * i) + 1];
         }
-
-        if (init)
-            init();
     }
 
     /**
@@ -118,6 +135,10 @@ public class Board {
         this.dico = dico;
     }
 
+    /**
+     * Initialize the board.
+     * MUST BE CALLED BEFORE PLAYING THE GAME !!
+     */
     public void init() {
         // TODO
         Random r = new Random();
@@ -153,6 +174,11 @@ public class Board {
         board[2][1].setBonus(Marble.WORD_COUNT_TRIPLE);
     }
 
+    /**
+     * It adds every neighbours of the marble in the [i][j] pos.
+     * @param i
+     * @param j
+     */
     private void addNeighbours(int i, int j) {
         ArrayList<Integer[]> newNeighbours = new ArrayList<Integer[]>(6);
         int lineOfTheTop = 
@@ -182,6 +208,16 @@ public class Board {
         board[i][j].setNeighbours(newNeighbours);
     }
     
+    /**
+     * It returns a boolean to say if the current case is a neighbour of
+     * the current marble.
+     * @param tline
+     * @param line
+     * @param cpt
+     * @param i
+     * @param j
+     * @return true if it's a neighbour.
+     */
     private boolean toAdd(boolean tline, int line, int cpt, int i, int j) {
         if (tline) {
             if (line == i-1) {
@@ -202,6 +238,7 @@ public class Board {
         }
     }
 
+    @Override
     public String toString() {
         String result = new String();
 
