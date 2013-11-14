@@ -15,7 +15,7 @@ public class Window extends JFrame {
 		//Proprietes
 	    this.setTitle("Ruzzle Bobble");
 	    //this.setSize(800, 500);//A MODIFIER
-	    this.setIconImage(new ImageIcon(Launcher.PATH + "img/interface/icone.png").getImage());
+	    this.setIconImage(new ImageIcon(Engine.PATH + "img/interface/icone.png").getImage());
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 	    //Initialisation des composants

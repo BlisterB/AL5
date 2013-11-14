@@ -1,8 +1,6 @@
 package com.mklr.graphics.stage;
 
 import com.mklr.graphics.engine.Engine;
-import com.mklr.graphics.engine.Launcher;
-import com.mklr.graphics.engine.MusicPlayer;
 import com.mklr.graphics.sprite.Bob;
 import com.mklr.graphics.sprite.Bub;
 import com.mklr.graphics.sprite.InterfaceSprite;
@@ -21,9 +19,9 @@ public class GameTitle extends Stage{
 		//MusicPlayer.playMusic("music/title.mid");
 		
 		//Initialisation des composants
-		this.background = new Sprite(Launcher.PATH + "img/background/game_title.png");
-		titleSprite = new Sprite(Launcher.PATH + "img/interface/title.png", 300, -150, 200, 150);
-		jouerInterface = new InterfaceSprite(Launcher.PATH + "img/interface/jouer.png", 200, 450, 400, 100, Stage.VALIDATE, this);
+		this.background = new Sprite(Engine.PATH + "img/background/game_title.png");
+		titleSprite = new Sprite(Engine.PATH + "img/interface/title.png", 300, -150, 200, 150);
+		jouerInterface = new InterfaceSprite(Engine.PATH + "img/interface/jouer.png", 200, 450, 400, 100, Stage.VALIDATE, this);
 		bub = new Bub(800, 150, Bub.FEAR);
 		bob = new Bob(850, 150, Bob.BUBBLE_LEFT);
 		

@@ -1,8 +1,6 @@
 package com.mklr.graphics.stage;
 
 import com.mklr.graphics.engine.Engine;
-import com.mklr.graphics.engine.Launcher;
-import com.mklr.graphics.engine.MusicPlayer;
 import com.mklr.graphics.sprite.Bob;
 import com.mklr.graphics.sprite.Bub;
 import com.mklr.graphics.sprite.InterfaceSprite;
@@ -23,16 +21,16 @@ public class GameStage extends Stage {
 		this.board = board;
 		
 		//Background et interface
-		background = new Sprite(Launcher.PATH + "img/background/game_stage.png");
-		sprite_list.add(new InterfaceSprite(Launcher.PATH + "img/interface/afficher_les_mots.png", 50, 375, 275, 50, 1, this)); //Bouton Valider
-		sprite_list.add(new Sprite(Launcher.PATH + "img/interface/interface_game.png", 0, 0, 0, 0));
+		background = new Sprite(Engine.PATH + "img/background/game_stage.png");
+		sprite_list.add(new InterfaceSprite(Engine.PATH + "img/interface/afficher_les_mots.png", 50, 375, 275, 50, 1, this)); //Bouton Valider
+		sprite_list.add(new Sprite(Engine.PATH + "img/interface/interface_game.png", 0, 0, 0, 0));
 		
 		//Chargement des lettres
 		Marble[][] tab = board.getBoard();
 		int k = 0;
 		for(int i = 0; i < tab.length; i++){
 			for(int j = 0; j < tab[i].length; j++){
-				letter_array[k] = new LetterSprite(Launcher.PATH + "img/fonts/" + tab[i][j].getLetter().getLetter().toString()+".png", getLetterX(i,j), getLetterY(i,j), 30,30, tab[i][j].getLetter().getLetter(), tab[i][j], this);
+				letter_array[k] = new LetterSprite(Engine.PATH + "img/fonts/" + tab[i][j].getLetter().getLetter().toString()+".png", getLetterX(i,j), getLetterY(i,j), 30,30, tab[i][j].getLetter().getLetter(), tab[i][j], this);
 
 				//Ajout de la lettre
 				sprite_list.add(letter_array[k]);
@@ -40,16 +38,16 @@ public class GameStage extends Stage {
 				//Ajout de la vignette Bonus
 				String bonus_path = "";
 				if(letter_array[k].getMarble().getBonus() == Marble.LETTER_COUNT_DOUBLE){
-					bonus_path = Launcher.PATH + "img/interface/green_buble.png";
+					bonus_path = Engine.PATH + "img/interface/green_buble.png";
 				}
 				else if(letter_array[k].getMarble().getBonus() == Marble.LETTER_COUNT_TRIPLE){
-					bonus_path = Launcher.PATH + "img/interface/blue_buble.png";
+					bonus_path = Engine.PATH + "img/interface/blue_buble.png";
 				}
 				else if(letter_array[k].getMarble().getBonus() == Marble.WORD_COUNT_DOUBLE){
-					bonus_path = Launcher.PATH + "img/interface/red_buble.png";
+					bonus_path = Engine.PATH + "img/interface/red_buble.png";
 				}
 				else if(letter_array[k].getMarble().getBonus() == Marble.WORD_COUNT_TRIPLE){
-					bonus_path = Launcher.PATH + "img/interface/yellow_buble.png";
+					bonus_path = Engine.PATH + "img/interface/yellow_buble.png";
 				}
 				if(!(letter_array[k].getMarble().getBonus() == Marble.NO_BONUS)){
 					sprite_list.add(new Sprite(bonus_path, 20 + getLetterX(i,j), getLetterY(i,j) - 10, 25, 25));

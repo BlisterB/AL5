@@ -1,14 +1,12 @@
 package com.mklr.ruzzle.data;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.text.Normalizer;
 import java.util.Locale;
-import java.util.Scanner;
 
-import com.mklr.graphics.engine.Launcher;
 import com.mklr.collection.Tree;
+import com.mklr.graphics.engine.Engine;
 
 public class RuzzleDictionary implements Runnable {
     private final String dictionnaryPath;
@@ -124,7 +122,7 @@ public class RuzzleDictionary implements Runnable {
         } else {
             try {
                 FileReader fr = 
-                    new FileReader(Launcher.PATH + "config/lang/enEN.set");
+                    new FileReader(Engine.PATH + "config/lang/enEN.set");
                 BufferedReader br = new BufferedReader(fr);
 
                 String line = br.readLine();
