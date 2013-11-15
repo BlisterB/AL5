@@ -74,7 +74,7 @@ public class GameTitle extends Stage{
 	}
 	
 	public void close(){
+		super.close();
 		animation = false;
-		musicPlayer.setPlay(false);
 	}
 }

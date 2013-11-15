@@ -19,7 +19,7 @@ public class MenuBar extends JMenuBar {
 	private JMenu mAlgorithme = new JMenu("Algorithme");
 	private JMenuItem iConnasse = new JMenuItem("Truc de la conasse");
 	
-	public MenuBar(Engine engine){
+	public MenuBar(final Engine engine){
 		super();
 		this.engine = engine;
 		
@@ -41,7 +41,7 @@ public class MenuBar extends JMenuBar {
         });
         iQuitter.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
-                System.exit(0);
+                engine.exit();
             }
         });
 	}

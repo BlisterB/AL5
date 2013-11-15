@@ -8,6 +8,7 @@ import javax.sound.midi.Sequencer;
 
 public class MusicPlayer {
 	boolean play;
+	private Sequencer sequencer = null;;
 	
 	public MusicPlayer(final String path){
 		play = true;
@@ -17,7 +18,6 @@ public class MusicPlayer {
 				//Ouverture du fichier
 				File file = new File(path);
 				//Initialisation du sequenceur MIDI
-				Sequencer sequencer = null;;
 				try{
 					sequencer = MidiSystem.getSequencer();
 				}catch(MidiUnavailableException e){
@@ -28,26 +28,16 @@ public class MusicPlayer {
 			        //Lancement de la lecture
 			        sequencer.open();
 			        sequencer.start();
-			        while(play) {
-			            if(sequencer.isRunning()) {
-			                try {
-			                    Thread.sleep(500); // Check every second
-			                } catch(InterruptedException ignore) {
-			                    break;
-			                }
-			            } else {
-			                break;
-			            }
-			        }
 				}catch(Exception e) {
 				        System.out.println(e.toString());
-				}finally {
-				    // Close resources
-					sequencer.stop();
-					sequencer.close();
 				}
 			}
 		}).start();
+	}
+	
+	public void stopPlaying(){
+		sequencer.stop();
+		sequencer.close();
 	}
 
 	/**

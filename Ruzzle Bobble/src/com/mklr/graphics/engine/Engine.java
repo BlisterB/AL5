@@ -65,6 +65,14 @@ public class Engine implements Runnable{
 		}
 	}
 	
+	/**Methode fermant la sequence de jeu en cours et fermant son sequenceur midi proprement**/
+	public int exit(){
+		if(stage != null)
+			stage.close();
+		System.exit(0);
+		return 1;
+	}
+	
 	   //////////////////////////////////////////////////////////////////
 	  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
 	 //////////////////////////////////////////////////////////////////

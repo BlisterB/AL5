@@ -38,7 +38,8 @@ public class Stage {
 	}
 	
 	public void close(){
-		
+		if(musicPlayer != null)
+			musicPlayer.stopPlaying();
 	}
 	
 	/**
