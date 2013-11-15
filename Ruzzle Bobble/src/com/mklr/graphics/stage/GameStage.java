@@ -1,6 +1,7 @@
 package com.mklr.graphics.stage;
 
 import com.mklr.graphics.engine.Engine;
+import com.mklr.graphics.engine.MusicPlayer;
 import com.mklr.graphics.sprite.Bob;
 import com.mklr.graphics.sprite.Bub;
 import com.mklr.graphics.sprite.InterfaceSprite;
@@ -19,6 +20,7 @@ public class GameStage extends Stage {
 	public GameStage(Engine engine, Board board){
 		super(engine);
 		this.board = board;
+		this.musicPlayer = new MusicPlayer("music/gamestage.mid");
 		
 		//Background et interface
 		background = new Sprite(Engine.PATH + "img/background/game_stage.png");

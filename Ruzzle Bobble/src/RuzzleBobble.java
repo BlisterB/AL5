@@ -13,7 +13,7 @@ public class RuzzleBobble {
 		//Creation de la fenetre
 		Window window = new Window(engine);
 		
-		//Recuperation du moteur de jeu et lancement de l ecran de titre
+		//Lancement de l ecran de titre
 		engine.setGameTitle();
 	}
 }

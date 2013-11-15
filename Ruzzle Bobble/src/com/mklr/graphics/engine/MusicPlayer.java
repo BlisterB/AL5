@@ -7,8 +7,11 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequencer;
 
 public class MusicPlayer {
-
-	public static void playMusic(final String path){
+	boolean play;
+	
+	public MusicPlayer(final String path){
+		play = true;
+		
 		new Thread(new Runnable(){
 			public void run(){
 				//Ouverture du fichier
@@ -25,10 +28,10 @@ public class MusicPlayer {
 			        //Lancement de la lecture
 			        sequencer.open();
 			        sequencer.start();
-			        while(true) {
+			        while(play) {
 			            if(sequencer.isRunning()) {
 			                try {
-			                    Thread.sleep(1000); // Check every second
+			                    Thread.sleep(500); // Check every second
 			                } catch(InterruptedException ignore) {
 			                    break;
 			                }
@@ -46,6 +49,22 @@ public class MusicPlayer {
 			}
 		}).start();
 	}
+
+	/**
+	 * @return the play
+	 */
+	public boolean isPlay() {
+		return play;
+	}
+
+	/**
+	 * @param play the play to set
+	 */
+	public void setPlay(boolean play) {
+		this.play = play;
+	}
+	
+	
 	
 	/*
 	public static void playMusic(final String path){

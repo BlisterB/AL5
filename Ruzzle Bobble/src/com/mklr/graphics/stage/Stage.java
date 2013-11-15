@@ -3,6 +3,7 @@ package com.mklr.graphics.stage;
 import java.util.LinkedList;
 
 import com.mklr.graphics.engine.Engine;
+import com.mklr.graphics.engine.MusicPlayer;
 import com.mklr.graphics.sprite.Sprite;
 
 /**La sequence est l'objet definissant la sequence de jeu : ecran de titre, ecran de jeu etc.
@@ -14,6 +15,7 @@ public class Stage {
 	protected Engine engine;
 	protected LinkedList <Sprite> sprite_list = new LinkedList <Sprite>();
 	protected Sprite background;
+	protected MusicPlayer musicPlayer;
 	public static final int VALIDATE = 1;
 	public static final int CANCEL = 2;
 	public static final int TIMMER_END = 2;
