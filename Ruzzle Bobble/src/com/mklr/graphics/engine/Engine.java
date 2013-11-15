@@ -1,8 +1,11 @@
 package com.mklr.graphics.engine;
 
+import java.util.HashMap;
+
 import com.mklr.graphics.stage.GameStage;
 import com.mklr.graphics.stage.GameTitle;
 import com.mklr.graphics.stage.Stage;
+import com.mklr.ruzzle.data.RuzzleDictionary;
 import com.mklr.ruzzle.engine.Board;
 
 /**La classe Engine represente le moteur de jeu
@@ -15,8 +18,9 @@ public class Engine implements Runnable{
 	
 	private GameScreen gamescreen;
 	private Stage stage;
+	HashMap<String, RuzzleDictionary> dicList;
 	
-	public Engine(){
+	public Engine(HashMap<String, RuzzleDictionary> dicList){
 		this.gamescreen = new GameScreen();
 		
 		//On cree lance le thread de raffraichissement de l'ecran
