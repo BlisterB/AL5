@@ -3,17 +3,22 @@ package com.mklr.graphics.engine;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.HashMap;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.mklr.ruzzle.data.RuzzleDictionary;
+
 
 public class Window extends JFrame {
 	private GameScreen gamescreen;
 	private Engine engine;
 	private MenuBar menubar;
+
+	HashMap<String, RuzzleDictionary> dicList;
 	
 	public Window(final Engine engine){
 		//Proprietes

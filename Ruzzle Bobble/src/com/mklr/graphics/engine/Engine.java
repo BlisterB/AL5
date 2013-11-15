@@ -22,6 +22,7 @@ public class Engine implements Runnable{
 	
 	public Engine(HashMap<String, RuzzleDictionary> dicList){
 		this.gamescreen = new GameScreen();
+		this.dicList = dicList;
 		
 		//On cree lance le thread de raffraichissement de l'ecran
 		Thread t = new Thread(this);
@@ -107,6 +108,22 @@ public class Engine implements Runnable{
 	 */
 	public void setGamescreen(GameScreen gamescreen) {
 		this.gamescreen = gamescreen;
+	}
+
+
+	/**
+	 * @return the dicList
+	 */
+	public HashMap<String, RuzzleDictionary> getDicList() {
+		return dicList;
+	}
+
+
+	/**
+	 * @param dicList the dicList to set
+	 */
+	public void setDicList(HashMap<String, RuzzleDictionary> dicList) {
+		this.dicList = dicList;
 	}
 	
 }

@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Map;
 
 import com.mklr.graphics.engine.Engine;
 import com.mklr.graphics.engine.Window;
@@ -12,6 +13,7 @@ public class RuzzleBobble {
 	public static void main(String[] args){
 		HashMap<String, RuzzleDictionary> dicList = new HashMap<String, RuzzleDictionary>();
 		dicList.put("ENGLISH", new RuzzleDictionary());
+		
 		
 		//Creation du moteur de jeu
 		Engine engine = new Engine(dicList);
