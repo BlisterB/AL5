@@ -15,9 +15,11 @@ public class MenuBar extends JMenuBar {
 	private JMenuItem iLancerPartie = new JMenuItem("Lancer une partie");
 	private JMenuItem iQuitter = new JMenuItem("Quitter");
 	
-	//Algorithme
-	private JMenu mAlgorithme = new JMenu("Algorithme");
-	private JMenuItem iConnasse = new JMenuItem("Truc de la conasse");
+	//Options
+	private JMenu mOptions = new JMenu("Options");
+	private JMenu mChoixLangue = new JMenu("Choix de la langue du dictionnaire");
+	private JMenu mChoixAlgo = new JMenu("Choix de l'algorithme de resolution");
+	private JMenuItem iAPropos = new JMenuItem("A propos");
 	
 	public MenuBar(final Engine engine){
 		super();
@@ -26,12 +28,15 @@ public class MenuBar extends JMenuBar {
 		//Menu Fichier
 		this.add(mFichier);
 		mFichier.add(iLancerPartie);
-		iLancerPartie.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
 		mFichier.add(iQuitter);
 		
-		//Menu Algorithme
-		this.add(mAlgorithme);
-		mAlgorithme.add(iConnasse);
+		//Menu Option
+		this.add(mOptions);
+		mOptions.add(mChoixLangue);
+		mOptions.add(mChoixAlgo);
+		mOptions.addSeparator();
+		mOptions.add(iAPropos);
+		
 		
 		//Ajout des Action Listener
         iLancerPartie.addActionListener(new ActionListener(){

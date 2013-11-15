@@ -18,7 +18,6 @@ public class Window extends JFrame {
 	public Window(final Engine engine){
 		//Proprietes
 	    this.setTitle("Ruzzle Bobble");
-	    //this.setSize(800, 500);//A MODIFIER
 	    this.setIconImage(new ImageIcon(Engine.PATH + "img/interface/icone.png").getImage());
 	    
 	    //Initialisation des composants
@@ -46,9 +45,9 @@ public class Window extends JFrame {
 	    
 	    //Affichage de la fenetre et ajustement de sa taille
 	    setResizable(false);
-	    this.setVisible(true);
-	    setSize(800,450 + this.getHeight());
+	    setSize(800,500);
 	    this.setLocationRelativeTo(null);
+	    this.setVisible(true);
 	}
 
 	/**
