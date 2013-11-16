@@ -33,6 +33,8 @@ public class Stage {
 		}	
 	}
 	
+	public void update(){};
+	
 	public void interaction(int function){
 		
 	}

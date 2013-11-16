@@ -61,6 +61,8 @@ public class Engine implements Runnable{
 	//Methode de raffraichissement
 	public void refresh_gamescreen(){
 		while(true){
+			if(stage != null)
+				stage.update();
 			gamescreen.repaint();
 			try{
 				  Thread.sleep(32); //Ici, une pause d'une seconde

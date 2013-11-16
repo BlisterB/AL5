@@ -38,8 +38,12 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
 	public void paintComponent(Graphics g){
 		Sprite sprite;//Tampon
 		if(stage != null){
+			//Raffraichissement du stage
+			stage.update();
+			
 			//Dessin du background
 			g.drawImage(stage.getBackground().getImage(), 0, 0, this);
+			
 			//Dessin des sprite
 			if(stage.getSpriteList() != null){
 				for(int i = 0; i < stage.getSpriteList().size(); i++){
@@ -50,6 +54,12 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
 		}
 	}
 
+	public void drawNumber(int n, int x, int y){
+		
+	}
+	
+	//Gestion de la souris
+	
     public void mousePressed(MouseEvent e) {
     }
 
@@ -88,6 +98,8 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
 	        }
         }
      }
+     
+     
      
  	//Controle du mouvement de la souris
      //Clic continue (avec mouvement) de la souris (ne concerne que le clic gauche)

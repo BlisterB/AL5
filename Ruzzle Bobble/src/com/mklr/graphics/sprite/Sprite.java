@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.mklr.graphics.engine.Engine;
+
 public class Sprite{
 	protected Image image;//L'image actuelle du sprite
 	protected Rectangle rect;//Le rectangle symbolisant l'image dans le JPanel
@@ -23,10 +25,13 @@ public class Sprite{
 	}
 	public Sprite(String chemin){
 		this.image = openImage(chemin);
-		this.rect = new Rectangle(0, 0, 0, 0);
 	}
 	public Sprite(String chemin, int posX, int posY, int width, int height){
-		this.image = openImage(chemin);
+		this(chemin);
+		this.rect = new Rectangle(posX, posY, width, height);
+	}
+	public Sprite(Image image, int posX, int posY, int width, int height){
+		this.image = image;
 		this.rect = new Rectangle(posX, posY, width, height);
 	}
 
@@ -37,7 +42,7 @@ public class Sprite{
 	/** Ouvre une image et gere l'exception
 	 * @return l'image
 	 */
-	public Image openImage(String path){
+	public static Image openImage(String path){
 		Image image;
 		try {
 			image = ImageIO.read(new File(path));
@@ -95,6 +100,16 @@ public class Sprite{
 	
 	public void onMousePressedWay(){
 		
+	}
+	
+	public static Image[] getNumberImageArray(){
+		Image[] array = new Image[12];
+		for(int i = 0; i < 10; i++){
+			array[i] = openImage(Engine.PATH + "img/fonts/" + i + ".png");
+		}
+		array[11] = openImage(Engine.PATH + "img/fonts/colon.png");
+		
+		return array;
 	}
 	
    //////////////////////////////////////////////////////////////////

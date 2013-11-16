@@ -10,6 +10,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 
 import com.mklr.ruzzle.data.RuzzleDictionary;
@@ -72,6 +73,13 @@ public class MenuBar extends JMenuBar {
         iQuitter.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
                 engine.exit();
+            }
+        });
+        iAPropos.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent arg0){
+            	String info = "Ruzzle Bubble est un projet universitaire développé par deux étudiants :\n-Mehdi Khelifi\n-Loic Runarvot\n\n Les sprites des mascottes du projet ainsi que les deux pistes musicales sont issus de la série Puzzle Bobble.";
+            	JOptionPane aProposWindow = new JOptionPane();
+            	aProposWindow.showMessageDialog(null, info, "A propos", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 	}

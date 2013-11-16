@@ -1,11 +1,13 @@
 package com.mklr.graphics.stage;
 
 import com.mklr.graphics.engine.Engine;
+import com.mklr.graphics.engine.GameTimer;
 import com.mklr.graphics.engine.MusicPlayer;
 import com.mklr.graphics.sprite.Bob;
 import com.mklr.graphics.sprite.Bub;
 import com.mklr.graphics.sprite.InterfaceSprite;
 import com.mklr.graphics.sprite.LetterSprite;
+import com.mklr.graphics.sprite.NumberSprite;
 import com.mklr.graphics.sprite.Sprite;
 import com.mklr.ruzzle.engine.Board;
 import com.mklr.ruzzle.engine.Marble;
@@ -16,11 +18,15 @@ public class GameStage extends Stage {
 	private Board board;
 	private String currentWorld = "";
 	private LetterSprite[] letter_array = new LetterSprite[24];
+	private GameTimer timer;
+	private NumberSprite[] timeSprite;
+	private Sprite[] scoreSprite;
 	
 	public GameStage(Engine engine, Board board){
 		super(engine);
 		this.board = board;
 		this.musicPlayer = new MusicPlayer("music/gamestage.mid");
+		this.timer = new GameTimer(1000 * 60, this);
 		
 		//Background et interface
 		background = new Sprite(Engine.PATH + "img/background/game_stage.png");
@@ -58,6 +64,13 @@ public class GameStage extends Stage {
 			}
 		}
 		
+		//Chargement des nombres du scores
+		timeSprite = new NumberSprite[5];
+		for(int i = 0; i < 5; i++){
+			timeSprite[i] = new NumberSprite(600 + 40*i, 10);
+			sprite_list.add(timeSprite[i]);
+		}
+		
 		//Personnages
 		sprite_list.add(bub);
 		sprite_list.add(bob);
@@ -67,6 +80,30 @@ public class GameStage extends Stage {
 	   //////////////////////////////////////////////////////////////////
 	  ////////////////////////////// METHODES //////////////////////////
 	 //////////////////////////////////////////////////////////////////	
+	
+	public void addToCurrentWord(char letter){
+		currentWorld = currentWorld + letter;
+	}
+	
+	public void flushSelectedLetter(){
+        for(int i = 0; i < letter_array.length; i++){
+        	letter_array[i].setSelected(false);
+        }
+
+	}
+	
+	public void update(){
+		timeSprite[0].changeNumber(timer.getDizaineMinute());
+		timeSprite[1].changeNumber(timer.getUniteMinute());
+		timeSprite[2].changeNumber(timer.getDizaineSeconde());
+		timeSprite[3].changeNumber(timer.getUniteSeconde());
+		timeSprite[4].changeNumber(timer.getDiziemeSeconde());
+	}
+	
+	public void close(){
+		super.close();
+	}	
+
 	public int getLetterY(int i, int j){
 		switch(i){
 			case 0 :
@@ -132,21 +169,6 @@ public class GameStage extends Stage {
 			}
 		}
 	}
-	
-	public void addToCurrentWord(char letter){
-		currentWorld = currentWorld + letter;
-	}
-	
-	public void flushSelectedLetter(){
-        for(int i = 0; i < letter_array.length; i++){
-        	letter_array[i].setSelected(false);
-        }
-
-	}
-	
-	public void close(){
-		super.close();
-	}
 	   //////////////////////////////////////////////////////////////////
 	  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
 	 //////////////////////////////////////////////////////////////////
@@ -173,6 +195,18 @@ public class GameStage extends Stage {
 	 */
 	public void setLetter_array(LetterSprite[] letter_array) {
 		this.letter_array = letter_array;
+	}
+	/**
+	 * @return the timer
+	 */
+	public GameTimer getTimer() {
+		return timer;
+	}
+	/**
+	 * @param timer the timer to set
+	 */
+	public void setTimer(GameTimer timer) {
+		this.timer = timer;
 	}
 	
 }
