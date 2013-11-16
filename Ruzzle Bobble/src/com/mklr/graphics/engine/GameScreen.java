@@ -102,8 +102,8 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
 			        		s = stage.getSpriteList().get(i);
 			        		if(s instanceof LetterSprite){
 			        			if(lastSpritePointed instanceof LetterSprite || lastSpritePointed == null)
-			        				((LetterSprite)s).onMousePressedWay((LetterSprite)lastSpritePointed);
-			        				lastSpritePointed = s;
+			        				if(((LetterSprite)s).addLettertoCurrentWorld((LetterSprite)lastSpritePointed))
+			        					lastSpritePointed = s;
 			        		}
 			        	}
 			        }
@@ -131,4 +131,20 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
+
+	/**
+	 * @return the lastSpritePointed
+	 */
+	public Sprite getLastSpritePointed() {
+		return lastSpritePointed;
+	}
+
+	/**
+	 * @param lastSpritePointed the lastSpritePointed to set
+	 */
+	public void setLastSpritePointed(Sprite lastSpritePointed) {
+		this.lastSpritePointed = lastSpritePointed;
+	}
+	
+	
 }

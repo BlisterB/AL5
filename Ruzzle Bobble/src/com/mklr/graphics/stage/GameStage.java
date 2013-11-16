@@ -11,8 +11,8 @@ import com.mklr.ruzzle.engine.Board;
 import com.mklr.ruzzle.engine.Marble;
 
 public class GameStage extends Stage {
-	private Bub bub = new Bub(550, 330, Bub.STANDING);
-	private Bob bob = new Bob(600, 330, Bob.STANDING);
+	private Bub bub = new Bub(560, 330, Bub.STANDING);
+	private Bob bob = new Bob(610, 330, Bob.STANDING);
 	private Board board;
 	private String currentWorld = "";
 	private LetterSprite[] letter_array = new LetterSprite[24];
@@ -25,7 +25,7 @@ public class GameStage extends Stage {
 		//Background et interface
 		background = new Sprite(Engine.PATH + "img/background/game_stage.png");
 		sprite_list.add(new InterfaceSprite(Engine.PATH + "img/interface/afficher_les_mots.png", 50, 375, 275, 50, 1, this)); //Bouton Valider
-		sprite_list.add(new Sprite(Engine.PATH + "img/interface/interface_game.png", 0, 0, 0, 0));
+		//sprite_list.add(new Sprite(Engine.PATH + "img/interface/interface_game.png", 0, 0, 0, 0));
 		
 		//Chargement des lettres
 		Marble[][] tab = board.getBoard();

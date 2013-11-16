@@ -1,5 +1,6 @@
 package com.mklr.graphics.sprite;
 
+import com.mklr.graphics.engine.GameScreen;
 import com.mklr.graphics.stage.GameStage;
 import com.mklr.ruzzle.engine.Marble;
 
@@ -21,14 +22,16 @@ public class LetterSprite extends Sprite {
 		boardPosition[1] = row;
 	}
 	
-	public void onMousePressedWay(LetterSprite previousLetter){
+	public boolean addLettertoCurrentWorld(LetterSprite previousLetter){
 		if(!selected){
 			selected = true;
 			if(previousLetter == null || (previousLetter != null && this.marble.isNeighbour(previousLetter.boardPosition))){
 				//System.out.println(previousLetter + " " +boardPosition + " " + previousLetter.boardPosition + " " + this.marble.isNeighbour(previousLetter.boardPosition));
 				gamestage.addToCurrentWord(letter);
+				return true;
 			}
 		}
+		return false;
 	}
 
 	   //////////////////////////////////////////////////////////////////
