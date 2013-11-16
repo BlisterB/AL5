@@ -32,7 +32,7 @@ public class GameStage extends Stage {
 		int k = 0;
 		for(int i = 0; i < tab.length; i++){
 			for(int j = 0; j < tab[i].length; j++){
-				letter_array[k] = new LetterSprite(Engine.PATH + "img/fonts/" + tab[i][j].getLetter().getLetter().toString()+".png", getLetterX(i,j), getLetterY(i,j), 30,30, tab[i][j].getLetter().getLetter(), tab[i][j], this);
+				letter_array[k] = new LetterSprite(Engine.PATH + "img/fonts/" + tab[i][j].getLetter().getLetter().toString()+".png", getLetterX(i,j), getLetterY(i,j), 30,30, tab[i][j].getLetter().getLetter(),i, j, tab[i][j], this);
 
 				//Ajout de la lettre
 				sprite_list.add(letter_array[k]);

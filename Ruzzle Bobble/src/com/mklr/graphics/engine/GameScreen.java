@@ -2,13 +2,13 @@ package com.mklr.graphics.engine;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
+import com.mklr.graphics.sprite.LetterSprite;
 import com.mklr.graphics.sprite.Sprite;
 import com.mklr.graphics.stage.GameStage;
 import com.mklr.graphics.stage.Stage;
@@ -20,6 +20,7 @@ import com.mklr.graphics.stage.Stage;
  */
 public class GameScreen extends JPanel implements MouseMotionListener, MouseListener {
 	private Stage stage;
+	private Sprite lastSpritePointed;
 	
 	public GameScreen(){
 		this.setSize(800, 450);
@@ -54,9 +55,11 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
 
 	public void mouseReleased(MouseEvent e) {
 		if(stage instanceof GameStage){
-			System.out.println(((GameStage) stage).getCurrentWorld());
+			if(((GameStage) stage).getCurrentWorld() != "")
+				System.out.println(((GameStage) stage).getCurrentWorld());
 			((GameStage) stage).setCurrentWorld("");
 			((GameStage) stage).flushSelectedLetter();
+			lastSpritePointed = null;
 		}
 	}
 
@@ -97,8 +100,10 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
 			        	s = stage.getSpriteList().get(i);
 			        	if(s.isInCollision(e.getX(), e.getY())){
 			        		s = stage.getSpriteList().get(i);
-			        		if(s instanceof Sprite){
-			        			s.onMousePressedWay();
+			        		if(s instanceof LetterSprite){
+			        			if(lastSpritePointed instanceof LetterSprite || lastSpritePointed == null)
+			        				((LetterSprite)s).onMousePressedWay((LetterSprite)lastSpritePointed);
+			        				lastSpritePointed = s;
 			        		}
 			        	}
 			        }

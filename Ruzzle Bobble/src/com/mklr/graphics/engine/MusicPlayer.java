@@ -36,8 +36,10 @@ public class MusicPlayer {
 	}
 	
 	public void stopPlaying(){
-		sequencer.stop();
-		sequencer.close();
+		if(sequencer != null){
+			sequencer.stop();
+			sequencer.close();
+		}
 	}
 
 	/**

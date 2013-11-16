@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -19,13 +20,13 @@ public class MenuBar extends JMenuBar {
 	
 	//Fichier
 	private JMenu mFichier = new JMenu("Fichier");
-	private JMenuItem iLancerPartie = new JMenuItem("Lancer une partie");
+	private JMenuItem iLancerPartie = new JMenuItem("Lancer une partie personalisée");
 	private JMenuItem iQuitter = new JMenuItem("Quitter");
 	
 	//Options
 	private JMenu mOptions = new JMenu("Options");
 	private JMenu mChoixLangue = new JMenu("Choix de la langue du dictionnaire");
-	private LinkedList <JRadioButtonMenuItem> DicoList;
+	private JRadioButtonMenuItem[] dicoRadioArray;
 	private JMenu mChoixAlgo = new JMenu("Choix de l'algorithme de resolution");
 	private LinkedList <JRadioButtonMenuItem> AlgoList;
 	//Algo
@@ -49,9 +50,17 @@ public class MenuBar extends JMenuBar {
 		
 		//Generation des choix de dictionnaire
 		dicList = engine.getDicList();
+		dicoRadioArray = new JRadioButtonMenuItem[dicList.size()];
+	    ButtonGroup dicoRadioGroup = new ButtonGroup();
+		int i =0;
 		for(Map.Entry<String, RuzzleDictionary> entry : dicList.entrySet()) {
 		    String cle = entry.getKey();
-		    System.out.println(cle);
+		    dicoRadioArray[i] = new JRadioButtonMenuItem(cle);
+		    if(i == 0)
+		    	dicoRadioArray[i].setSelected(true);
+		    dicoRadioGroup.add(dicoRadioArray[i]);
+		    mChoixLangue.add(dicoRadioArray[i]);
+		    i++;
 		}
 		
 		//Ajout des Action Listener
