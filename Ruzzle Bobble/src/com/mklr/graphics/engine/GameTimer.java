@@ -38,14 +38,14 @@ public class GameTimer {
 	public int getDizaineSeconde(){
 		int n = time/1000;//Nombre de Seconde
 		while(n>60){
-			n/=60;
+			n%=60;
 		}
 		return n/10%10;
 	}
 	public int getUniteSeconde(){
 		int n = time/1000;//Nombre de Seconde
 		while(n>60){
-			n/=60;
+			n%=60;
 		}
 		return n%10;
 	}
