@@ -64,12 +64,14 @@ public class GameStage extends Stage {
 			}
 		}
 		
-		//Chargement des nombres du scores
+		//Chargement des nombres du scores et des 2 deux points
 		timeSprite = new NumberSprite[5];
 		for(int i = 0; i < 5; i++){
 			timeSprite[i] = new NumberSprite(600 + 40*i, 10);
 			sprite_list.add(timeSprite[i]);
 		}
+		sprite_list.add(new Sprite("img/fonts/colon.png", 658, 6, 30, 25));
+		sprite_list.add(new Sprite("img/fonts/colon.png", 740, 6, 30, 25));
 		
 		//Personnages
 		sprite_list.add(bub);
