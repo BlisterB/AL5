@@ -1,7 +1,7 @@
 package com.mklr.ruzzle.solver;
 
 import java.util.ArrayList;
-
+import java.util.Collections;
 import java.util.LinkedList;
 
 import com.mklr.collection.Tree;
@@ -12,15 +12,13 @@ import com.mklr.ruzzle.engine.Marble;
 
 public class SolveByMarbleGrid extends Solver {
     RuzzleDictionary dictionary;
-    Board gameBoard;
     Marble[][] marblesBoard;
     ArrayList<SolutionWord> wordsList;
 
     public SolveByMarbleGrid(byte type, RuzzleDictionary d, Board b) {
         super(type);
         this.dictionary = d;
-        this.gameBoard = b;
-        marblesBoard = gameBoard.getGrid();
+        marblesBoard = b.getGrid();
         wordsList = new ArrayList<SolutionWord>();
     }
 
@@ -30,58 +28,65 @@ public class SolveByMarbleGrid extends Solver {
         for (Marble[] marbleRow : marblesBoard) {
             int j = 0;
             for (Marble marble : marbleRow) {
-                System.out.println("DFS MARBLE["+i+"]["+j+"]");
- //               toBlank();
-                dfs(new Integer[]{i, j}, "", 0, dictionary.getDictionaryTree(), new LinkedList<Integer[]>());
+                dfs(new Integer[]{i, j}, new SolutionWord(), 0, 
+                		dictionary.getDictionaryTree(), new LinkedList<Integer[]>());
                 ++j;
             }
             ++i;
         }
+        SolutionWord.changeSortType(Solver.SORT_BY_SCORE);
+        Collections.sort(wordsList, new SolutionWord());
     }
 
-    private void toBlank() {
-        Marble[][] marblesBoard = gameBoard.getGrid();
-
-        for (Marble[] marbleRow : marblesBoard) {
-            for (Marble marble : marbleRow) {
-                marble.setState(Marble.WHITE_STATE);
-            }
-        }
-    }
-
-    private void dfs(Integer[] marbleCoo, String currentWord, 
+    private void dfs(Integer[] marbleCoo, SolutionWord currentWord, 
             int wordLength, Tree<Character> position, LinkedList<Integer[]> path) {
         if (wordLength > dictionary.getMaxLength())
             return;
 
         Marble m = marblesBoard[marbleCoo[0]][marbleCoo[1]]; 
         Letter l = m.getLetter();
+        SolutionWord nextWord = new SolutionWord(currentWord);
         LinkedList<Integer[]> path_cpy = new LinkedList<Integer[]>(path);
         Tree<Character> child = position.getChild(l.getLetter());
         if (child == null)
             return;
 
-        currentWord += l.getLetter();
-
-        if (child.isTerminal() && !wordsList.contains(currentWord))
-            wordsList.add(new SolutionWord(currentWord, 1));
-
-        m.setState(Marble.GREY_STATE);
+        nextWord.addLetter(m);
         path_cpy.add(marbleCoo);
 
-        for (Integer[] neighbours : m.getNeighbours()) {
-            if (!path_cpy.contains(neighbours)) {
-                dfs(neighbours, currentWord, wordLength+1, child, path_cpy);
-            }
+        if (child.isTerminal() && !containsWord(nextWord)) {
+        	nextWord.endWord(path_cpy);
+            wordsList.add(nextWord);
         }
 
-        m.setState(Marble.BLACK_STATE);
+        for (Integer[] neighbours : m.getNeighbours()) {
+            if (!containsNeighbour(path_cpy, neighbours)) {
+                dfs(neighbours, nextWord, wordLength+1, child, path_cpy);
+            }
+        }
     }
 
     private void bfs() {
 
     }
 
+    private boolean containsWord(SolutionWord s) {
+    	String word = s.getWord();
+    	for (SolutionWord as : wordsList) {
+    		if (word.equals(as.getWord()))
+    			return true;
+    	}
+    	return false;
+    }
+    
+    private boolean containsNeighbour(LinkedList<Integer[]> path, Integer[] neighbour) {
+    	for (Integer[] i : path) {
+    		if (i[0].equals(neighbour[0]) && i[1].equals(neighbour[1]))
+    			return true;
+    	}
+    	return false;
+    }
+    
     /**
      * @return the wordsList
      */
