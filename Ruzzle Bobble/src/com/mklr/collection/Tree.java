@@ -169,7 +169,7 @@ public class Tree<T>  implements BasicTree<T>  {
      */
     private void testStatus(int status) 
     		throws BadAttributeValueExpException {  
-    	if (status != TERMINAL || status != NON_TERMINAL)
+    	if (status != TERMINAL && status != NON_TERMINAL)
     		throw new BadAttributeValueExpException(status);
     }
 }

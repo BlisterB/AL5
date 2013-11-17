@@ -27,6 +27,7 @@ public class RuzzleDictionary implements Runnable {
     private Locale locale;
     private Tree<Character> dictionaryTree;
     private LetterSet letterSet;
+    private int maxLength;
 
     /**
      * Create the dictionary.
@@ -53,7 +54,7 @@ public class RuzzleDictionary implements Runnable {
      * and the dictionary given.
      * 
      * The given dictionary must respect the rule :
-     * 	one word by line.
+     *  one word by line.
      * @param locale the langage
      * @param dictionnaryPath path of the dictionary
      */
@@ -61,6 +62,7 @@ public class RuzzleDictionary implements Runnable {
         this.locale = locale;
         this.dictionaryPath = dictionnaryPath;
         dictionaryTree = new Tree<Character>();
+        maxLength = 0;
     }
 
     /**
@@ -106,6 +108,20 @@ public class RuzzleDictionary implements Runnable {
     }
 
     /**
+     * @return the maxLength
+     */
+    public int getMaxLength() {
+        return maxLength;
+    }
+
+    /**
+     * @param maxLength the maxLength to set
+     */
+    public void setMaxLength(int maxLength) {
+        this.maxLength = maxLength;
+    }
+
+    /**
      * It initialize the dictionary object.
      */
     public void init() {
@@ -144,39 +160,47 @@ public class RuzzleDictionary implements Runnable {
      * Create the tree.
      */
     private void createTree() {
-    	try {
-    		FileReader fr = new FileReader(dictionaryPath);
-    		BufferedReader br = new BufferedReader(fr);
-    		
-    		try {
-    			String line = br.readLine();
+        try {
+            FileReader fr = new FileReader(dictionaryPath);
+            BufferedReader br = new BufferedReader(fr);
+            
+            try {
+                String line = br.readLine();
                 while (line != null) {
                     Tree<Character> cur_pos = dictionaryTree;
-                    int length = line.length();
 
                     line = normalizeWord(line);
-                    for (int i = 0; i < length; i++) {
-                        Character c = line.charAt(i);
+                    char lineArray[] = line.toCharArray();
+                    if (lineArray.length > 1) {
+                        if (lineArray.length > maxLength) {
+                            maxLength = lineArray.length;
+                        }
 
-                        if (!cur_pos.childExist(c))
-                            cur_pos.add(c, new Tree<Character>(c));
+                        for (Character c : lineArray) {
+                            c = Character.toLowerCase(c);
+                            Tree<Character> tmp = cur_pos.getChild(c);
 
-                        cur_pos = cur_pos.getChild(c);
+                            if (tmp == null) {
+                                tmp = new Tree<Character>(c);
+                                cur_pos.add(c, tmp);
+                            }
+                                
+                            cur_pos = tmp;
+                        }
+                        cur_pos.setStatus(Tree.TERMINAL);
                     }
-                    
-                    cur_pos.setStatus(Tree.TERMINAL);
 
                     line = br.readLine();
                 }
-    		} catch (Exception e) {
-    			e.printStackTrace();
-    		} finally {
-    			fr.close();
-    			br.close();
-    		}
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                fr.close();
+                br.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void createLetterSet() {
@@ -185,11 +209,12 @@ public class RuzzleDictionary implements Runnable {
         boolean success = true;
     
         if ((locale.getCountry()).equals(Locale.FRENCH)) {
-        	path = Engine.PATH + "config/lang/frFR.set";
+            System.out.println("FRENCH LOCALE");
+            path = Engine.PATH + "config/lang/frFR.set";
         } 
         
         try {
-        	FileReader fr = new FileReader(path);
+            FileReader fr = new FileReader(path);
             BufferedReader br = new BufferedReader(fr);
 
             try {
@@ -207,7 +232,7 @@ public class RuzzleDictionary implements Runnable {
                     if (splittedLine.length != 3
                             && (splittedLine[0].length() > 1)) {
                         System.out.println("The line is incorrect : \n" + line
-                        		+ "DEFAULT VALUE INITIALIZED.");
+                                + "DEFAULT VALUE INITIALIZED.");
                         success = false;
                         break;
                     }
@@ -226,7 +251,7 @@ public class RuzzleDictionary implements Runnable {
                     Letter newOne = new Letter(c, value, percentage);
                     if (letterSet.contains(newOne)) {
                         System.out.println("Letter " + c + " already exist"
-                        		+ "DEFAULT VALUE INITIALIZED.");
+                                + "DEFAULT VALUE INITIALIZED.");
                         success = false;
                         break;
                     }
@@ -236,22 +261,22 @@ public class RuzzleDictionary implements Runnable {
                     line = br.readLine();
                 }
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             } finally {
-            	fr.close();
+                fr.close();
                 br.close();
             }
         } catch (Exception e) {
-        	success = false;
+            success = false;
             System.out.println("Le fichier de configuration de la langue "
-            		+ "anglaise n'est pas disponible : "
+                    + "anglaise n'est pas disponible : "
                     + e.getMessage());
         } finally {
-        	if (success == false) {
-        		letterSet = new LetterSet(locale);
+            if (success == false) {
+                letterSet = new LetterSet(locale);
                 
                 for(int i = 97; i < 123; i++) {
-                	letterSet.add( new Letter((char)i, 1, 100.0/26.0));
+                    letterSet.add( new Letter((char)i, 1, 100.0/26.0));
                 }
             }
         }
@@ -262,10 +287,9 @@ public class RuzzleDictionary implements Runnable {
      * It returns the word without any capitalize characters and without
      * any accent.
      * @param s
-     * @return
+     * @return the normalized string
      */
     private String normalizeWord(String s) {
-        s = s.toLowerCase();
         return Normalizer.normalize(s, Normalizer.Form.NFD)
             .replaceAll("[\u0300-\u036F]", "");
     }

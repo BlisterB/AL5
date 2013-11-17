@@ -1,7 +1,6 @@
 package com.mklr.ruzzle.engine;
 
 import java.util.ArrayList;
-
 import java.util.Arrays;
 
 import com.mklr.ruzzle.data.Letter;

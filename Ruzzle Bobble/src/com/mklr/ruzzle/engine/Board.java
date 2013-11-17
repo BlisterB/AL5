@@ -2,10 +2,10 @@ package com.mklr.ruzzle.engine;
 
 import java.util.ArrayList;
 
-import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
+import com.mklr.collection.AbstractGrid;
 import com.mklr.ruzzle.data.RuzzleDictionary;
 import com.mklr.ruzzle.data.Letter;
 
@@ -15,10 +15,8 @@ import com.mklr.ruzzle.data.Letter;
  * @author Loic Runarvot
  * @author Mehdi Khelifi
  */
-public class Board {
-    private int row;
+public class Board extends AbstractGrid<Marble>{
     private int score;
-    private Marble[][] board;
     private Locale locale;
     private RuzzleDictionary dico;
 
@@ -53,16 +51,10 @@ public class Board {
      * @param dico
      */
     public Board(int row, Locale locale, RuzzleDictionary dico) {
-        this.row = row;
+        super(row);
         this.dico = dico;
         score = 0;
         this.locale = locale;
-
-        board = new Marble[2 * row][];
-        for(int i = 0; i <= row/2; i++) {
-            board[i] = new Marble[(2 * row) + (2 * i) + 1];
-            board[(2 * row) - i - 1] = new Marble[(2 * row) + (2 * i) + 1];
-        }
     }
 
     /**
@@ -94,20 +86,6 @@ public class Board {
     }
 
     /**
-     * @return the board
-     */
-    public Marble[][] getBoard() {
-        return board;
-    }
-
-    /**
-     * @param board the board to set
-     */
-    public void setBoard(Marble[][] board) {
-        this.board = board;
-    }
-    
-    /**
      * @return the locale
      */
     public Locale getLocale() {
@@ -135,11 +113,28 @@ public class Board {
         this.dico = dico;
     }
 
+    public Marble[][] getBoard() {
+        return super.getGrid();
+    }
+
     /**
      * Initialize the board.
      * MUST BE CALLED BEFORE PLAYING THE GAME !!
      */
     public void init() {
+        tGrid = new Marble[2 * row][];
+        for(int i = 0; i <= row/2; i++) {
+            tGrid[i] = new Marble[(2 * row) + (2 * i) + 1];
+            tGrid[(2 * row) - i - 1] = new Marble[(2 * row) + (2 * i) + 1];
+        }
+
+        fillGrid();
+    }
+
+    /**
+     *  Fill the grid.
+     */
+    private void fillGrid() {
         // TODO
         Random r = new Random();
         int cpt_star = 2;
@@ -147,31 +142,37 @@ public class Board {
         int cpt_word_count_triple = 1;
         int cpt_letter_count_double = 2;
         int cpt_letter_count_triple = 1;
-
-        long beg = (new Date().getTime());
-
-        if (dico != null) {
+/*
+        if (dico == null) {
             //TODO temporary, change condition after
         }
-        else {
+        else {*/
             System.err.println("No Dictionary found... Board will be created"
                     + " with random letters...");
-            for (int i = 0; i < board.length; i++) {
-                for (int j = 0; j < board[i].length; j++) {
+            for (int i = 0; i < tGrid.length; i++) {
+                for (int j = 0; j < tGrid[i].length; j++) {
                     int random = r.nextInt(26) + 97;
-                    board[i][j] = new Marble(new Letter((char)random, 1));
+                    tGrid[i][j] = new Marble(new Letter((char)random, 1));
 
                     //TODO Gérer les bonus
                     addNeighbours(i, j);
                 }   
             }
-        }
-        board[board.length-1][board[board.length-1].length-1] = new Marble(new Letter('*', 1));
+       // }
 
-        board[0][1].setBonus(Marble.LETTER_COUNT_DOUBLE);
-        board[1][2].setBonus(Marble.LETTER_COUNT_TRIPLE);
-        board[3][2].setBonus(Marble.WORD_COUNT_DOUBLE);
-        board[2][1].setBonus(Marble.WORD_COUNT_TRIPLE);
+        tGrid[0][0] = new Marble(new Letter('m', 1));
+        addNeighbours(0, 0);
+        tGrid[1][0] = new Marble(new Letter('o', 1));
+        addNeighbours(1, 0);
+        tGrid[2][0] = new Marble(new Letter('v', 1));
+        addNeighbours(2, 0);
+        tGrid[3][0] = new Marble(new Letter('e', 1));
+        addNeighbours(3, 0);
+        
+        tGrid[0][1].setBonus(Marble.LETTER_COUNT_DOUBLE);
+        tGrid[1][2].setBonus(Marble.LETTER_COUNT_TRIPLE);
+        tGrid[3][2].setBonus(Marble.WORD_COUNT_DOUBLE);
+        tGrid[2][1].setBonus(Marble.WORD_COUNT_TRIPLE);
     }
 
     /**
@@ -186,13 +187,13 @@ public class Board {
                         : ((j&1) == 0 ? i+1 : i-1));
 
         for (int currentLine = i-1; currentLine < i+2; currentLine++) {
-            if (currentLine < 0 || currentLine >= board.length)
+            if (currentLine < 0 || currentLine >= tGrid.length)
                 continue;
 
             for (int currentMarble = j-(2*row); 
                     currentMarble <= j+(2*row); currentMarble++) {
                 if (currentMarble < 0 
-                        || currentMarble >= board[currentLine].length
+                        || currentMarble >=tGrid[currentLine].length
                         || (currentLine == i && currentMarble == j)
                         || !toAdd(currentLine == lineOfTheTop,
                                     currentLine, currentMarble,
@@ -205,7 +206,7 @@ public class Board {
             }
         }
 
-        board[i][j].setNeighbours(newNeighbours);
+        tGrid[i][j].setNeighbours(newNeighbours);
     }
     
     /**
@@ -243,7 +244,7 @@ public class Board {
         String result = new String();
 
         result += "\n";
-        for(Marble[] m1 : board) {
+        for(Marble[] m1 : tGrid) {
             for (Marble m2 : m1) {
                 System.out.print(m2);
             }
