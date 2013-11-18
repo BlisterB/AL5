@@ -24,9 +24,9 @@ public class LetterSprite extends Sprite {
 	
 	public boolean addLettertoCurrentWorld(LetterSprite previousLetter){
 		if(!selected){
-			selected = true;
 			if(previousLetter == null || (previousLetter != null && this.marble.isNeighbour(previousLetter.boardPosition))){
 				//System.out.println(previousLetter + " " +boardPosition + " " + previousLetter.boardPosition + " " + this.marble.isNeighbour(previousLetter.boardPosition));
+				setSelected(true);
 				gamestage.addToCurrentWord(letter);
 				return true;
 			}
@@ -34,6 +34,17 @@ public class LetterSprite extends Sprite {
 		return false;
 	}
 
+	/**
+	 * @param selected the selected to set
+	 */
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+		if(selected)
+			this.setTransparency((float)0.5);
+		else
+			this.setTransparency((float)1);
+	}
+	
 	   //////////////////////////////////////////////////////////////////
 	  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
 	 //////////////////////////////////////////////////////////////////
@@ -45,12 +56,7 @@ public class LetterSprite extends Sprite {
 		return letter;
 	}
 
-	/**
-	 * @param selected the selected to set
-	 */
-	public void setSelected(boolean selected) {
-		this.selected = selected;
-	}
+
 
 	/**
 	 * @return the marble

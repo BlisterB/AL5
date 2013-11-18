@@ -1,5 +1,6 @@
 package com.mklr.graphics.sprite;
 
+import java.awt.AlphaComposite;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.io.File;
@@ -16,6 +17,7 @@ public class Sprite{
 	boolean animated;
 	int animation;
 	boolean inMove;
+	protected AlphaComposite alphaComposite = null;
 
 	public Sprite(){
 		
@@ -112,6 +114,10 @@ public class Sprite{
 		return array;
 	}
 	
+	public void setTransparency(float t){
+		alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, t);
+	}
+	
    //////////////////////////////////////////////////////////////////
   ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
  //////////////////////////////////////////////////////////////////
@@ -180,6 +186,18 @@ public class Sprite{
 	 */
 	public boolean isInMove() {
 		return inMove;
+	}
+	/**
+	 * @return the alphaComposite
+	 */
+	public AlphaComposite getAlphaComposite() {
+		return alphaComposite;
+	}
+	/**
+	 * @param alphaComposite the alphaComposite to set
+	 */
+	public void setAlphaComposite(AlphaComposite alphaComposite) {
+		this.alphaComposite = alphaComposite;
 	}
 	
 }

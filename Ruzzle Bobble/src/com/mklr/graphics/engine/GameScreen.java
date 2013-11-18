@@ -1,7 +1,9 @@
 package com.mklr.graphics.engine;
 
+import java.awt.AlphaComposite;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -36,6 +38,8 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
 	
 	/**La methode paintComponent recupere la liste de sprite de la sequence en cours et les affiches successivement**/
 	public void paintComponent(Graphics g){
+		Graphics2D g2 = (Graphics2D) g ;
+		
 		Sprite sprite;//Tampon
 		if(stage != null){
 			//Raffraichissement du stage
@@ -48,7 +52,14 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
 			if(stage.getSpriteList() != null){
 				for(int i = 0; i < stage.getSpriteList().size(); i++){
 					sprite = stage.getSpriteList().get(i);
-					g.drawImage(sprite.getImage(), sprite.getRect().x, sprite.getRect().y, this);
+					//On distingue le cas ou on doit gérer la transparence ou non (pour economiser de la memoire)
+					if(sprite.getAlphaComposite() == null)
+						g.drawImage(sprite.getImage(), sprite.getRect().x, sprite.getRect().y, this);
+					else{
+						g2.setComposite(sprite.getAlphaComposite());
+						g2.drawImage(sprite.getImage(), sprite.getRect().x, sprite.getRect().y, this);
+						g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+					}
 				}
 			}
 		}
