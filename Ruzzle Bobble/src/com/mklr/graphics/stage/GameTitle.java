@@ -4,6 +4,7 @@ import com.mklr.graphics.engine.Engine;
 import com.mklr.graphics.engine.MusicPlayer;
 import com.mklr.graphics.sprite.Bob;
 import com.mklr.graphics.sprite.Bub;
+import com.mklr.graphics.sprite.BubLoading;
 import com.mklr.graphics.sprite.InterfaceSprite;
 import com.mklr.graphics.sprite.Sprite;
 
@@ -11,8 +12,10 @@ import com.mklr.graphics.sprite.Sprite;
 public class GameTitle extends Stage{
 	private Bub bub;
 	private Bob bob;
+	private BubLoading bubLoading;
 	private Sprite titleSprite;
 	private InterfaceSprite jouerInterface;
+	private Sprite textLoadingSprite;
 	private boolean animation;//Definie si on continue a bouger les elements a l'ecran ou non
 	
 	public GameTitle(Engine engine){
@@ -25,12 +28,16 @@ public class GameTitle extends Stage{
 		jouerInterface = new InterfaceSprite(Engine.PATH + "img/interface/jouer.png", 200, 450, 400, 100, Stage.VALIDATE, this);
 		bub = new Bub(800, 150, Bub.FEAR);
 		bob = new Bob(850, 150, Bob.BUBBLE_LEFT);
+		bubLoading = new BubLoading(0, 410, BubLoading.LOADING);
+		textLoadingSprite = new Sprite(Engine.PATH + "img/bub_loading/chargement.png", 60, 425, 275, 25);
 		
 		//Ajout des composants a la sprite_list
 		sprite_list.add(titleSprite);
 		sprite_list.add(jouerInterface);
 		sprite_list.add(bub);
 		sprite_list.add(bob);
+		sprite_list.add(bubLoading);
+		sprite_list.add(textLoadingSprite);
 		
 		//Mise en mouvement des composants
 		animation = true;

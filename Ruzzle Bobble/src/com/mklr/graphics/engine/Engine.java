@@ -81,7 +81,7 @@ public class Engine implements Runnable{
 	}
 	
 	public void dictAreLoaded(){
-		
+		System.out.println("Dico chargé");
 	}
 	
 	   //////////////////////////////////////////////////////////////////
