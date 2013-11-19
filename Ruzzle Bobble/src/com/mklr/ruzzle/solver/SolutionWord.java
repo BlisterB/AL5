@@ -131,8 +131,10 @@ public class SolutionWord
     	++length;
     }
 
-    public void addLetter(Letter l) {
-        score += l.getValue();
+    public void addLetter(Letter l, boolean joker) {
+        if (!joker)
+            score += l.getValue();
+
         word += l.getLetter();
         ++length;
     }
