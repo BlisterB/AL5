@@ -135,16 +135,38 @@ public class RuzzleDictionary implements Runnable {
      * @return true if the word exists
      */
     public boolean searchWord(String word) {
-        int length = word.length();
-        Tree<Character> cur_pos = dictionaryTree;
-        
-        for (int i = 0; i < length; i++) {
-            Character c = word.charAt(i);
+        return searchWord(dictionaryTree, word);
+    }
 
-            if (cur_pos.childExist(c))
-                cur_pos = cur_pos.getChild(c);
-            else
+    public boolean searchWord(Tree<Character> beg, String word) {
+        Tree<Character> cur_pos = beg;
+
+        char[] wordArray = word.toCharArray();
+        for (int i = 0; i < wordArray.length; i++) {
+            Character c = wordArray[i];
+
+            if (c.charValue() == '*') {
+                char[] nextPart = new char[wordArray.length - i - 1];
+
+                for (int j = 0, k = i+1; j < nextPart.length; j++)
+                    nextPart[j] = wordArray[k++];
+
+                if (nextPart.length == 0)
+                    return true;
+                
+                for (Tree<Character> child
+                        : cur_pos.getListOfChilds().values()) {
+                    if (searchWord(child, new String(nextPart)))
+                        return true;
+                }
+
                 return false;
+            } else {
+                if (cur_pos.childExist(c))
+                    cur_pos = cur_pos.getChild(c);
+                else
+                    return false;
+            }
         }
 
         return cur_pos.isTerminal();
@@ -175,7 +197,7 @@ public class RuzzleDictionary implements Runnable {
                         if (lineArray.length > maxLength) {
                             maxLength = lineArray.length;
                         }
-
+                        
                         for (Character c : lineArray) {
                             c = Character.toLowerCase(c);
                             Tree<Character> tmp = cur_pos.getChild(c);

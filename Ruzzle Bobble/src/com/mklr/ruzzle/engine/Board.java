@@ -164,7 +164,7 @@ public class Board extends AbstractGrid<Marble>{
         addNeighbours(0, 0);
         tGrid[1][0] = new Marble(new Letter('o', 1));
         addNeighbours(1, 0);
-        tGrid[2][0] = new Marble(new Letter('v', 1));
+        tGrid[2][0] = new Marble(new Letter('*', 0));
         addNeighbours(2, 0);
         tGrid[3][0] = new Marble(new Letter('e', 1));
         addNeighbours(3, 0);

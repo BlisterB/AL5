@@ -61,7 +61,7 @@ public class TestDictionnary {
 
         System.out.println(al);
         */
-
+        
         RuzzleDictionary d = new RuzzleDictionary();
         d.init();
         Board b = new Board(2, Locale.ENGLISH, d);
@@ -81,6 +81,6 @@ public class TestDictionnary {
         System.out.println(solver.getWordsList());
         System.out.println("====== SOLVER ======");
 
-        System.out.println("\n\nAlg done in " + ((double)(end-beg)/(1000.0)) + "s.");
+        System.out.println("\n\nAlg done in " + ((double)(end-beg)/(1000.0)) + "s."); 
     }
 }

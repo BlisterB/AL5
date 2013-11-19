@@ -106,15 +106,15 @@ public class SolutionWord
     
     public void addLetter(Marble m) {
     	Letter l = m.getLetter();
-    	int score = l.getValue();
+    	int l_score = l.getValue();
     	Character letter = l.getLetter();
     	
     	switch (m.getBonus()) {
     		case Marble.LETTER_COUNT_DOUBLE :
-    			score *= 2;
+    			l_score *= 2;
     			break;
     		case Marble.LETTER_COUNT_TRIPLE :
-    			score *= 3;
+    			l_score *= 3;
     			break;
     		case Marble.WORD_COUNT_DOUBLE :
     			wordMultiplicator *= 2;
@@ -126,9 +126,15 @@ public class SolutionWord
     			break;
     	}
     	
-    	this.score += score;
+    	score += l_score;
     	word += letter;
     	++length;
+    }
+
+    public void addLetter(Letter l) {
+        score += l.getValue();
+        word += l.getLetter();
+        ++length;
     }
     
     public void endWord(LinkedList<Integer[]> path) {

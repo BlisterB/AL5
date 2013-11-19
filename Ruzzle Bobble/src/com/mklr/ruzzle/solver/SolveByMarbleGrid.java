@@ -43,25 +43,42 @@ public class SolveByMarbleGrid extends Solver {
         if (wordLength > dictionary.getMaxLength())
             return;
 
+        SolutionWord nextWord;
         Marble m = marblesBoard[marbleCoo[0]][marbleCoo[1]]; 
         Letter l = m.getLetter();
-        SolutionWord nextWord = new SolutionWord(currentWord);
+        
         LinkedList<Integer[]> path_cpy = new LinkedList<Integer[]>(path);
-        Tree<Character> child = position.getChild(l.getLetter());
-        if (child == null)
-            return;
-
-        nextWord.addLetter(m);
         path_cpy.add(marbleCoo);
 
-        if (child.isTerminal() && !containsWord(nextWord)) {
-        	nextWord.endWord(path_cpy);
-            wordsList.add(nextWord);
-        }
+        if (l.getLetter() == '*') {
+            for (Tree<Character> child : position.getListOfChilds().values()) {
+                nextWord = new SolutionWord(currentWord);
+                nextWord.addLetter(dictionary.getLetterSet()
+                            .getLetter(child.getNodeValue()));
+                for (Integer[] neighbours : m.getNeighbours()) {
+                    if (!containsNeighbour(path_cpy, neighbours)) {
+                        dfs(neighbours, nextWord, 
+                                wordLength + 1, child, path_cpy);
+                    }
+                }
+            }
+        } else {
+            nextWord = new SolutionWord(currentWord);
+            Tree<Character> child = position.getChild(l.getLetter());
+            if (child == null)
+                return;
 
-        for (Integer[] neighbours : m.getNeighbours()) {
-            if (!containsNeighbour(path_cpy, neighbours)) {
-                dfs(neighbours, nextWord, wordLength+1, child, path_cpy);
+            nextWord.addLetter(m);
+
+            if (child.isTerminal() && !containsWord(nextWord)) {
+        	    nextWord.endWord(path_cpy);
+                wordsList.add(nextWord);
+            }
+
+            for (Integer[] neighbours : m.getNeighbours()) {
+                if (!containsNeighbour(path_cpy, neighbours)) {
+                    dfs(neighbours, nextWord, wordLength+1, child, path_cpy);
+                }
             }
         }
     }
