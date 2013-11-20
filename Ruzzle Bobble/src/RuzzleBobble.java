@@ -72,8 +72,6 @@ public class RuzzleBobble {
             i++;
         }
 
-        System.out.println("All dictionary loaded");
         engine.dictAreLoaded();
-        System.out.println("FUCK YOU");
 	}
 }

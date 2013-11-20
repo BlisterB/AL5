@@ -130,7 +130,10 @@ public class Sprite{
 				else
 					transparency = alphaComposite.getAlpha();
 				while(transparency > 0){
-					transparency -= 0.1;
+					if(transparency > 0.1f)
+						transparency -= 0.1;
+					else
+						transparency = 0;
 					alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, transparency);
 					sleep(periode);
 				}

@@ -72,6 +72,7 @@ public class GameTitle extends Stage{
 	}
 	
 	public void dictAreLoaded() {
+		System.out.println("Les dictionnaires sont chargés, on peut afficher le bouton jouer");
 		bubLoading.setTransparency(0f, 10);
 		textLoadingSprite.setTransparency(0f, 10);
 		jouerInterface = new InterfaceSprite(Engine.PATH + "img/interface/jouer.png", 200, 450, 400, 100, Stage.VALIDATE, this);
