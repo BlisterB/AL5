@@ -9,7 +9,6 @@ import com.mklr.ruzzle.data.RuzzleDictionary;
 
 
 public class RuzzleBobble {
-	public static void method(){}
 	public static final String PATH = "";
     
     private static Thread[] threadArray;

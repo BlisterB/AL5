@@ -25,7 +25,6 @@ public class GameTitle extends Stage{
 		//Initialisation des composants
 		this.background = new Sprite(Engine.PATH + "img/background/game_title.png");
 		titleSprite = new Sprite(Engine.PATH + "img/interface/title.png", 300, -150, 200, 150);
-		jouerInterface = new InterfaceSprite(Engine.PATH + "img/interface/jouer.png", 200, 450, 400, 100, Stage.VALIDATE, this);
 		bub = new Bub(800, 150, Bub.FEAR);
 		bob = new Bob(850, 150, Bob.BUBBLE_LEFT);
 		bubLoading = new BubLoading(0, 410, BubLoading.LOADING);
@@ -33,7 +32,6 @@ public class GameTitle extends Stage{
 		
 		//Ajout des composants a la sprite_list
 		sprite_list.add(titleSprite);
-		sprite_list.add(jouerInterface);
 		sprite_list.add(bub);
 		sprite_list.add(bob);
 		sprite_list.add(bubLoading);
@@ -49,7 +47,6 @@ public class GameTitle extends Stage{
 			public void run(){
 				//Arrive de l'ecran et du bouton jouer
 				titleSprite.move(300, 0, 5);
-				jouerInterface.move(200, 325, 5);
 				
 				//Boucle du gag de Bub et Bob
 				while(animation){
@@ -74,8 +71,16 @@ public class GameTitle extends Stage{
 		
 	}
 	
+	public void dictAreLoaded() {
+		bubLoading.setTransparency(0f, 10);
+		textLoadingSprite.setTransparency(0f, 10);
+		jouerInterface = new InterfaceSprite(Engine.PATH + "img/interface/jouer.png", 200, 450, 400, 100, Stage.VALIDATE, this);
+		sprite_list.add(jouerInterface);
+		jouerInterface.move(200, 325, 5);
+	}
+	
 	public void interaction(int function){
-		if (function == 1){
+		if (function == 1){//Clic sur le bouton jouer
 			engine.setGameStage();
 		}
 	}
