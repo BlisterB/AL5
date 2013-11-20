@@ -62,6 +62,18 @@ public class LetterSet extends HashSet<Letter>
         return result;
     }
 
+    public Letter getLetterByPercentage(double percentage) {
+        for (Letter l : this) {
+            System.out.println(l);
+            double[] letterPercentages = l.getPercentage();
+            if (percentage >= letterPercentages[0] 
+                    && percentage < letterPercentages[1])
+                return l;
+        }
+
+        return null;
+    }
+
     /**
      * Return the letter needed in the Set.
      * It'll be search with the given Character.

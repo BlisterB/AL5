@@ -66,13 +66,14 @@ public class TestDictionnary {
         d.init();
         Board b = new Board(2, Locale.ENGLISH, d);
         b.init();
-
         System.out.println("====== BOARD ======");
         System.out.println(b);
         System.out.println("====== BOARD ======");
 
         System.out.println("\n\n");
 
+        d.getLetterSet().getLetterByPercentage(10.0);
+/*       
         System.out.println("====== SOLVER ======");
         SolveByMarbleGrid solver = new SolveByMarbleGrid(Solver.SORT_BY_NAME, d, b);
         long beg = new Date().getTime();
@@ -82,5 +83,6 @@ public class TestDictionnary {
         System.out.println("====== SOLVER ======");
 
         System.out.println("\n\nAlg done in " + ((double)(end-beg)/(1000.0)) + "s."); 
+        */
     }
 }
