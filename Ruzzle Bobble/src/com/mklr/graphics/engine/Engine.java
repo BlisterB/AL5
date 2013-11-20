@@ -81,7 +81,9 @@ public class Engine implements Runnable{
 	}
 	
 	public void dictAreLoaded(){
-		System.out.println("Dictionnaires chargés");
+		if(stage instanceof GameTitle){
+			((GameTitle)stage).dictAreLoaded();
+		}
 	}
 	
 	   //////////////////////////////////////////////////////////////////
