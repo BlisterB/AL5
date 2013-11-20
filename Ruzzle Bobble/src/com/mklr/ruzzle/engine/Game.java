@@ -16,7 +16,7 @@ public class Game {
         gameDictionary = d;
     }
 
-    public int getScore(ArrayList<Marble> path, String word) {
+    public int getScoreofMove(ArrayList<Marble> path, String word) {
         int score = 0;
         int wordMultiplicator = 1;
         if (!gameDictionary.searchWord(word))

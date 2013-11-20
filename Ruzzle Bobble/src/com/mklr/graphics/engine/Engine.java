@@ -7,6 +7,7 @@ import com.mklr.graphics.stage.GameTitle;
 import com.mklr.graphics.stage.Stage;
 import com.mklr.ruzzle.data.RuzzleDictionary;
 import com.mklr.ruzzle.engine.Board;
+import com.mklr.ruzzle.engine.Game;
 
 /**La classe Engine represente le moteur de jeu
  * C'est elle qui charge les sequences du jeu et commande le raffraichissement du GameScreen.
@@ -44,13 +45,13 @@ public class Engine implements Runnable{
 		this.stage.close();
 		
 		//Creation du jeu PROVISOIRE
-		Board d = new Board();
-		d.init();
-		System.out.println(d);
+		Board board = new Board();
+		board.init();
+		Game game = new Game(this, board, dicList.get("french.dict"));
 		
 		
 		//Lancement de la phase de jeu
-		this.stage = new GameStage(this, d);
+		this.stage = new GameStage(this, board, game);
 		gamescreen.setStage(stage);
 	}
 	
@@ -133,5 +134,4 @@ public class Engine implements Runnable{
 	public void setDicList(HashMap<String, RuzzleDictionary> dicList) {
 		this.dicList = dicList;
 	}
-	
 }

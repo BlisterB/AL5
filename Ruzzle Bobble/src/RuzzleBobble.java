@@ -53,7 +53,7 @@ public class RuzzleBobble {
 		
 		
 		//Creation du moteur de jeu
-		Engine engine = new Engine(dicList/*,Game game*/);
+		Engine engine = new Engine(dicList);
 		//game.setEngine(engine);
 		
 		//Creation de la fenetre

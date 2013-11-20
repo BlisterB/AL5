@@ -76,10 +76,7 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
 
 	public void mouseReleased(MouseEvent e) {
 		if(stage instanceof GameStage){
-			if(((GameStage) stage).getCurrentWorld() != "")
-				System.out.println(((GameStage) stage).getCurrentWorld());
-			((GameStage) stage).setCurrentWorld("");
-			((GameStage) stage).flushSelectedLetter();
+			((GameStage)stage).sendCurrentWord();
 			lastSpritePointed = null;
 		}
 	}

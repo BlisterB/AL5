@@ -25,9 +25,9 @@ public class LetterSprite extends Sprite {
 	public boolean addLettertoCurrentWorld(LetterSprite previousLetter){
 		if(!selected){
 			if(previousLetter == null || (previousLetter != null && this.marble.isNeighbour(previousLetter.boardPosition))){
-				//System.out.println(previousLetter + " " +boardPosition + " " + previousLetter.boardPosition + " " + this.marble.isNeighbour(previousLetter.boardPosition));
 				setSelected(true);
 				gamestage.addToCurrentWord(letter);
+				gamestage.getMarblesOfTheCurrentWord().add(marble);
 				return true;
 			}
 		}

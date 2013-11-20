@@ -1,5 +1,7 @@
 package com.mklr.graphics.stage;
 
+import java.util.ArrayList;
+
 import com.mklr.graphics.engine.Engine;
 import com.mklr.graphics.engine.GameTimer;
 import com.mklr.graphics.engine.MusicPlayer;
@@ -10,21 +12,25 @@ import com.mklr.graphics.sprite.LetterSprite;
 import com.mklr.graphics.sprite.NumberSprite;
 import com.mklr.graphics.sprite.Sprite;
 import com.mklr.ruzzle.engine.Board;
+import com.mklr.ruzzle.engine.Game;
 import com.mklr.ruzzle.engine.Marble;
 
 public class GameStage extends Stage {
 	private Bub bub = new Bub(560, 330, Bub.STANDING);
 	private Bob bob = new Bob(610, 330, Bob.STANDING);
 	private Board board;
-	private String currentWorld = "";
+	private String currentWord = "";
+	private ArrayList<Marble> marblesOfTheCurrentWord = new ArrayList<Marble>() ;
 	private LetterSprite[] letter_array = new LetterSprite[24];
 	private GameTimer timer;
 	private NumberSprite[] timeSprite;
 	private Sprite[] scoreSprite;
+	private Game game;
 	
-	public GameStage(Engine engine, Board board){
+	public GameStage(Engine engine, Board board, Game game){
 		super(engine);
 		this.board = board;
+		this.game = game;
 		this.musicPlayer = new MusicPlayer("music/gamestage.mid");
 		this.timer = new GameTimer(1000 * 60 * 2, this);
 		
@@ -84,10 +90,21 @@ public class GameStage extends Stage {
 	 //////////////////////////////////////////////////////////////////	
 	
 	public void addToCurrentWord(char letter){
-		currentWorld = currentWorld + letter;
+		currentWord = currentWord + letter;
+	}
+	
+	public void sendCurrentWord(){
+		//On envoie à game le mot actuel et la liste de marbles associée
+		int scoreOfTheMove = game.getScoreofMove(marblesOfTheCurrentWord, currentWord);
+		System.out.println("Score du mot : " + currentWord + " -> " + scoreOfTheMove);
+		
+		//On efface le mot courant ainsi que sa liste de marble associée
+		currentWord = "";
+		flushSelectedLetter();
 	}
 	
 	public void flushSelectedLetter(){
+		marblesOfTheCurrentWord.clear();
         for(int i = 0; i < letter_array.length; i++){
         	letter_array[i].setSelected(false);
         }
@@ -178,13 +195,13 @@ public class GameStage extends Stage {
 	 * @return the currentWorld
 	 */
 	public String getCurrentWorld() {
-		return currentWorld;
+		return currentWord;
 	}
 	/**
 	 * @param currentWorld the currentWorld to set
 	 */
 	public void setCurrentWorld(String currentWorld) {
-		this.currentWorld = currentWorld;
+		this.currentWord = currentWorld;
 	}
 	/**
 	 * @return the letter_array
@@ -209,6 +226,24 @@ public class GameStage extends Stage {
 	 */
 	public void setTimer(GameTimer timer) {
 		this.timer = timer;
+	}
+
+	public ArrayList<Marble> getMarblesOfTheCurrentWord() {
+		return marblesOfTheCurrentWord;
+	}
+
+	/**
+	 * @return the game
+	 */
+	public Game getGame() {
+		return game;
+	}
+
+	/**
+	 * @param game the game to set
+	 */
+	public void setGame(Game game) {
+		this.game = game;
 	}
 	
 }
