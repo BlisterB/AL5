@@ -9,6 +9,7 @@ public class Game {
 	private Engine engine;
     private Board gameBoard;
     private RuzzleDictionary gameDictionary;
+    private int score;
 
     public Game(Engine e, Board b, RuzzleDictionary d) {
         engine = e;
@@ -47,6 +48,7 @@ public class Game {
 
         return (score * wordMultiplicator);
     }
+
 	//options : langue
 	//tester les mots
 	
@@ -54,4 +56,18 @@ public class Game {
 	
 	//f getScore qui recoit la chaine de caractere et renvoie le score
 	// -1 si le mot n'existe pas... > 0 sinon
+    
+	/**
+	 * @return the score
+	 */
+	public int getScore() {
+		return score;
+	}
+
+	/**
+	 * @param score the score to set
+	 */
+	public void setScore(int score) {
+		this.score = score;
+	} 
 }
