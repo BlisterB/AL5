@@ -62,8 +62,18 @@ public class RuzzleBobble {
 		//Lancement de l ecran de titre
 		engine.setGameTitle();
 
-        while (allFinished());
+        int i = 1;
+        while (!allFinished()) {
+            try {
+                Thread.sleep(100);
+            } catch (Exception e) {
+            }
+            System.out.println("i : " + i + "\n");
+            i++;
+        }
+
         System.out.println("All dictionary loaded");
         engine.dictAreLoaded();
+        System.out.println("FUCK YOU");
 	}
 }

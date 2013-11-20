@@ -229,7 +229,8 @@ public class RuzzleDictionary implements Runnable {
         letterSet = new LetterSet(locale);
         String path = Engine.PATH + "config/lang/enEN.set";
         boolean success = true;
-    
+        double lastPercentage = 0.0;
+
         if ((locale.getCountry()).equals(Locale.FRENCH)) {
             System.out.println("FRENCH LOCALE");
             path = Engine.PATH + "config/lang/frFR.set";
@@ -270,7 +271,10 @@ public class RuzzleDictionary implements Runnable {
                         break;
                     }
 
-                    Letter newOne = new Letter(c, value, percentage);
+                    Letter newOne = new Letter(c, value, 
+                            new double[]{lastPercentage, lastPercentage + percentage});
+                    lastPercentage += percentage;
+
                     if (letterSet.contains(newOne)) {
                         System.out.println("Letter " + c + " already exist"
                                 + "DEFAULT VALUE INITIALIZED.");
@@ -298,7 +302,10 @@ public class RuzzleDictionary implements Runnable {
                 letterSet = new LetterSet(locale);
                 
                 for(int i = 97; i < 123; i++) {
-                    letterSet.add( new Letter((char)i, 1, 100.0/26.0));
+                    double percentage = (100.0/26.0) + lastPercentage;
+                    letterSet.add( new Letter((char)i, 1, 
+                                new double[]{lastPercentage, percentage}));
+                    lastPercentage += percentage;
                 }
             }
         }
