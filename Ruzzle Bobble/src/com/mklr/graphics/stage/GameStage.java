@@ -24,7 +24,7 @@ public class GameStage extends Stage {
 	private LetterSprite[] letter_array = new LetterSprite[24];
 	private GameTimer timer;
 	private NumberSprite[] timeSprite;
-	private Sprite[] scoreSprite;
+	private NumberSprite[] scoreSprite; //0 est l'unite, 1 la dizaine etc.
 	private Game game;
 	
 	public GameStage(Engine engine, Board board, Game game){
@@ -39,7 +39,7 @@ public class GameStage extends Stage {
 		sprite_list.add(new InterfaceSprite(Engine.PATH + "img/interface/afficher_les_mots.png", 50, 375, 275, 50, 1, this)); //Bouton Valider
 		//sprite_list.add(new Sprite(Engine.PATH + "img/interface/interface_game.png", 0, 0, 0, 0));
 		
-		//Chargement des lettres
+		//Chargement des lettres du board
 		Marble[][] tab = board.getBoard();
 		int k = 0;
 		for(int i = 0; i < tab.length; i++){
@@ -70,7 +70,7 @@ public class GameStage extends Stage {
 			}
 		}
 		
-		//Chargement des nombres du scores et des 2 deux points
+		//Chargement des nombres du timer et des 2 deux points
 		timeSprite = new NumberSprite[5];
 		for(int i = 0; i < 5; i++){
 			timeSprite[i] = new NumberSprite(600 + 40*i, 10);
@@ -78,6 +78,14 @@ public class GameStage extends Stage {
 		}
 		sprite_list.add(new Sprite("img/fonts/colon.png", 658, 6, 30, 25));
 		sprite_list.add(new Sprite("img/fonts/colon.png", 740, 6, 30, 25));
+		
+		//Chargement des nombres du score
+		scoreSprite = new NumberSprite[12];
+		for(int i = 0; i < scoreSprite.length; i++){
+			scoreSprite[i] = new NumberSprite(750 - 22*i, 335);
+			sprite_list.add(scoreSprite[i]);
+		}
+		
 		
 		//Personnages
 		sprite_list.add(bub);
@@ -112,11 +120,17 @@ public class GameStage extends Stage {
 	}
 	
 	public void update(){
+		//Mise a jour du timer
 		timeSprite[0].changeNumber(timer.getDizaineMinute());
 		timeSprite[1].changeNumber(timer.getUniteMinute());
 		timeSprite[2].changeNumber(timer.getDizaineSeconde());
 		timeSprite[3].changeNumber(timer.getUniteSeconde());
 		timeSprite[4].changeNumber(timer.getDiziemeSeconde());
+		
+		//Mise a jour du score
+		for(int i = 0; i < scoreSprite.length; i++){
+			scoreSprite[i].changeNumber(game.getScore() / (int)(Math.pow(10, i)) % 10);
+		}
 	}
 	
 	public void close(){
