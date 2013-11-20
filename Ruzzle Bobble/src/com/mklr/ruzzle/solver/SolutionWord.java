@@ -30,7 +30,7 @@ public class SolutionWord
     }
     
     public SolutionWord(SolutionWord s) {
-    	this.word = s.word;
+    	this.word = new String(s.word);
     	this.length = s.length;
     	this.score = s.score;
     	this.wordMultiplicator = s.wordMultiplicator;
@@ -134,7 +134,6 @@ public class SolutionWord
     public void addLetter(Letter l, boolean joker) {
         if (!joker)
             score += l.getValue();
-
         word += l.getLetter();
         ++length;
     }

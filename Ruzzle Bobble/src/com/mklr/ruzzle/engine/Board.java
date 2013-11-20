@@ -147,8 +147,6 @@ public class Board extends AbstractGrid<Marble>{
             //TODO temporary, change condition after
         }
         else {*/
-            System.err.println("No Dictionary found... Board will be created"
-                    + " with random letters...");
             for (int i = 0; i < tGrid.length; i++) {
                 for (int j = 0; j < tGrid[i].length; j++) {
          //           int random = r.nextInt(10000);

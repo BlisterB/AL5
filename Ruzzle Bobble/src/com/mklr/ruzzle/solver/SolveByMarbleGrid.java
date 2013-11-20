@@ -15,27 +15,35 @@ public class SolveByMarbleGrid extends Solver {
     Marble[][] marblesBoard;
     ArrayList<SolutionWord> wordsList;
 
-    public SolveByMarbleGrid(byte type, RuzzleDictionary d, Board b) {
-        super(type);
+    public SolveByMarbleGrid(RuzzleDictionary d, Board b) {
         this.dictionary = d;
         marblesBoard = b.getGrid();
         wordsList = new ArrayList<SolutionWord>();
     }
 
     public void solve() {
-        int i = 0;
-        
-        for (Marble[] marbleRow : marblesBoard) {
-            int j = 0;
-            for (Marble marble : marbleRow) {
-                dfs(new Integer[]{i, j}, new SolutionWord(), 0, 
-                		dictionary.getDictionaryTree(), new LinkedList<Integer[]>());
-                ++j;
+        solve(Solver.SORT_BY_WORD_LENGTH);
+    }
+
+    public void solve(byte sortType) {
+        if (!wordsList.isEmpty())
+            return;
+
+        for (int i = 0; i < marblesBoard.length; i++) {
+            for (int j = 0; j < marblesBoard[i].length; j++){
+                dfs(new Integer[]{i, j}, new SolutionWord(), 0,
+                        dictionary.getDictionaryTree(), new LinkedList<Integer[]>());
             }
-            ++i;
         }
-        SolutionWord.changeSortType(Solver.SORT_BY_SCORE);
+
+        sort(sortType);
+    }
+
+    public void sort(byte sortType) {
+        byte initialSortType = SolutionWord.SORT_TYPE;
+        SolutionWord.changeSortType(sortType);
         Collections.sort(wordsList, new SolutionWord());
+        SolutionWord.changeSortType(initialSortType);
     }
 
     private void dfs(Integer[] marbleCoo, SolutionWord currentWord, 
@@ -110,12 +118,4 @@ public class SolveByMarbleGrid extends Solver {
     public ArrayList<SolutionWord> getWordsList() {
         return wordsList;
     }
-
-    /**
-     * @param wordsList the wordsList to set
-     */
-    public void setWordsList(ArrayList<SolutionWord> wordsList) {
-        this.wordsList = wordsList;
-    }
-
 }

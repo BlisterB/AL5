@@ -62,7 +62,8 @@ public class TestDictionnary {
         System.out.println(al);
         */
         
-        RuzzleDictionary d = new RuzzleDictionary();
+        RuzzleDictionary d = new RuzzleDictionary("frFR", "dict/frFR.dict");
+        //RuzzleDictionary d = new RuzzleDictionary("enEN", "/usr/share/dict/words");
         d.init();
         Board b = new Board(2, Locale.ENGLISH, d);
         b.init();
@@ -72,17 +73,18 @@ public class TestDictionnary {
 
         System.out.println("\n\n");
 
-        d.getLetterSet().getLetterByPercentage(10.0);
-/*       
+        System.out.println(d.getLetterSet());
+
+
         System.out.println("====== SOLVER ======");
-        SolveByMarbleGrid solver = new SolveByMarbleGrid(Solver.SORT_BY_NAME, d, b);
+        SolveByMarbleGrid solver = new SolveByMarbleGrid(d, b);
         long beg = new Date().getTime();
-        solver.solve();
+        solver.solve(Solver.SORT_BY_SCORE);
         long end = new Date().getTime();
         System.out.println(solver.getWordsList());
         System.out.println("====== SOLVER ======");
 
-        System.out.println("\n\nAlg done in " + ((double)(end-beg)/(1000.0)) + "s."); 
-        */
+        System.out.println("\n\nAlg done in " + ((double)(end-beg)/(1000.0)) + "s.");
+
     }
 }

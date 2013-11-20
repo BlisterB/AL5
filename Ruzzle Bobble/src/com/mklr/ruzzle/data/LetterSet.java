@@ -12,36 +12,36 @@ public class LetterSet extends HashSet<Letter>
 {
 	private static final long serialVersionUID = -7359698600848463258L;
 
-	private Locale locale;
+	private String lang;
 
 	/**
 	 * Create a new LetterSet.
 	 * The lang is set to the default value. (ie. english)
 	 */
     public LetterSet() {
-        this(Locale.ENGLISH);
+        this("enEN");
     }
 
     /**
      * Create a new LetterSet with the given langage.
-     * @param locale 
+     * @param lang
      */
-    public LetterSet(Locale locale) {
-        this.locale = locale;
+    public LetterSet(String lang) {
+        this.lang = lang;
     }
 
     /**
      * @return the locale
      */
-    public Locale getLocale() {
-        return locale;
+    public String getLang() {
+        return lang;
     }
 
     /**
-     * @param locale the locale to set
+     * @param lang the locale to set
      */
-    public void setLocale(Locale locale) {
-        this.locale = locale;
+    public void setLang(String lang) {
+        this.lang = lang;
     }
 
     public boolean contains(Letter letter) {

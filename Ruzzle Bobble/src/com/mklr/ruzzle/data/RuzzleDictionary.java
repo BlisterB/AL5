@@ -24,7 +24,7 @@ import com.mklr.graphics.engine.Engine;
  */
 public class RuzzleDictionary implements Runnable {
     private final String dictionaryPath;
-    private Locale locale;
+    private String lang;
     private Tree<Character> dictionaryTree;
     private LetterSet letterSet;
     private int maxLength;
@@ -36,17 +36,16 @@ public class RuzzleDictionary implements Runnable {
      * (Only on Unix systems...)
      */
     public RuzzleDictionary() {
-        this(Locale.ENGLISH);
+        this("enEN");
     }
 
     /**
-     * Create the dictionary according to the langage given.
-     * The default dictionary is at "/usr/share/dict/words"
-     * (Only on Unix systems...)
-     * @param locale the given langage
+     * Create the dictionary according to the dictionary path.
+     * The name is set to "UNKNOWN".
+     * @param dictionaryPath
      */
-    public RuzzleDictionary(Locale locale) {
-        this(Locale.ENGLISH, "/usr/share/dict/words");
+    public RuzzleDictionary(String dictionaryPath) {
+        this("UNKNOWN", dictionaryPath);
     }
 
     /**
@@ -55,18 +54,18 @@ public class RuzzleDictionary implements Runnable {
      * 
      * The given dictionary must respect the rule :
      *  one word by line.
-     * @param locale the langage
-     * @param dictionnaryPath path of the dictionary
+     * @param lang the langage
+     * @param dictionaryPath path of the dictionary
      */
-    public RuzzleDictionary(Locale locale, String dictionnaryPath) {
-        this.locale = locale;
-        this.dictionaryPath = dictionnaryPath;
+    public RuzzleDictionary(String lang, String dictionaryPath) {
+        this.lang = lang;
+        this.dictionaryPath = dictionaryPath;
         dictionaryTree = new Tree<Character>();
         maxLength = 0;
     }
 
     /**
-     * @return the dictionnaryPath
+     * @return the dictionaryPath
      */
     public String getDictionaryPath() {
         return dictionaryPath;
@@ -75,15 +74,15 @@ public class RuzzleDictionary implements Runnable {
     /**
      * @return the locale
      */
-    public Locale getLocale() {
-        return locale;
+    public String getLang() {
+        return lang;
     }
 
     /**
-     * @param locale the locale to set
+     * @param lang the locale to set
      */
-    public void setLocale(Locale locale) {
-        this.locale = locale;
+    public void setLang(String lang) {
+        this.lang = lang;
     }
 
     /**
@@ -138,7 +137,7 @@ public class RuzzleDictionary implements Runnable {
         return searchWord(dictionaryTree, word);
     }
 
-    public boolean searchWord(Tree<Character> beg, String word) {
+    private boolean searchWord(Tree<Character> beg, String word) {
         Tree<Character> cur_pos = beg;
 
         char[] wordArray = word.toCharArray();
@@ -226,16 +225,11 @@ public class RuzzleDictionary implements Runnable {
     }
 
     private void createLetterSet() {
-        letterSet = new LetterSet(locale);
-        String path = Engine.PATH + "config/lang/enEN.set";
+        letterSet = new LetterSet(lang);
+        String path = Engine.PATH + "config/lang/" + lang + ".set";
         boolean success = true;
         double lastPercentage = 0.0;
 
-        if ((locale.getCountry()).equals(Locale.FRENCH)) {
-            System.out.println("FRENCH LOCALE");
-            path = Engine.PATH + "config/lang/frFR.set";
-        } 
-        
         try {
             FileReader fr = new FileReader(path);
             BufferedReader br = new BufferedReader(fr);
@@ -254,8 +248,8 @@ public class RuzzleDictionary implements Runnable {
 
                     if (splittedLine.length != 3
                             && (splittedLine[0].length() > 1)) {
-                        System.out.println("The line is incorrect : \n" + line
-                                + "DEFAULT VALUE INITIALIZED.");
+                        System.out.println("The line is incorrect : " + line
+                                + "\nDEFAULT VALUE INITIALIZED.");
                         success = false;
                         break;
                     }
@@ -298,8 +292,8 @@ public class RuzzleDictionary implements Runnable {
                     + "anglaise n'est pas disponible : "
                     + e.getMessage());
         } finally {
-            if (success == false) {
-                letterSet = new LetterSet(locale);
+            if (!success) {
+                letterSet = new LetterSet(lang);
                 
                 for(int i = 97; i < 123; i++) {
                     double percentage = (100.0/26.0) + lastPercentage;
@@ -320,6 +314,6 @@ public class RuzzleDictionary implements Runnable {
      */
     private String normalizeWord(String s) {
         return Normalizer.normalize(s, Normalizer.Form.NFD)
-            .replaceAll("[\u0300-\u036F]", "");
+            .replaceAll("[\u0300-\u036F]|[-\'.]", "");
     }
 }
