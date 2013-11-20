@@ -151,9 +151,11 @@ public class Board extends AbstractGrid<Marble>{
                     + " with random letters...");
             for (int i = 0; i < tGrid.length; i++) {
                 for (int j = 0; j < tGrid[i].length; j++) {
-                    int random = r.nextInt(10000);
-                    tGrid[i][j] = new Marble(dico.getLetterSet().getLetterByPercentage(((double)random)/100.0));
-
+         //           int random = r.nextInt(10000);
+         //           tGrid[i][j] = new Marble(dico.getLetterSet().getLetterByPercentage(((double)random)/100.0));
+                    int random = r.nextInt(26) + 97;
+                    tGrid[i][j] = new Marble(new Letter((char)random, 1,new double[]{0,  100./26.0}));
+                        
                     //TODO Gérer les bonus
                     addNeighbours(i, j);
                 }   
