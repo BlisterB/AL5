@@ -31,7 +31,7 @@ public class GameStage extends Stage {
 		super(engine);
 		this.board = board;
 		this.game = game;
-		this.musicPlayer = new MusicPlayer("music/gamestage.mid", true);
+		this.musicPlayer = new MusicPlayer("music/gamestage3.mid", true);
 		this.timer = new GameTimer(1000 * 60 * 2, this);
 		
 		//Background et interface
