@@ -62,7 +62,7 @@ public class SolveByMarbleGrid extends Solver {
             for (Tree<Character> child : position.getListOfChilds().values()) {
                 nextWord = new SolutionWord(currentWord);
                 nextWord.addLetter(dictionary.getLetterSet()
-                            .getLetter(child.getNodeValue()), true);
+                            .getLetter(child.getNodeValue()));
                 for (Integer[] neighbours : m.getNeighbours()) {
                     if (!containsNeighbour(path_cpy, neighbours)) {
                         dfs(neighbours, nextWord, 
@@ -79,7 +79,7 @@ public class SolveByMarbleGrid extends Solver {
             nextWord.addLetter(m);
 
             if (child.isTerminal() && !containsWord(nextWord)) {
-        	    nextWord.endWord(path_cpy);
+        	    nextWord.endWord(path_cpy, marblesBoard);
                 wordsList.add(nextWord);
             }
 

@@ -18,19 +18,13 @@ public class SolutionWord
     private int wordMultiplicator = 1;
     
     public SolutionWord() {
-    	word = new String();
+    	word = "";
     	length = 0;
     	score = 0;
     }
 
-    public SolutionWord(String word, int score) {
-        this.word = word;
-        length = word.length();
-        this.score = score;
-    }
-    
     public SolutionWord(SolutionWord s) {
-    	this.word = new String(s.word);
+    	this.word = s.word;
     	this.length = s.length;
     	this.score = s.score;
     	this.wordMultiplicator = s.wordMultiplicator;
@@ -44,24 +38,10 @@ public class SolutionWord
     }
 
     /**
-     * @param word the word to set
-     */
-    public void setWord(String word) {
-        this.word = word;
-    }
-
-    /**
      * @return the length
      */
     public int getLength() {
         return length;
-    }
-
-    /**
-     * @param length the length to set
-     */
-    public void setLength(int length) {
-        this.length = length;
     }
 
     /**
@@ -106,41 +86,48 @@ public class SolutionWord
     
     public void addLetter(Marble m) {
     	Letter l = m.getLetter();
-    	int l_score = l.getValue();
     	Character letter = l.getLetter();
-    	
-    	switch (m.getBonus()) {
-    		case Marble.LETTER_COUNT_DOUBLE :
-    			l_score *= 2;
-    			break;
-    		case Marble.LETTER_COUNT_TRIPLE :
-    			l_score *= 3;
-    			break;
-    		case Marble.WORD_COUNT_DOUBLE :
-    			wordMultiplicator *= 2;
-    			break;
-    		case Marble.WORD_COUNT_TRIPLE :
-    			wordMultiplicator *= 3;
-    			break;
-    		default :
-    			break;
-    	}
-    	
-    	score += l_score;
     	word += letter;
     	++length;
     }
 
-    public void addLetter(Letter l, boolean joker) {
-        if (!joker)
-            score += l.getValue();
+    public void addLetter(Letter l) {
         word += l.getLetter();
         ++length;
     }
     
-    public void endWord(LinkedList<Integer[]> path) {
-    	solutionPath = path;
-    	score *= wordMultiplicator;
+    public void endWord(LinkedList<Integer[]> path, Marble[][] gameBoard) {
+    	int multiplicator = 1;
+        int tmp_score = 0;
+
+        solutionPath = path;
+
+
+        for (Integer[] marble : path) {
+            Marble m = gameBoard[marble[0]][marble[1]];
+            int l_score = m.getLetter().getValue();
+
+            switch (m.getBonus()) {
+                case Marble.LETTER_COUNT_DOUBLE:
+                    l_score *= 2;
+                    break;
+                case Marble.LETTER_COUNT_TRIPLE:
+                    l_score *= 3;
+                    break;
+                case Marble.WORD_COUNT_DOUBLE:
+                    multiplicator *= 2;
+                    break;
+                case Marble.WORD_COUNT_TRIPLE:
+                    multiplicator *= 3;
+                    break;
+                default:
+                    break;
+            }
+
+            tmp_score += l_score;
+        }
+
+        this.score = tmp_score * multiplicator;
     	
     	switch (length) {
     		case 8 :
