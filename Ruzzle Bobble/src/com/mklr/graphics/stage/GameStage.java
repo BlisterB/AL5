@@ -82,7 +82,7 @@ public class GameStage extends Stage {
 		//Chargement des nombres du score
 		scoreSprite = new NumberSprite[12];
 		for(int i = 0; i < scoreSprite.length; i++){
-			scoreSprite[i] = new NumberSprite(750 - 22*i, 335);
+			scoreSprite[i] = new NumberSprite(740 - 22*i, 335);
 			sprite_list.add(scoreSprite[i]);
 		}
 		
@@ -129,7 +129,16 @@ public class GameStage extends Stage {
 		
 		//Mise a jour du score
 		for(int i = 0; i < scoreSprite.length; i++){
-			scoreSprite[i].changeNumber(game.getScore() / (int)(Math.pow(10, i)) % 10);
+			int s = game.getScore();
+			//On enleve les chiffre apres le chiffre qui nous interesse
+			s /= (int)(Math.pow(10, i));
+			//On affiche le chiffre seulement si c'est l'unité ou si le nombre apres son indice est superieur a 0
+			if(i == 0 || s > 0){
+				scoreSprite[i].setDisplayable(true);
+				scoreSprite[i].changeNumber(s%10);
+			}
+			else
+				scoreSprite[i].setDisplayable(false);
 		}
 	}
 	

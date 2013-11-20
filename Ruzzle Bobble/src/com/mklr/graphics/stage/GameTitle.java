@@ -25,6 +25,7 @@ public class GameTitle extends Stage{
 		//Initialisation des composants
 		this.background = new Sprite(Engine.PATH + "img/background/game_title.png");
 		titleSprite = new Sprite(Engine.PATH + "img/interface/title.png", 300, -150, 200, 150);
+		jouerInterface = new InterfaceSprite(Engine.PATH + "img/interface/jouer.png", 200, 450, 400, 100, Stage.VALIDATE, this);
 		bub = new Bub(800, 150, Bub.FEAR);
 		bob = new Bob(850, 150, Bob.BUBBLE_LEFT);
 		bubLoading = new BubLoading(0, 410, BubLoading.LOADING);
@@ -36,6 +37,7 @@ public class GameTitle extends Stage{
 		sprite_list.add(bob);
 		sprite_list.add(bubLoading);
 		sprite_list.add(textLoadingSprite);
+		sprite_list.add(jouerInterface);
 		
 		//Mise en mouvement des composants
 		animation = true;
@@ -75,8 +77,6 @@ public class GameTitle extends Stage{
 		System.out.println("Les dictionnaires sont chargés, on peut afficher le bouton jouer");
 		bubLoading.setTransparency(0f, 10);
 		textLoadingSprite.setTransparency(0f, 10);
-		jouerInterface = new InterfaceSprite(Engine.PATH + "img/interface/jouer.png", 200, 450, 400, 100, Stage.VALIDATE, this);
-		sprite_list.add(jouerInterface);
 		jouerInterface.move(200, 325, 5);
 	}
 	

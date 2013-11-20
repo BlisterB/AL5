@@ -52,13 +52,16 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
 			if(stage.getSpriteList() != null){
 				for(int i = 0; i < stage.getSpriteList().size(); i++){
 					sprite = stage.getSpriteList().get(i);
-					//On distingue le cas ou on doit gérer la transparence ou non (pour economiser de la memoire)
-					if(sprite.getAlphaComposite() == null)
-						g.drawImage(sprite.getImage(), sprite.getRect().x, sprite.getRect().y, this);
-					else{
-						g2.setComposite(sprite.getAlphaComposite());
-						g2.drawImage(sprite.getImage(), sprite.getRect().x, sprite.getRect().y, this);
-						g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+					//On affiche le sprite seulement si son attribut displayble le permet
+					if(sprite.getDisplayable()){
+						//On distingue le cas ou on doit gérer la transparence ou non (pour economiser de la memoire)
+						if(sprite.getAlphaComposite() == null)
+							g.drawImage(sprite.getImage(), sprite.getRect().x, sprite.getRect().y, this);
+						else{
+							g2.setComposite(sprite.getAlphaComposite());
+							g2.drawImage(sprite.getImage(), sprite.getRect().x, sprite.getRect().y, this);
+							g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+						}
 					}
 				}
 			}

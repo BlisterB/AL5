@@ -15,6 +15,7 @@ public class Sprite{
 	protected Rectangle rect;//Le rectangle symbolisant l'image dans le JPanel
 	protected Image[] sprite_list;//Le tableau des images du sprite
 	boolean animated;
+	boolean displayable = true;//Defini si on affiche le sprite ou non
 	int animation;
 	boolean inMove;
 	protected AlphaComposite alphaComposite = null;
@@ -119,8 +120,6 @@ public class Sprite{
 	}
 	
 	public void setTransparency(float t, final int periode){
-		//On recupere la valeur actuelle de la transparence
-		
 		//On baisse progressivement la transparence
 		new Thread(new Runnable(){
 			public void run(){
@@ -221,5 +220,22 @@ public class Sprite{
 	public void setAlphaComposite(AlphaComposite alphaComposite) {
 		this.alphaComposite = alphaComposite;
 	}
-	
+	/**
+	 * @return the displayable
+	 */
+	public boolean isDisplayable() {
+		return displayable;
+	}
+	/**
+	 * @param displayable the displayable to set
+	 */
+	public void setDisplayable(boolean displayable) {
+		this.displayable = displayable;
+	}
+	/**
+	 * @return the displayable
+	 */
+	public boolean getDisplayable() {
+		return displayable;
+	}
 }
