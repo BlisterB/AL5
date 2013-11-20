@@ -118,6 +118,25 @@ public class Sprite{
 		alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, t);
 	}
 	
+	public void setTransparency(float t, final int periode){
+		//On recupere la valeur actuelle de la transparence
+		
+		//On baisse progressivement la transparence
+		new Thread(new Runnable(){
+			public void run(){
+				float transparency;
+				if(alphaComposite == null)
+					transparency = 1f;
+				else
+					transparency = alphaComposite.getAlpha();
+				while(transparency > 0){
+					transparency -= 0.1;
+					alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, transparency);
+					sleep(periode);
+				}
+			}
+		}).start();
+	}
    //////////////////////////////////////////////////////////////////
   ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
  //////////////////////////////////////////////////////////////////
