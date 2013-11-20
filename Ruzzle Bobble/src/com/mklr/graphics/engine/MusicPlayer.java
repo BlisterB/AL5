@@ -8,10 +8,12 @@ import javax.sound.midi.Sequencer;
 
 public class MusicPlayer {
 	boolean play;
+	boolean loopContinuously;
 	private Sequencer sequencer = null;;
 	
-	public MusicPlayer(final String path){
+	public MusicPlayer(final String path, final boolean loopContinuously){
 		play = true;
+		this.loopContinuously = loopContinuously;
 		
 		new Thread(new Runnable(){
 			public void run(){
@@ -28,6 +30,9 @@ public class MusicPlayer {
 			        //Lancement de la lecture
 			        sequencer.open();
 			        sequencer.start();
+			        //On boucle la musique indefiniment
+			        if(loopContinuously)
+			        	sequencer.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
 				}catch(Exception e) {
 				        System.out.println(e.toString());
 				}

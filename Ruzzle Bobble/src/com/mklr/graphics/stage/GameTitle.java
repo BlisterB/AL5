@@ -20,7 +20,7 @@ public class GameTitle extends Stage{
 	
 	public GameTitle(Engine engine){
 		super(engine);
-		this.musicPlayer = new MusicPlayer("music/title.mid");
+		this.musicPlayer = new MusicPlayer("music/title.mid", true);
 		
 		//Initialisation des composants
 		this.background = new Sprite(Engine.PATH + "img/background/game_title.png");
