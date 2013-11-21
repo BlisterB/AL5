@@ -8,7 +8,7 @@ public abstract class Solver {
     public static final byte SORT_BY_SCORE = 1;
     public static final byte SORT_BY_WORD_LENGTH = 2;
 
-    
+
     protected byte sortType;
 
     protected Solver() {

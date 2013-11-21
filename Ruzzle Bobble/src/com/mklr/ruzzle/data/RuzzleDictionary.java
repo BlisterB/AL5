@@ -36,13 +36,13 @@ public class RuzzleDictionary implements Runnable {
      * (Only on Unix systems...)
      */
     public RuzzleDictionary() {
-        this("enEN");
+        this("English", "/usr/share/dict/words");
     }
 
     /**
      * Create the dictionary according to the dictionary path.
      * The name is set to "UNKNOWN".
-     * @param dictionaryPath
+     * @param dictionaryPath path of the dictionary
      */
     public RuzzleDictionary(String dictionaryPath) {
         this("UNKNOWN", dictionaryPath);
@@ -93,13 +93,6 @@ public class RuzzleDictionary implements Runnable {
     }
 
     /**
-     * @param dictionnaryTree the dictionnaryTree to set
-     */
-    public void setDictionaryTree(Tree<Character> dictionnaryTree) {
-        this.dictionaryTree = dictionnaryTree;
-    }
-
-    /**
      * @return the letterSet
      */
     public LetterSet getLetterSet() {
@@ -111,13 +104,6 @@ public class RuzzleDictionary implements Runnable {
      */
     public int getMaxLength() {
         return maxLength;
-    }
-
-    /**
-     * @param maxLength the maxLength to set
-     */
-    public void setMaxLength(int maxLength) {
-        this.maxLength = maxLength;
     }
 
     /**
@@ -141,7 +127,8 @@ public class RuzzleDictionary implements Runnable {
         Tree<Character> cur_pos = beg;
 
         char[] wordArray = word.toCharArray();
-        for (int i = 0; i < wordArray.length; i++) {
+        for (int i = 0; i < wordArray.length;
+             i++) {
             Character c = wordArray[i];
 
             if (c.charValue() == '*') {

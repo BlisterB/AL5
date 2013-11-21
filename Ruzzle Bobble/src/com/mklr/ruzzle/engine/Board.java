@@ -17,44 +17,19 @@ import com.mklr.ruzzle.data.Letter;
  */
 public class Board extends AbstractGrid<Marble>{
     private int score;
-    private Locale locale;
+    private String lang;
     private RuzzleDictionary dico;
 
     /**
-     * Create the board with default value.
-     */
-    public Board() {
-        this(2);
-    }
-
-    /**
-     * Create the board with row size.
-     * @param row
-     */
-    public Board(int row) {
-        this(row, Locale.ENGLISH);
-    }
-
-    /**
-     * Create the board with row size, and the langage.
-     * @param row
-     * @param locale
-     */
-    public Board(int row, Locale locale) {
-        this(row, locale, null);
-    }
-    
-    /**
      * Create the board with row size, the langage and the dictionary.
-     * @param row
-     * @param locale
+     * @param lang
      * @param dico
      */
-    public Board(int row, Locale locale, RuzzleDictionary dico) {
-        super(row);
+    public Board(String lang, RuzzleDictionary dico) {
+        super(2);
         this.dico = dico;
         score = 0;
-        this.locale = locale;
+        this.lang = lang;
     }
 
     /**
@@ -86,17 +61,17 @@ public class Board extends AbstractGrid<Marble>{
     }
 
     /**
-     * @return the locale
+     * @return the lang
      */
-    public Locale getLocale() {
-        return locale;
+    public String getLang() {
+        return lang;
     }
 
     /**
-     * @param locale the locale to set
+     * @param lang the locale to set
      */
-    public void setLocale(Locale locale) {
-        this.locale = locale;
+    public void setLocale(String lang) {
+        this.lang = lang;
     }
 
     /**
@@ -138,9 +113,9 @@ public class Board extends AbstractGrid<Marble>{
         // TODO
         Random r = new Random();
         int cpt_star = 2;
-        int cpt_word_count_double = 2;
+        int cpt_word_count_double = 1;
         int cpt_word_count_triple = 1;
-        int cpt_letter_count_double = 2;
+        int cpt_letter_count_double = 1;
         int cpt_letter_count_triple = 1;
 /*
         if (dico == null) {
@@ -149,10 +124,11 @@ public class Board extends AbstractGrid<Marble>{
         else {*/
             for (int i = 0; i < tGrid.length; i++) {
                 for (int j = 0; j < tGrid[i].length; j++) {
-         //           int random = r.nextInt(10000);
-         //           tGrid[i][j] = new Marble(dico.getLetterSet().getLetterByPercentage(((double)random)/100.0));
-                    int random = r.nextInt(26) + 97;
-                    tGrid[i][j] = new Marble(new Letter((char)random, 1,new double[]{0,  100./26.0}));
+                    int random = r.nextInt(10000);
+                    double randomLetterValue = ((double)random)/100.0;
+                    tGrid[i][j] = new Marble(dico.getLetterSet().getLetterByPercentage(randomLetterValue));
+         /*           int random = r.nextInt(26) + 97;
+                    tGrid[i][j] = new Marble(new Letter((char)random, 1,new double[]{0,  100./26.0}));*/
                         
                     //TODO Gérer les bonus
                     addNeighbours(i, j);
@@ -241,7 +217,7 @@ public class Board extends AbstractGrid<Marble>{
 
     @Override
     public String toString() {
-        String result = new String();
+        String result = "";
 
         result += "\n";
         for(Marble[] m1 : tGrid) {

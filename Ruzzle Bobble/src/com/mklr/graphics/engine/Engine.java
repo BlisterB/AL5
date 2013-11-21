@@ -45,7 +45,7 @@ public class Engine implements Runnable{
 		this.stage.close();
 		
 		//Creation du jeu PROVISOIRE
-		Board board = new Board();
+		Board board = new Board("French", dicList.get("French.dict"));
 		board.init();
 		Game game = new Game(this, board, dicList.get("french.dict"));
 		

@@ -3,15 +3,10 @@ package com.mklr.ruzzle.data;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Date;
-import java.util.Scanner;
+import java.util.*;
 
 import com.mklr.ruzzle.engine.Board;
+import com.mklr.ruzzle.engine.Marble;
 import com.mklr.ruzzle.solver.SolutionWord;
 import com.mklr.ruzzle.solver.SolveByMarbleGrid;
 import com.mklr.ruzzle.solver.Solver;
@@ -62,29 +57,48 @@ public class TestDictionnary {
         System.out.println(al);
         */
         
-        RuzzleDictionary d = new RuzzleDictionary("frFR", "dict/frFR.dict");
+        RuzzleDictionary d = new RuzzleDictionary("French", "dict/French.dict");
         //RuzzleDictionary d = new RuzzleDictionary("enEN", "/usr/share/dict/words");
         d.init();
-        Board b = new Board(2, Locale.ENGLISH, d);
+
+        Board b = new Board("French", d);
         b.init();
+
         System.out.println("====== BOARD ======");
         System.out.println(b);
         System.out.println("====== BOARD ======");
 
         System.out.println("\n\n");
 
+
         System.out.println(d.getLetterSet());
-
-
+       /*
+        Random r = new Random();
+        for (int i = 0; i < 10000000; i++) {
+            int random = r.nextInt(10000);
+            double next = ((double)random)/100.0;
+            try {
+                new Marble(d.getLetterSet().getLetterByPercentage(next));
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Failed with value " + next);
+                break;
+            }
+        }
+         */
+        /*
         System.out.println("====== SOLVER ======");
         SolveByMarbleGrid solver = new SolveByMarbleGrid(d, b);
         long beg = new Date().getTime();
-        solver.solve(Solver.SORT_BY_SCORE);
+        solver.solve(Solver.SORT_BY_WORD_LENGTH);
         long end = new Date().getTime();
         System.out.println(solver.getWordsList());
         System.out.println("====== SOLVER ======");
 
         System.out.println("\n\nAlg done in " + ((double)(end-beg)/(1000.0)) + "s.");
+        System.out.println(solver.getWordsList().size() + " words found...");
+           */
+
 
     }
 }
