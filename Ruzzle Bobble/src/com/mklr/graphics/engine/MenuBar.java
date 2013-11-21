@@ -67,7 +67,7 @@ public class MenuBar extends JMenuBar {
 		//Ajout des Action Listener
         iLancerPartie.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent arg0){
-                        run_game();
+                        OptionsWindow optwindow = new OptionsWindow(null, engine.getDicList());
                 }
         });
         iQuitter.addActionListener(new ActionListener(){
