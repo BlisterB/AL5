@@ -110,41 +110,44 @@ public class Board extends AbstractGrid<Marble>{
      *  Fill the grid.
      */
     private void fillGrid() {
-        // TODO
         Random r = new Random();
-/*
-        if (dico == null) {
-            //TODO temporary, change condition after
+        int[][] jokers = new int[2][];
+
+        for (int i = 0; i < jokers.length; i++) {
+            do {
+                int r_first = r.nextInt(2 * row);
+                int r_second = r.nextInt(tGrid[r_first].length);
+
+                if (i == 1) {
+                    if (jokers[0][0] == r_first && jokers[0][1] == r_second) {
+                        continue;
+                    } else {
+                        jokers[1] = new int[]{r_first, r_second};
+                        break;
+                    }
+                } else {
+                    jokers[i] = new int[]{r_first, r_second};
+                    break;
+                }
+            } while(true);
         }
-        else {*/
-            for (int i = 0; i < tGrid.length; i++) {
-                for (int j = 0; j < tGrid[i].length; j++) {
+
+        for (int i = 0; i < tGrid.length; i++) {
+            for (int j = 0; j < tGrid[i].length; j++) {
+                if ((jokers[0][0] == i && jokers[0][1] == j)
+                        || (jokers[1][0] == i && jokers[1][1] == j)) {
+                    tGrid[i][j] = new Marble(new Letter('*', 0));
+                } else {
                     int random = r.nextInt(10000);
                     double randomLetterValue = ((double)random)/100.0;
                     tGrid[i][j] = new Marble(dico.getLetterSet().getLetterByPercentage(randomLetterValue));
-         /*           int random = r.nextInt(26) + 97;
-                    tGrid[i][j] = new Marble(new Letter((char)random, 1,new double[]{0,  100./26.0}));*/
-                        
-                    //TODO Gérer les bonus
-                    addNeighbours(i, j);
-                }   
-            }
-       // }
+                }
 
-        tGrid[0][0] = new Marble(new Letter('m', 1));
-        addNeighbours(0, 0);
-        tGrid[1][0] = new Marble(new Letter('o', 1));
-        addNeighbours(1, 0);
-        tGrid[2][0] = new Marble(new Letter('*', 0));
-        addNeighbours(2, 0);
-        tGrid[3][0] = new Marble(new Letter('e', 1));
-        addNeighbours(3, 0);
-  /*
-        tGrid[0][1].setBonus(Marble.LETTER_COUNT_DOUBLE);
-        tGrid[1][2].setBonus(Marble.LETTER_COUNT_TRIPLE);
-        tGrid[3][2].setBonus(Marble.WORD_COUNT_DOUBLE);
-        tGrid[2][1].setBonus(Marble.WORD_COUNT_TRIPLE);
-    */
+                addNeighbours(i, j);
+
+            }
+        }
+
         for (byte bonus :
                 new byte[]{Marble.LETTER_COUNT_DOUBLE,
                     Marble.LETTER_COUNT_TRIPLE, Marble.WORD_COUNT_DOUBLE,
@@ -152,7 +155,8 @@ public class Board extends AbstractGrid<Marble>{
             do {
                 int r_first = r.nextInt(2*row);
                 int r_second = r.nextInt(tGrid[r_first].length);
-                if (tGrid[r_first][r_second].getBonus() == Marble.NO_BONUS) {
+                if (tGrid[r_first][r_second].getBonus() == Marble.NO_BONUS &&
+                        tGrid[r_first][r_second].getLetter().getLetter() != '*') {
                     tGrid[r_first][r_second].setBonus(bonus);
                     break;
                 }

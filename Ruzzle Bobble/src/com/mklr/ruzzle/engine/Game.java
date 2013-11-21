@@ -18,7 +18,7 @@ public class Game {
     }
 
     public int getScoreofMove(ArrayList<Marble> path, String word) {
-        int score = 0;
+        int wordScore = 0;
         int wordMultiplicator = 1;
         if (!gameDictionary.searchWord(word))
             return -1;
@@ -43,10 +43,11 @@ public class Game {
                     break;
             }
 
-            score += l_score;
+            wordScore += l_score;
         }
 
-        return (score * wordMultiplicator);
+        this.score += (wordScore * wordMultiplicator);
+        return (wordScore * wordMultiplicator);
     }
 
 	//options : langue
