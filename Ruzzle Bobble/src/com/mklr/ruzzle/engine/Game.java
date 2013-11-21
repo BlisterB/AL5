@@ -9,18 +9,26 @@ public class Game {
 	private Engine engine;
     private Board gameBoard;
     private RuzzleDictionary gameDictionary;
+
+    private ArrayList<String> wordsGiven;
+    private String lastWord;
+
     private int score;
 
     public Game(Engine e, Board b) {
         engine = e;
         gameBoard = b;
         gameDictionary = b.getDico();
+
+        lastWord = "";
+        wordsGiven = new ArrayList<String>();
     }
 
     public int getScoreofMove(ArrayList<Marble> path, String word) {
         int wordScore = 0;
         int wordMultiplicator = 1;
-        if (!gameDictionary.searchWord(word))
+
+        if (!gameDictionary.searchWord(word) || wordAlreadyGiven(word))
             return -1;
 
         for (Marble m : path) {
@@ -46,6 +54,9 @@ public class Game {
             wordScore += l_score;
         }
 
+        lastWord = word;
+        wordsGiven.add(word);
+
         this.score += (wordScore * wordMultiplicator);
         return (wordScore * wordMultiplicator);
     }
@@ -70,5 +81,35 @@ public class Game {
 	 */
 	public void setScore(int score) {
 		this.score = score;
-	} 
+	}
+
+    public String getLastWord() {
+        return lastWord;
+    }
+
+    private boolean wordAlreadyGiven(String word) {
+        char[] wordGivenCharArray = word.toCharArray();
+
+        for (String currentWord : wordsGiven) {
+            boolean isTheSameWord = true;
+            char[] wordCharArray = currentWord.toCharArray();
+
+            if (wordGivenCharArray.length != wordCharArray.length)
+                continue;
+
+            for (int i = 0; i < wordGivenCharArray.length; i++) {
+                if (wordGivenCharArray[i] == '*' || wordCharArray[i] == '*')
+                    continue;
+                if (wordGivenCharArray[i] != wordCharArray[i]) {
+                    isTheSameWord = false;
+                    break;
+                }
+            }
+
+            if (isTheSameWord)
+                return true;
+        }
+
+        return false;
+    }
 }
