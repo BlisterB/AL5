@@ -11,10 +11,10 @@ public class Game {
     private RuzzleDictionary gameDictionary;
     private int score;
 
-    public Game(Engine e, Board b, RuzzleDictionary d) {
+    public Game(Engine e, Board b) {
         engine = e;
         gameBoard = b;
-        gameDictionary = d;
+        gameDictionary = b.getDico();
     }
 
     public int getScoreofMove(ArrayList<Marble> path, String word) {

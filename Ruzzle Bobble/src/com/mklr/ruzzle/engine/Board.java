@@ -112,11 +112,6 @@ public class Board extends AbstractGrid<Marble>{
     private void fillGrid() {
         // TODO
         Random r = new Random();
-        int cpt_star = 2;
-        int cpt_word_count_double = 1;
-        int cpt_word_count_triple = 1;
-        int cpt_letter_count_double = 1;
-        int cpt_letter_count_triple = 1;
 /*
         if (dico == null) {
             //TODO temporary, change condition after
@@ -144,11 +139,25 @@ public class Board extends AbstractGrid<Marble>{
         addNeighbours(2, 0);
         tGrid[3][0] = new Marble(new Letter('e', 1));
         addNeighbours(3, 0);
-        
+  /*
         tGrid[0][1].setBonus(Marble.LETTER_COUNT_DOUBLE);
         tGrid[1][2].setBonus(Marble.LETTER_COUNT_TRIPLE);
         tGrid[3][2].setBonus(Marble.WORD_COUNT_DOUBLE);
         tGrid[2][1].setBonus(Marble.WORD_COUNT_TRIPLE);
+    */
+        for (byte bonus :
+                new byte[]{Marble.LETTER_COUNT_DOUBLE,
+                    Marble.LETTER_COUNT_TRIPLE, Marble.WORD_COUNT_DOUBLE,
+                    Marble.WORD_COUNT_TRIPLE}) {
+            do {
+                int r_first = r.nextInt(2*row);
+                int r_second = r.nextInt(tGrid[r_first].length);
+                if (tGrid[r_first][r_second].getBonus() == Marble.NO_BONUS) {
+                    tGrid[r_first][r_second].setBonus(bonus);
+                    break;
+                }
+            } while(true);
+        }
     }
 
     /**
