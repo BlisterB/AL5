@@ -17,10 +17,14 @@ public class Sprite{
 	protected AlphaComposite alphaComposite = null;//L'alpha composite associe (referrence a la transparence)
 	int animation; //Nombre representant le numero de l'animation a jouer (declararees comme static final)
 	
-	protected boolean animated;
+	protected boolean animated;//Defini si le sprite est en animation (false pour arreter l'animation et le thread associé)
 	protected boolean displayable = true;//Defini si on affiche le sprite ou non
-	protected boolean inMove;
-
+	protected boolean inMove;//Defini si le Sprite est en mouvement (false pour arreter un mouvement et le thread associé)
+	
+	
+	   //////////////////////////////////////////////////////////////////
+	  ///////////////////////// CONSTRUCTEURS //////////////////////////
+	 //////////////////////////////////////////////////////////////////	
 	public Sprite(){
 		
 	}
@@ -43,6 +47,8 @@ public class Sprite{
   ////////////////////////////// METHODES //////////////////////////
  //////////////////////////////////////////////////////////////////	
 	
+	//FONCTIONS D'AFFICHAGE
+	
 	/** Ouvre une image dont le chemin est en parametre et leve l'eventuelle exception */
 	public static Image openImage(String path){
 		Image image;
@@ -56,53 +62,6 @@ public class Sprite{
 		}
 		
 		return null;
-	}
-	
-	/** Teste la collision entre le sprite courant et celui passé en parametre **/
-	public boolean isInCollision(Sprite s){
-		return this.rect.intersects(s.rect);
-	}
-	/** Teste la collision entre le sprite courant et le point dont les coordonnees sont entrées en parametre*/
-	public boolean isInCollision(int x, int y){
-		Rectangle rect = new Rectangle(x, y, 1, 1);
-		return this.rect.intersects(rect);
-	}
-	
-	/** Dirige le Sprite vers les coordonnees 'x' et 'y' avec une periode de raffraichissement 'periode' (en ms) */
-	public void move(final int x, final int y, final int periode){
-		inMove = true;
-		new Thread(new Runnable(){
-			public void run(){
-				while((rect.x != x || rect.y != y) && inMove){
-					int tempX = rect.x, tempY = rect.y;
-					if(rect.x > x) tempX--;
-					else if(rect.x < x)	tempX++;
-					if(rect.y > y) tempY--;
-					else if(rect.y < y)	tempY++;
-
-					Engine.sleep(periode);
-					rect = new Rectangle(tempX, tempY, (int)rect.getWidth(), (int)rect.getHeight());
-				}
-				inMove = false;
-			}
-		}).start();
-	}
-	
-	/** Stoppe un mouvement en cours */
-	public void stopMove(){
-		inMove = false;
-	}
-	
-	
-	//FONCTION LIEES A LA GESTION DE LA SOURIS
-	/** Definie l'action effectuee lors d'un clic sur le Sprite*/
-	public void onClick(){
-		System.out.println("Clic sur " + this);
-	}
-	
-	/** Definie l'action effectuee lors d'un passage sur le Sprite de la souris ayant un bouton enfoncé */
-	public void onMousePressedWay(){
-		
 	}
 	
 	/** Modifie la transparence du Sprite, t est un float représentant la nouvelle transparence (1 : opaque, O : invisible)*/
@@ -131,6 +90,71 @@ public class Sprite{
 			}
 		}).start();
 	}
+	
+	
+	//FONCTIONS DE MOUVEMENT/COLLISION
+	/** Dirige le Sprite vers les coordonnees 'x' et 'y' avec une periode de raffraichissement 'periode' (en ms) */
+	public void move(final int x, final int y, final int periode){
+		inMove = true;
+		new Thread(new Runnable(){
+			public void run(){
+				while((rect.x != x || rect.y != y) && inMove){
+					int tempX = rect.x, tempY = rect.y;
+					if(rect.x > x) tempX--;
+					else if(rect.x < x)	tempX++;
+					if(rect.y > y) tempY--;
+					else if(rect.y < y)	tempY++;
+
+					Engine.sleep(periode);
+					rect = new Rectangle(tempX, tempY, (int)rect.getWidth(), (int)rect.getHeight());
+				}
+				inMove = false;
+			}
+		}).start();
+	}
+	
+	/** Stoppe un mouvement en cours (si il y en a un) et ferme indirectement le thread associé*/
+	public void stopMove(){
+		inMove = false;
+	}
+	
+	/** Stope l'animation du Sprite (si il y en a une) et ferme indirectement le thread associé*/
+	public void stopAnimation(){
+		animated = false;
+	}
+	
+	/** Teste la collision entre le sprite courant et celui passé en parametre **/
+	public boolean isInCollision(Sprite s){
+		return this.rect.intersects(s.rect);
+	}
+	
+	/** Teste la collision entre le sprite courant et le point dont les coordonnees sont entrées en parametre*/
+	public boolean isInCollision(int x, int y){
+		Rectangle rect = new Rectangle(x, y, 1, 1);
+		return this.rect.intersects(rect);
+	}
+	
+	
+	//FONCTION DE GESTION DE LA SOURIS
+	
+	/** Definie l'action effectuee lors d'un clic sur le Sprite*/
+	public void onClick(){
+		System.out.println("Clic sur " + this);
+	}
+	
+	/** Definie l'action effectuee lors d'un passage sur le Sprite de la souris ayant un bouton enfoncé */
+	public void onMousePressedWay(){
+		
+	}	
+
+	//FONCTION DE FERMETURE DU SPRITE
+	
+	/** Fonction fermant indirectement tous les thread associé au sprite et permettant sa suppression par la garbage collector */
+	public void close(){
+		stopMove();
+		stopAnimation();
+	}
+	
    //////////////////////////////////////////////////////////////////
   ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
  //////////////////////////////////////////////////////////////////
