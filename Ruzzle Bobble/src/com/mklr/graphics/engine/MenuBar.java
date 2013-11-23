@@ -88,4 +88,38 @@ public class MenuBar extends JMenuBar {
 		iLancerPartie.setEnabled(false);
 		engine.setGameStage();
 	}
+
+	/**
+	 * @return the mChoixLangue
+	 */
+	public JMenu getmChoixLangue() {
+		return mChoixLangue;
+	}
+
+	/**
+	 * @param mChoixLangue the mChoixLangue to set
+	 */
+	public void setmChoixLangue(JMenu mChoixLangue) {
+		this.mChoixLangue = mChoixLangue;
+	}
+
+	/**
+	 * @return the mChoixAlgo
+	 */
+	public JMenu getmChoixAlgo() {
+		return mChoixAlgo;
+	}
+
+	/**
+	 * @param mChoixAlgo the mChoixAlgo to set
+	 */
+	public void setmChoixAlgo(JMenu mChoixAlgo) {
+		this.mChoixAlgo = mChoixAlgo;
+	}
+	
+	   //////////////////////////////////////////////////////////////////
+	  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
+	 //////////////////////////////////////////////////////////////////
+	
+	
 }

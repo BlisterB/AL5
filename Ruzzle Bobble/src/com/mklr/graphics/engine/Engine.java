@@ -20,6 +20,7 @@ public class Engine implements Runnable{
 	private GameScreen gamescreen;
 	private Stage stage;
 	HashMap<String, RuzzleDictionary> dicList;
+	private Window window;
 	
 	public Engine(HashMap<String, RuzzleDictionary> dicList){
 		this.gamescreen = new GameScreen();
@@ -44,7 +45,13 @@ public class Engine implements Runnable{
 		//Arret des Thread de GameTitle
 		this.stage.close();
 		
-		//Creation du jeu PROVISOIRE
+		//Re agencement de la menuBar
+		if(window != null){
+			window.getMenubar().getmChoixLangue().setEnabled(false);
+			window.getMenubar().getmChoixAlgo().setEnabled(false);
+		}
+		
+		//Creation du jeu
 		Board board = new Board("French", dicList.get("French.dict"));
 		board.init();
 		Game game = new Game(this, board);
@@ -134,4 +141,22 @@ public class Engine implements Runnable{
 	public void setDicList(HashMap<String, RuzzleDictionary> dicList) {
 		this.dicList = dicList;
 	}
+
+
+	/**
+	 * @return the window
+	 */
+	public Window getWindow() {
+		return window;
+	}
+
+
+	/**
+	 * @param window the window to set
+	 */
+	public void setWindow(Window window) {
+		this.window = window;
+	}
+
+	
 }

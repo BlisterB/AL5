@@ -25,12 +25,15 @@ public class Window extends JFrame {
 	    this.setTitle("Ruzzle Bobble");
 	    this.setIconImage(new ImageIcon(Engine.PATH + "img/interface/icone.png").getImage());
 	    
+	    //Liaison a l'engine
+	    engine.setWindow(this);
+	    
 	    //Initialisation des composants
 	    this.engine = engine;
 	    this.gamescreen = engine.getGamescreen();
-	    menubar = new MenuBar(engine);
 	    
 	    //Barre de menu
+	    menubar = new MenuBar(engine);
 	    this.setJMenuBar(menubar);
 	    
 	    //On definie l'action a la fermeture de la fenetre
