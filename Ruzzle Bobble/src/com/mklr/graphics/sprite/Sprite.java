@@ -20,11 +20,13 @@ public class Sprite{
 	protected boolean animated;//Defini si le sprite est en animation (false pour arreter l'animation et le thread associé)
 	protected boolean displayable = true;//Defini si on affiche le sprite ou non
 	protected boolean inMove;//Defini si le Sprite est en mouvement (false pour arreter un mouvement et le thread associé)
+	protected boolean inTransparenceChangement;//Defini si le Sprite est dans une animation de changement de transparence (false pour arreter le thread associer)
 	
 	
 	   //////////////////////////////////////////////////////////////////
 	  ///////////////////////// CONSTRUCTEURS //////////////////////////
 	 //////////////////////////////////////////////////////////////////	
+	
 	public Sprite(){
 		
 	}
@@ -74,12 +76,13 @@ public class Sprite{
 		//On baisse progressivement la transparence
 		new Thread(new Runnable(){
 			public void run(){
+				inTransparenceChangement = true;
 				float transparency;
 				if(alphaComposite == null)
 					transparency = 1f;
 				else
 					transparency = alphaComposite.getAlpha();
-				while(transparency > 0){
+				while(transparency > 0 && inTransparenceChangement){
 					if(transparency > 0.1f)
 						transparency -= 0.1;
 					else
@@ -87,10 +90,15 @@ public class Sprite{
 					alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, transparency);
 					Engine.sleep(periode);
 				}
+				inTransparenceChangement = false;
 			}
 		}).start();
 	}
 	
+	/** Permet de stopper le thread modifiant progressivement la transparence si celui ci existe */
+	public void stopTransparencyThread(){
+		inTransparenceChangement = false;
+	}
 	
 	//FONCTIONS DE MOUVEMENT/COLLISION
 	/** Dirige le Sprite vers les coordonnees 'x' et 'y' avec une periode de raffraichissement 'periode' (en ms) */
@@ -153,6 +161,7 @@ public class Sprite{
 	public void close(){
 		stopMove();
 		stopAnimation();
+		stopTransparencyThread();
 	}
 	
    //////////////////////////////////////////////////////////////////

@@ -63,7 +63,7 @@ public class GameTitle extends Stage{
 					bub.move(-100, 150, 7);
 					bob.setAnimation(Bob.BUBBLE_LEFT);
 					bob.move(-150, 150, 7);
-					sleep(9000);
+					Engine.sleep(9000);
 					
 					//Retour
 					if(animation){
@@ -71,7 +71,7 @@ public class GameTitle extends Stage{
 						bub.move(800, 150, 7);
 						bob.setAnimation(Bob.BUBBLE_RIGHT);
 						bob.move(850, 150, 7);
-						sleep(9000);
+						Engine.sleep(9000);
 					}
 				}
 			}

@@ -1,5 +1,6 @@
 package com.mklr.graphics.stage;
 
+import java.awt.AlphaComposite;
 import java.util.LinkedList;
 
 import com.mklr.graphics.engine.Engine;
@@ -20,29 +21,42 @@ public class Stage {
 	public static final int CANCEL = 2;
 	public static final int TIMMER_END = 2;
 	
+	   //////////////////////////////////////////////////////////////////
+	  ///////////////////////// CONSTRUCTEURS //////////////////////////
+	 //////////////////////////////////////////////////////////////////	
+	
 	public Stage(Engine engine){
 		this.engine = engine;
 	}
 	
-	public void sleep(int temps){
-		try{
-			Thread.sleep(temps);
-		}
-		catch(InterruptedException e){
-			e.printStackTrace();
-		}	
-	}
+	   //////////////////////////////////////////////////////////////////
+	  ////////////////////////////// METHODES //////////////////////////
+	 //////////////////////////////////////////////////////////////////	
 	
+	/** Fonction appelée avant chaque raffraichissement de l'image, a redefinir pour mettre a jour des informations a l'ecran */
 	public void update(){};
 	
-	public void interaction(int function){
-		
-	}
+	/** Fonction liées aux interaction avec les autres methode, elle prend en parametre un entier representant une action particuliere 
+	 * pour l'objet (clic sur un bouton valider, fin d'un timer etc) et permet de definir des actions associées */
+	public void interaction(int function){}
 	
+	/** Ferme les Threads associé au stage (musique, sprite etc.) afin d'être éliminé par le garbage collector */ 
 	public void close(){
+		//Parcours de la liste de sprite et fermeture de tous les sprites associés au stageif(stage.getSpriteList() != null){
+		if(sprite_list != null){
+			for(int i = 0; i < sprite_list.size(); i++){
+				sprite_list.get(i).close();
+			}
+		}
+		
+		//Fermeture du lecteur de musique
 		if(musicPlayer != null)
 			musicPlayer.stopPlaying();
 	}
+	
+	   //////////////////////////////////////////////////////////////////
+	  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
+	 //////////////////////////////////////////////////////////////////
 	
 	/**
 	 * @return the liste_sprite
