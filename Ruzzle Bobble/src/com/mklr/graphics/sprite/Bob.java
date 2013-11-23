@@ -53,45 +53,45 @@ public class Bob extends Sprite implements Runnable{
 			while(animated && animation == BUBBLE_LEFT){
 				for(int i = 0; i < 5 && animation == BUBBLE_LEFT; i++){
 					image = sprite_list[i];
-					sleep(160);
+					Engine.sleep(160);
 				}
 				for(int i = 4; i > 0 && animation == BUBBLE_LEFT; i--){
 					image = sprite_list[i];
-					sleep(160);
+					Engine.sleep(160);
 				}
 			}
 
 			while(animated && animation == BUBBLE_RIGHT){
 				for(int i = 5; i < 10 && animation == BUBBLE_RIGHT; i++){
 					image = sprite_list[i];
-					sleep(160);
+					Engine.sleep(160);
 				}
 				for(int i = 9; i > 4 && animation == BUBBLE_RIGHT; i--){
 					image = sprite_list[i];
-					sleep(160);
+					Engine.sleep(160);
 				}
 			}
 			
 			while(animated && animation == STANDING){
 				image = sprite_list[10];
-				sleep(1500);
+				Engine.sleep(1500);
 				//Bub cligne des yeux
 				for(int j = 0; j < 2 && animation == STANDING; j++){
 					image = sprite_list[15];
-					sleep(180);
+					Engine.sleep(180);
 					image = sprite_list[10];
-					sleep(180);
+					Engine.sleep(180);
 				}
-				sleep(1000);
+				Engine.sleep(1000);
 				//Bub regarde le joueur
 				for(int i = 11; i < 13 && animation == STANDING; i++){
 					image = sprite_list[i];
-					sleep(180);
+					Engine.sleep(180);
 				}
-				sleep(1000);
+				Engine.sleep(1000);
 				for(int i = 12; i > 10 && animation == STANDING; i--){
 					image = sprite_list[i];
-					sleep(180);
+					Engine.sleep(180);
 				}
 				/*
 				//Bub bouge la queue

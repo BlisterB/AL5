@@ -53,38 +53,38 @@ public class Bub extends Sprite implements Runnable{
 			while(animated && animation == STANDING){
 				for(int i = 0; i < 3 && animation == STANDING; i++){
 					image = sprite_list[i];
-					sleep(180);
+					Engine.sleep(180);
 				}
 				for(int i = 1; i > 0 && animation == STANDING; i--){
 					image = sprite_list[i];
-					sleep(180);
+					Engine.sleep(180);
 				}
 			}
 			while(animated && animation == FEAR){
 				for(int i = 4; i < 9 && animation == FEAR; i++){
 					image = sprite_list[i];
-				    sleep(180);
+					Engine.sleep(180);
 				}
 				for(int i = 7; i >3 && animation == FEAR; i--){
 					image = sprite_list[i];
-				    sleep(180);
+					Engine.sleep(180);
 				}
 			}
 			if(animated && animation == CRY){
 				//Retient ses larme (on repete l'animation deux fois)
 				image = sprite_list[9];
-				sleep(180);
+				Engine.sleep(180);
 				image = sprite_list[10];
-				sleep(180);
+				Engine.sleep(180);
 				for(int i = 9; i < 14 && animation == CRY; i++){
 					image = sprite_list[i];
-					sleep(180);
+					Engine.sleep(180);
 				}
 				//Pleure indefiniment
 				while(animated && animation == CRY)
 					for(int i = 14; i < 17 && animation == CRY; i++){
 						image = sprite_list[i];
-						sleep(180);
+						Engine.sleep(180);
 					}
 			}
 		}

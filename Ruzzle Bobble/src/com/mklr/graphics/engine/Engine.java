@@ -94,7 +94,14 @@ public class Engine implements Runnable{
 			}
 		}
 	}
-	
+	public static void sleep(int temps){
+		try{
+			Thread.sleep(temps);
+		}
+		catch(InterruptedException e){
+			e.printStackTrace();
+		}	
+	}
 	/**Methode fermant la sequence de jeu en cours et fermant son sequenceur midi proprement**/
 	public int exit(){
 		if(stage != null)

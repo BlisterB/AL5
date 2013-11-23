@@ -80,7 +80,7 @@ public class Sprite{
 					if(rect.y > y) tempY--;
 					else if(rect.y < y)	tempY++;
 
-					sleep(periode);
+					Engine.sleep(periode);
 					rect = new Rectangle(tempX, tempY, (int)rect.getWidth(), (int)rect.getHeight());
 				}
 				inMove = false;
@@ -91,16 +91,6 @@ public class Sprite{
 	/** Stoppe un mouvement en cours */
 	public void stopMove(){
 		inMove = false;
-	}
-	
-
-	public void sleep(int temps){
-		try{
-			Thread.sleep(temps);
-		}
-		catch(InterruptedException e){
-			e.printStackTrace();
-		}	
 	}
 	
 	
@@ -136,7 +126,7 @@ public class Sprite{
 					else
 						transparency = 0;
 					alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, transparency);
-					sleep(periode);
+					Engine.sleep(periode);
 				}
 			}
 		}).start();

@@ -40,7 +40,7 @@ public class BubLoading extends Sprite implements Runnable{
 			while(animated && animation == LOADING){
 				for(int i = 0; i < 8 && animation == LOADING; i++){
 					image = sprite_list[i];
-					sleep(80);
+					Engine.sleep(80);
 				}
 			}
 		}
