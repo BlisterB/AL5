@@ -23,7 +23,6 @@ public class GameTimer {
 					}
 					time -= 10;
 				}
-				System.out.println("FIN DU TIMMER");
 				stage.interaction(Stage.TIMMER_END);
 			}
 		}).start();

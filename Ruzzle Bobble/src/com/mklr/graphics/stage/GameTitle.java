@@ -10,13 +10,15 @@ import com.mklr.graphics.sprite.Sprite;
 
 /**Sequence correspondant a la phase d'ecran de titre**/
 public class GameTitle extends Stage{
+	private static boolean dictAreLoaded;//Pour signaler que les dico sont deja charge apres une fin de partie
+	private boolean animation;//Definie si on continue a bouger les elements a l'ecran ou non
+	
 	private Bub bub;
 	private Bob bob;
 	private BubLoading bubLoading;
 	private Sprite titleSprite;
 	private InterfaceSprite jouerInterface;
 	private Sprite textLoadingSprite;
-	private boolean animation;//Definie si on continue a bouger les elements a l'ecran ou non
 	
 	public GameTitle(Engine engine){
 		super(engine);
@@ -42,6 +44,10 @@ public class GameTitle extends Stage{
 		//Mise en mouvement des composants
 		animation = true;
 		animation();
+		
+		//Si les dico sont deja charge, on affiche le bouton jouer
+		if(dictAreLoaded)
+			dictAreLoaded();
 	}
 	
 	public void animation(){
@@ -74,7 +80,7 @@ public class GameTitle extends Stage{
 	}
 	
 	public void dictAreLoaded() {
-		System.out.println("Les dictionnaires sont chargés, on peut afficher le bouton jouer");
+		dictAreLoaded = true;
 		bubLoading.setTransparency(0f, 10);
 		textLoadingSprite.setTransparency(0f, 10);
 		jouerInterface.move(200, 325, 5);

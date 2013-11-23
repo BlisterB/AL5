@@ -38,12 +38,16 @@ public class Engine implements Runnable{
 
 	//Methode de chargement des sequences
 	public void setGameTitle(){
+		if(stage != null){
+			stage.close();
+		}
 		this.stage = new GameTitle(this);
 		gamescreen.setStage(stage);
 	}
 	public void setGameStage(){
 		//Arret des Thread de GameTitle
-		this.stage.close();
+		if(stage != null)
+			this.stage.close();
 		
 		//Re agencement de la menuBar
 		if(window != null){

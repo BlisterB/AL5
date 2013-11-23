@@ -2,6 +2,8 @@ package com.mklr.graphics.stage;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import com.mklr.graphics.engine.Engine;
 import com.mklr.graphics.engine.GameTimer;
 import com.mklr.graphics.engine.MusicPlayer;
@@ -32,7 +34,7 @@ public class GameStage extends Stage {
 		this.board = board;
 		this.game = game;
 		this.musicPlayer = new MusicPlayer("music/gamestage.mid", true);
-		this.timer = new GameTimer(1000 * 60 * 2, this);
+		this.timer = new GameTimer(1000 * 10, this);
 		
 		//Background et interface
 		background = new Sprite(Engine.PATH + "img/background/game_stage.png");
@@ -146,6 +148,19 @@ public class GameStage extends Stage {
 		super.close();
 	}	
 
+	public void interaction(int i){
+		super.interaction(i);
+		if(i == TIMMER_END)
+			timeOut();
+	}
+	
+	public void timeOut(){
+    	String info = "Bravo !\nVous avez obtenu un score de " + game.getScore() + " !\nArriverez vous à faire mieux la prochaine fois ?";
+    	JOptionPane aProposWindow = new JOptionPane();
+    	aProposWindow.showMessageDialog(null, info, "Time out !", JOptionPane.INFORMATION_MESSAGE);
+    	engine.setGameTitle();
+	}
+	
 	public int getLetterY(int i, int j){
 		switch(i){
 			case 0 :
