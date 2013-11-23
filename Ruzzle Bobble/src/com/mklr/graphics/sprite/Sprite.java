@@ -73,7 +73,7 @@ public class Sprite{
 		inMove = true;
 		new Thread(new Runnable(){
 			public void run(){
-				while(rect.x != x || rect.y != y){
+				while((rect.x != x || rect.y != y) && inMove){
 					int tempX = rect.x, tempY = rect.y;
 					if(rect.x > x) tempX--;
 					else if(rect.x < x)	tempX++;
@@ -83,9 +83,9 @@ public class Sprite{
 					sleep(periode);
 					rect = new Rectangle(tempX, tempY, (int)rect.getWidth(), (int)rect.getHeight());
 				}
+				inMove = false;
 			}
 		}).start();
-		inMove = false;
 	}
 	
 	/** Stoppe un mouvement en cours */
