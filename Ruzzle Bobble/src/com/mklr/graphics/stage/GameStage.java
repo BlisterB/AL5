@@ -145,6 +145,7 @@ public class GameStage extends Stage {
 	}
 	
 	public void close(){
+		timer.close();
 		super.close();
 	}	
 
@@ -282,6 +283,20 @@ public class GameStage extends Stage {
 	 */
 	public void setGame(Game game) {
 		this.game = game;
+	}
+
+	/**
+	 * @return the timeSprite
+	 */
+	public NumberSprite[] getTimeSprite() {
+		return timeSprite;
+	}
+
+	/**
+	 * @param timeSprite the timeSprite to set
+	 */
+	public void setTimeSprite(NumberSprite[] timeSprite) {
+		this.timeSprite = timeSprite;
 	}
 	
 }

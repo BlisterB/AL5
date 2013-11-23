@@ -14,11 +14,12 @@ public class Sprite{
 	protected Image image;//L'image actuelle du sprite
 	protected Rectangle rect;//Le rectangle symbolisant l'image dans le JPanel
 	protected Image[] sprite_list;//Le tableau des images du sprite
-	boolean animated;
-	boolean displayable = true;//Defini si on affiche le sprite ou non
-	int animation;
-	boolean inMove;
-	protected AlphaComposite alphaComposite = null;
+	protected AlphaComposite alphaComposite = null;//L'alpha composite associe (referrence a la transparence)
+	int animation; //Nombre representant le numero de l'animation a jouer (declararees comme static final)
+	
+	protected boolean animated;
+	protected boolean displayable = true;//Defini si on affiche le sprite ou non
+	protected boolean inMove;
 
 	public Sprite(){
 		
@@ -42,9 +43,7 @@ public class Sprite{
   ////////////////////////////// METHODES //////////////////////////
  //////////////////////////////////////////////////////////////////	
 	
-	/** Ouvre une image et gere l'exception
-	 * @return l'image
-	 */
+	/** Ouvre une image dont le chemin est en parametre et leve l'eventuelle exception */
 	public static Image openImage(String path){
 		Image image;
 		try {
@@ -59,16 +58,17 @@ public class Sprite{
 		return null;
 	}
 	
-	/**@return Test de collision entre les deux sprites **/
-	
+	/** Teste la collision entre le sprite courant et celui passé en parametre **/
 	public boolean isInCollision(Sprite s){
 		return this.rect.intersects(s.rect);
 	}
+	/** Teste la collision entre le sprite courant et le point dont les coordonnees sont entrées en parametre*/
 	public boolean isInCollision(int x, int y){
 		Rectangle rect = new Rectangle(x, y, 1, 1);
 		return this.rect.intersects(rect);
 	}
 	
+	/** Dirige le Sprite vers les coordonnees 'x' et 'y' avec une periode de raffraichissement 'periode' (en ms) */
 	public void move(final int x, final int y, final int periode){
 		inMove = true;
 		new Thread(new Runnable(){
@@ -88,6 +88,12 @@ public class Sprite{
 		inMove = false;
 	}
 	
+	/** Stoppe un mouvement en cours */
+	public void stopMove(){
+		inMove = false;
+	}
+	
+
 	public void sleep(int temps){
 		try{
 			Thread.sleep(temps);
@@ -97,28 +103,24 @@ public class Sprite{
 		}	
 	}
 	
+	
+	//FONCTION LIEES A LA GESTION DE LA SOURIS
+	/** Definie l'action effectuee lors d'un clic sur le Sprite*/
 	public void onClick(){
 		System.out.println("Clic sur " + this);
 	}
 	
+	/** Definie l'action effectuee lors d'un passage sur le Sprite de la souris ayant un bouton enfoncé */
 	public void onMousePressedWay(){
 		
 	}
 	
-	public static Image[] getNumberImageArray(){
-		Image[] array = new Image[12];
-		for(int i = 0; i < 10; i++){
-			array[i] = openImage(Engine.PATH + "img/fonts/" + i + ".png");
-		}
-		array[11] = openImage(Engine.PATH + "img/fonts/colon.png");
-		
-		return array;
-	}
-	
+	/** Modifie la transparence du Sprite, t est un float représentant la nouvelle transparence (1 : opaque, O : invisible)*/
 	public void setTransparency(float t){
 		alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, t);
 	}
 	
+	/** Modifie progressivement la transparence du Sprite (periode est en ms), t est un float représentant la nouvelle transparence (1 : opaque, O : invisible)*/
 	public void setTransparency(float t, final int periode){
 		//On baisse progressivement la transparence
 		new Thread(new Runnable(){

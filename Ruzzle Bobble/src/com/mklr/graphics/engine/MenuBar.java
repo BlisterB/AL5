@@ -21,15 +21,20 @@ public class MenuBar extends JMenuBar {
 	
 	//Fichier
 	private JMenu mFichier = new JMenu("Fichier");
-	private JMenuItem iLancerPartie = new JMenuItem("Lancer une partie personalisée");
+	private JMenuItem iPartiePerso = new JMenuItem("Lancer une partie personalisée");
+	private JMenuItem iQuitterPartie = new JMenuItem("Quitter la partie");
 	private JMenuItem iQuitter = new JMenuItem("Quitter");
 	
 	//Options
 	private JMenu mOptions = new JMenu("Options");
+	
 	private JMenu mChoixLangue = new JMenu("Choix de la langue du dictionnaire");
 	private JRadioButtonMenuItem[] dicoRadioArray;
+	
 	private JMenu mChoixAlgo = new JMenu("Choix de l'algorithme de resolution");
 	private LinkedList <JRadioButtonMenuItem> AlgoList;
+	
+	private JMenuItem iStatCreationMot = new JMenuItem("Statistique de generation des mots");
 	//Algo
 	private JMenuItem iAPropos = new JMenuItem("A propos");
 	
@@ -39,7 +44,9 @@ public class MenuBar extends JMenuBar {
 		
 		//Menu Fichier
 		this.add(mFichier);
-		mFichier.add(iLancerPartie);
+		mFichier.add(iPartiePerso);
+		mFichier.add(iQuitterPartie);
+		iQuitterPartie.setEnabled(false);
 		mFichier.add(iQuitter);
 		
 		//Menu Option
@@ -65,9 +72,14 @@ public class MenuBar extends JMenuBar {
 		}
 		
 		//Ajout des Action Listener
-        iLancerPartie.addActionListener(new ActionListener(){
+        iPartiePerso.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent arg0){
                         OptionsWindow optwindow = new OptionsWindow(null, engine.getDicList());
+                }
+        });
+        iQuitterPartie.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent arg0){
+                	engine.setGameTitle();
                 }
         });
         iQuitter.addActionListener(new ActionListener(){
@@ -85,10 +97,16 @@ public class MenuBar extends JMenuBar {
 	}
 	
 	public void run_game(){
-		iLancerPartie.setEnabled(false);
+		iPartiePerso.setEnabled(false);
 		engine.setGameStage();
 	}
 
+
+	
+	   //////////////////////////////////////////////////////////////////
+	  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
+	 //////////////////////////////////////////////////////////////////
+	
 	/**
 	 * @return the mChoixLangue
 	 */
@@ -116,10 +134,35 @@ public class MenuBar extends JMenuBar {
 	public void setmChoixAlgo(JMenu mChoixAlgo) {
 		this.mChoixAlgo = mChoixAlgo;
 	}
+
+	/**
+	 * @return the iPartiePerso
+	 */
+	public JMenuItem getiPartiePerso() {
+		return iPartiePerso;
+	}
+
+	/**
+	 * @param iPartiePerso the iPartiePerso to set
+	 */
+	public void setiPartiePerso(JMenuItem iPartiePerso) {
+		this.iPartiePerso = iPartiePerso;
+	}
+
+	/**
+	 * @return the iQuitterPartie
+	 */
+	public JMenuItem getiQuitterPartie() {
+		return iQuitterPartie;
+	}
+
+	/**
+	 * @param iQuitterPartie the iQuitterPartie to set
+	 */
+	public void setiQuitterPartie(JMenuItem iQuitterPartie) {
+		this.iQuitterPartie = iQuitterPartie;
+	}
 	
-	   //////////////////////////////////////////////////////////////////
-	  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
-	 //////////////////////////////////////////////////////////////////
 	
 	
 }

@@ -4,18 +4,20 @@ import com.mklr.graphics.stage.Stage;
 
 public class GameTimer {
 	private int time;//En milliseconde
+	private boolean run_timmer;
 	private Stage stage;
 	
 	public GameTimer(int time, Stage stage){
 		this.time = time;
 		this.stage = stage;
+		run_timmer = true;
 		startTimmer();
 	}
 	
 	public void startTimmer(){
 		new Thread(new Runnable(){
 			public void run(){
-				while(time > 0){
+				while(time > 0 && run_timmer){
 					try{
 						Thread.sleep(10);
 					}catch(InterruptedException e){
@@ -23,9 +25,14 @@ public class GameTimer {
 					}
 					time -= 10;
 				}
-				stage.interaction(Stage.TIMMER_END);
+				if(run_timmer) //Si on a demandé l'arret du timmer, on ne comunique pas avec le stage associe
+					stage.interaction(Stage.TIMMER_END);
 			}
 		}).start();
+	}
+	
+	public void close(){
+		run_timmer = false;
 	}
 	
 	public int getDizaineMinute(){

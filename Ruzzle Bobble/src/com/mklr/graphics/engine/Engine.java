@@ -45,6 +45,7 @@ public class Engine implements Runnable{
 		
 		//Re agencement de la menuBar
 		if(window != null){
+			window.getMenubar().getiQuitterPartie().setEnabled(false);
 			window.getMenubar().getmChoixLangue().setEnabled(true);
 			window.getMenubar().getmChoixAlgo().setEnabled(true);
 		}
@@ -60,6 +61,7 @@ public class Engine implements Runnable{
 		
 		//Re agencement de la menuBar
 		if(window != null){
+			window.getMenubar().getiQuitterPartie().setEnabled(true);
 			window.getMenubar().getmChoixLangue().setEnabled(false);
 			window.getMenubar().getmChoixAlgo().setEnabled(false);
 		}
