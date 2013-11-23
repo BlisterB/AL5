@@ -38,9 +38,18 @@ public class Engine implements Runnable{
 
 	//Methode de chargement des sequences
 	public void setGameTitle(){
+		//Arret des Thread de GameTitle
 		if(stage != null){
 			stage.close();
 		}
+		
+		//Re agencement de la menuBar
+		if(window != null){
+			window.getMenubar().getmChoixLangue().setEnabled(true);
+			window.getMenubar().getmChoixAlgo().setEnabled(true);
+		}
+		
+		//Lanche de la phase d ecran de titre
 		this.stage = new GameTitle(this);
 		gamescreen.setStage(stage);
 	}
