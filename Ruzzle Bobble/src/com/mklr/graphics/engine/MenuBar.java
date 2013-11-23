@@ -47,6 +47,7 @@ public class MenuBar extends JMenuBar {
 		mFichier.add(iPartiePerso);
 		mFichier.add(iQuitterPartie);
 		iQuitterPartie.setEnabled(false);
+		mFichier.addSeparator();
 		mFichier.add(iQuitter);
 		
 		//Menu Option

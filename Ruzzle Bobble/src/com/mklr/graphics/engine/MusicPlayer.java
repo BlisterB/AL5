@@ -7,9 +7,16 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequencer;
 
 public class MusicPlayer {
-	boolean play;
-	boolean loopContinuously;
+	boolean play; //Defini si le thread de lecture doit continuer (false pour fermer le thread de lecture)
+	boolean loopContinuously; //Defini si la musique doit être jouée en boucle
 	private Sequencer sequencer = null;;
+	
+	public static final int MIDI = 1;
+	public static final int WAV = 2;
+	
+	   //////////////////////////////////////////////////////////////////
+	  ///////////////////////// CONSTRUCTEURS //////////////////////////
+	 //////////////////////////////////////////////////////////////////	
 	
 	public MusicPlayer(final String path, final boolean loopContinuously){
 		play = true;
@@ -40,6 +47,10 @@ public class MusicPlayer {
 		}).start();
 	}
 	
+	   //////////////////////////////////////////////////////////////////
+	  ////////////////////////////// METHODES //////////////////////////
+	 //////////////////////////////////////////////////////////////////	
+	
 	public void stopPlaying(){
 		if(sequencer != null){
 			sequencer.stop();
@@ -47,6 +58,10 @@ public class MusicPlayer {
 		}
 	}
 
+	   //////////////////////////////////////////////////////////////////
+	  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
+	 //////////////////////////////////////////////////////////////////
+	
 	/**
 	 * @return the play
 	 */
