@@ -51,7 +51,7 @@ public class Stage {
 		
 		//Fermeture du lecteur de musique
 		if(musicPlayer != null)
-			musicPlayer.stopPlaying();
+			musicPlayer.close();
 	}
 	
 	   //////////////////////////////////////////////////////////////////

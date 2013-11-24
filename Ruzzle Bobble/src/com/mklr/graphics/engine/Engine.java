@@ -73,7 +73,7 @@ public class Engine implements Runnable{
 		
 		
 		//Lancement de la phase de jeu
-		this.stage = new GameStage(this, board, game);
+		this.stage = new GameStage(this, board, game, 1000 * 5);
 		gamescreen.setStage(stage);
 	}
 	

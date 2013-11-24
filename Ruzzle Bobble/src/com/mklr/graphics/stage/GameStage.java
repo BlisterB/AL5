@@ -29,12 +29,13 @@ public class GameStage extends Stage {
 	private NumberSprite[] scoreSprite; //0 est l'unite, 1 la dizaine etc.
 	private Game game;
 	
-	public GameStage(Engine engine, Board board, Game game){
+	public GameStage(Engine engine, Board board, Game game, int timerTime){
 		super(engine);
 		this.board = board;
 		this.game = game;
 		this.musicPlayer = new MusicPlayer("music/gamestage.mid", true);
-		this.timer = new GameTimer(1000 * 60 * 2, this);
+		if(timerTime > 0)
+			this.timer = new GameTimer(timerTime, this);
 		
 		//Background et interface
 		background = new Sprite(Engine.PATH + "img/background/game_stage.png");
@@ -73,13 +74,15 @@ public class GameStage extends Stage {
 		}
 		
 		//Chargement des nombres du timer et des 2 deux points
-		timeSprite = new NumberSprite[5];
-		for(int i = 0; i < 5; i++){
-			timeSprite[i] = new NumberSprite(600 + 40*i, 10);
-			sprite_list.add(timeSprite[i]);
+		if(timerTime > 0){
+			timeSprite = new NumberSprite[5];
+			for(int i = 0; i < 5; i++){
+				timeSprite[i] = new NumberSprite(600 + 40*i, 10);
+				sprite_list.add(timeSprite[i]);
+			}
+			sprite_list.add(new Sprite("img/fonts/colon.png", 658, 6, 30, 25));
+			sprite_list.add(new Sprite("img/fonts/colon.png", 740, 6, 30, 25));
 		}
-		sprite_list.add(new Sprite("img/fonts/colon.png", 658, 6, 30, 25));
-		sprite_list.add(new Sprite("img/fonts/colon.png", 740, 6, 30, 25));
 		
 		//Chargement des nombres du score
 		scoreSprite = new NumberSprite[12];
@@ -171,6 +174,9 @@ public class GameStage extends Stage {
 	}
 	
 	public void timeOut(){
+		if(musicPlayer != null)
+			musicPlayer.close();
+		MusicPlayer.playSound("sound/game_over.wav");
     	String info = "Bravo !\nVous avez obtenu un score de " + game.getScore() + " !\nArriverez vous à faire mieux la prochaine fois ?";
     	JOptionPane aProposWindow = new JOptionPane();
     	aProposWindow.showMessageDialog(null, info, "Time out !", JOptionPane.INFORMATION_MESSAGE);

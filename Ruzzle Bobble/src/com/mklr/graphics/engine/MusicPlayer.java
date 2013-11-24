@@ -1,10 +1,18 @@
 package com.mklr.graphics.engine;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequencer;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class MusicPlayer {
 	boolean play; //Defini si le thread de lecture doit continuer (false pour fermer le thread de lecture)
@@ -51,8 +59,8 @@ public class MusicPlayer {
 	  ////////////////////////////// METHODES //////////////////////////
 	 //////////////////////////////////////////////////////////////////	
 	
-	public void stopPlaying(){
-		if(sequencer != null){
+	public void close(){
+		if(sequencer != null && sequencer.isRunning()){
 			sequencer.stop();
 			sequencer.close();
 		}
@@ -76,10 +84,7 @@ public class MusicPlayer {
 		this.play = play;
 	}
 	
-	
-	
-	/*
-	public static void playMusic(final String path){
+	public static void playSound(final String path){
 		new Thread(new Runnable(){
 			public void run(){
 				//Ouverture du fichier
@@ -134,5 +139,4 @@ public class MusicPlayer {
 			}
 		}).start();
 	}
-	*/
 }
