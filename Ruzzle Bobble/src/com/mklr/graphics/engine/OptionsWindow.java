@@ -23,7 +23,6 @@ import com.mklr.ruzzle.data.RuzzleDictionary;
 
 public class OptionsWindow extends JDialog {
 	private JPanel container = new JPanel();
-	private JSpinner spinTimer;
 	private JFormattedTextField[][] boardCharArray;
 	private JComboBox<Integer> comboBoxBonusLetter2;
 	private JComboBox<Integer> comboBoxBonusLetter3;
@@ -31,7 +30,9 @@ public class OptionsWindow extends JDialog {
 	private JComboBox<Integer> comboBoxBonusWord3;
 	private JComboBox<String> comboBoxAlgo;
 	private JComboBox<String> comboBoxDict;
+	private JSpinner spinTimer;
 	
+	/** Constructeur de la fenetre de création de partie personalisée, prend en parametre la JFrame parent et la liste dicList des dictionnaires disponibles */
 	public OptionsWindow(JFrame parent, HashMap<String, RuzzleDictionary> dicList){
 		super(parent, "Partie personnalisée", true);
 		this.setResizable(false);
@@ -42,6 +43,7 @@ public class OptionsWindow extends JDialog {
 		this.setVisible(true);
 	}
 	
+	/** Fonction d'initialisation de la fenetre */
 	private void initComponent(HashMap<String, RuzzleDictionary> dicList){
 		
 		   //////////////////////////////////////////////////////////////////
@@ -127,7 +129,7 @@ public class OptionsWindow extends JDialog {
 		panBonusWord3.add(labBonusWord3);
 		panBonusWord3.add(comboBoxBonusWord3);
 		
-		//Ajout des composant au JPanel Gauche
+		//Ajout des composant au JPanel Gauche et Alignement
 		panGauche.add(labBoard); 		labBoard.setAlignmentX(LEFT_ALIGNMENT);
 		panGauche.add(panBoard); 		panBoard.setAlignmentX(LEFT_ALIGNMENT);
 		panGauche.add(labBonus); 		labBonus.setAlignmentX(LEFT_ALIGNMENT);
@@ -136,27 +138,32 @@ public class OptionsWindow extends JDialog {
 		panGauche.add(panBonusWord2); 	panBonusWord2.setAlignmentX(LEFT_ALIGNMENT);
 		panGauche.add(panBonusWord3); 	panBonusWord3.setAlignmentX(LEFT_ALIGNMENT);
 		
+		
 		   //////////////////////////////////////////////////////////////////
 		  ///////////                VOLET DROIT                      //////
 		 //////////////////////////////////////////////////////////////////
+		
 		JPanel panDroit = new JPanel();
 		panDroit.setLayout(new BoxLayout(panDroit, BoxLayout.PAGE_AXIS));
 		
-		//Algorithme de Parcours
+		//I/ Algorithme de Parcours
 		JPanel panAlgo = new JPanel();
+		panAlgo.setLayout(new BoxLayout(panAlgo, BoxLayout.LINE_AXIS));
 		panAlgo.setBorder(BorderFactory.createTitledBorder("Algorithme"));
+		
 		JLabel labAlgo = new JLabel("Algorithme de parcours :");
 		String[] stringAlgo = {"Algo 1", "Algo 2", "Algo 3", "Algo 4"};
 		comboBoxAlgo = new JComboBox<String>(stringAlgo);
-		panAlgo.add(labAlgo);
-		panAlgo.add(comboBoxAlgo);
-		panDroit.add(panAlgo);
+		panAlgo.add(labAlgo);		labAlgo.setAlignmentX(LEFT_ALIGNMENT);
+		panAlgo.add(comboBoxAlgo);	comboBoxAlgo.setAlignmentX(LEFT_ALIGNMENT);
 		
-		//Dictionnaire
+		//II/ Dictionnaire
 		JPanel panDict = new JPanel();
+		panDict.setLayout(new BoxLayout(panDict, BoxLayout.LINE_AXIS));
 		panDict.setBorder(BorderFactory.createTitledBorder("Dictionnaire"));
+		
 		JLabel labDict = new JLabel("Langue du dictionnaire :");
-		//On creer le tableau de string des cle de 
+		//On creer le tableau de string des cle de dictList
 		String[] stringDict = new String[dicList.size()];
 		int i =0;
 		for(Map.Entry<String, RuzzleDictionary> entry : dicList.entrySet()) {
@@ -164,20 +171,28 @@ public class OptionsWindow extends JDialog {
 		    i++;
 		}
 		comboBoxDict = new JComboBox<String>(stringDict);
-		panDict.add(labDict);
-		panDict.add(comboBoxDict);
-		panDroit.add(panDict);
-		//Timer
-		JPanel panTimer = new JPanel();
-		panTimer.setBorder(BorderFactory.createTitledBorder("Timer"));
-		JLabel labTimer = new JLabel("Temps en secondes :");
-		SpinnerNumberModel spinModelTimer = new SpinnerNumberModel(120, 10, 35640, 10);
-		spinTimer = new JSpinner(spinModelTimer);
-		panTimer.add(labTimer);
-		panTimer.add(spinTimer);
-		panDroit.add(panTimer);
+		panDict.add(labDict);		labDict.setAlignmentX(LEFT_ALIGNMENT);
+		panDict.add(comboBoxDict);	comboBoxDict.setAlignmentX(LEFT_ALIGNMENT);
 		
-		//VOLET BAS (bouton ok/buton annuler)
+		//III/ Timer
+		JPanel panTimer = new JPanel();
+		panTimer.setLayout(new BoxLayout(panTimer, BoxLayout.LINE_AXIS));
+		panTimer.setBorder(BorderFactory.createTitledBorder("Timer"));
+		
+		JLabel labTimer = new JLabel("Temps en secondes (0 pour supprimer le timmer):");
+		SpinnerNumberModel spinModelTimer = new SpinnerNumberModel(120, 0, 35640, 10);
+		spinTimer = new JSpinner(spinModelTimer); spinTimer.setMaximumSize(new Dimension(400, 30));
+		panTimer.add(labTimer);		labTimer.setAlignmentX(LEFT_ALIGNMENT);
+		panTimer.add(spinTimer);	spinTimer.setAlignmentX(LEFT_ALIGNMENT);
+		
+		//Ajout des composants au JPanel Droit et Alignement
+		panDroit.add(panAlgo);		panAlgo.setAlignmentX(LEFT_ALIGNMENT);
+		panDroit.add(panDict);		panDict.setAlignmentX(LEFT_ALIGNMENT);
+		panDroit.add(panTimer);		panTimer.setAlignmentX(LEFT_ALIGNMENT);
+		
+		   //////////////////////////////////////////////////////////////////
+		  ///////////                VOLET BAS                        //////
+		 //////////////////////////////////////////////////////////////////
 		JPanel panButtons = new JPanel();
 		JButton buttonValider = new JButton("Valider");
 		JButton buttonAnnuler = new JButton("Annuler");
