@@ -34,7 +34,7 @@ public class GameStage extends Stage {
 		this.board = board;
 		this.game = game;
 		this.musicPlayer = new MusicPlayer("music/gamestage.mid", true);
-		this.timer = new GameTimer(1000 * 10, this);
+		this.timer = new GameTimer(1000 * 60 * 2, this);
 		
 		//Background et interface
 		background = new Sprite(Engine.PATH + "img/background/game_stage.png");
@@ -107,6 +107,16 @@ public class GameStage extends Stage {
 		//On envoie à game le mot actuel et la liste de marbles associée
 		int scoreOfTheMove = game.getScoreofMove(marblesOfTheCurrentWord, currentWord);
 		System.out.println("Score du mot : " + currentWord + " -> " + scoreOfTheMove);
+		//On anime Bob et Bub en fonction du score obtenu par le mot
+		if(scoreOfTheMove < 0){
+			bub.setAnimation(bub.FEAR2);
+		}
+		if(scoreOfTheMove > 0 && scoreOfTheMove < 7){
+			bub.setAnimation(bub.HAPPY);
+		}
+		else if(scoreOfTheMove >= 7){
+			bub.setAnimation(bub.JUMPING);
+		}
 		
 		//On efface le mot courant ainsi que sa liste de marble associée
 		currentWord = "";
@@ -227,7 +237,8 @@ public class GameStage extends Stage {
 			}
 		}
 	}
-	   //////////////////////////////////////////////////////////////////
+
+       //////////////////////////////////////////////////////////////////
 	  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
 	 //////////////////////////////////////////////////////////////////
 	/**
