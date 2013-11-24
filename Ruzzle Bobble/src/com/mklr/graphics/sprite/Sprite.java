@@ -225,6 +225,7 @@ public class Sprite{
 	 * @param animation the animation to set
 	 */
 	public void setAnimation(int animation) {
+		this.animated = true;
 		this.animation = animation;
 	}
 	/**

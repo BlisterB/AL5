@@ -50,6 +50,7 @@ public class GameTitle extends Stage{
 			dictAreLoaded();
 	}
 	
+	/**Gere l'animation des mascotes*/
 	public void animation(){
 		new Thread(new Runnable(){
 			public void run(){
@@ -79,6 +80,7 @@ public class GameTitle extends Stage{
 		
 	}
 	
+	/** Affiche le bouton jouer (les dictionnaires sont chargé, une partie peut donc être lancée) */
 	public void dictAreLoaded() {
 		dictAreLoaded = true;
 		bubLoading.setTransparency(0f, 10);

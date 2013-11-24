@@ -99,24 +99,26 @@ public class GameStage extends Stage {
 	  ////////////////////////////// METHODES //////////////////////////
 	 //////////////////////////////////////////////////////////////////	
 	
+	/** Ajoute c au mot en train d'être saisie par le joueur sur le plateau*/
 	public void addToCurrentWord(char letter){
 		currentWord = currentWord + letter;
 	}
 	
+	/** Envoe le mot saisie par le joueur à game et gere les animations du score associé au mot*/
 	public void sendCurrentWord(){
 		//On envoie à game le mot actuel et la liste de marbles associée
 		int scoreOfTheMove = game.getScoreofMove(marblesOfTheCurrentWord, currentWord);
 		System.out.println("Score du mot : " + currentWord + " -> " + scoreOfTheMove);
 		//On anime Bob et Bub en fonction du score obtenu par le mot
-		if(scoreOfTheMove < 0){
+		if(scoreOfTheMove <= 0){
 			bub.setAnimation(bub.FEAR2);
 			bob.setAnimation(bob.STRANGE);
 		}
-		if(scoreOfTheMove > 0 && scoreOfTheMove < 7){
+		else if(scoreOfTheMove < 7){
 			bub.setAnimation(bub.HAPPY);
 			bob.setAnimation(bob.HAPPY);
 		}
-		else if(scoreOfTheMove >= 7){
+		else{
 			bub.setAnimation(bub.JUMPING);
 			bob.setAnimation(bob.WHOA);
 		}

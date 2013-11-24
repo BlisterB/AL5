@@ -127,7 +127,7 @@ public class Bob extends Sprite implements Runnable{
 					image = sprite_list[i];
 					Engine.sleep(180);
 				}
-				Engine.sleep(300);
+				Engine.sleep(500);
 				animation = STANDING;
 			}
 			if(animated && animation == HAPPY){
