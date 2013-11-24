@@ -33,7 +33,7 @@ public class GameStage extends Stage {
 		super(engine);
 		this.board = board;
 		this.game = game;
-		this.musicPlayer = new MusicPlayer("music/gamestage.mid", true);
+		this.musicPlayer = new MusicPlayer(Engine.PATH + "music/gamestage.mid", true);
 		if(timerTime > 0)
 			this.timer = new GameTimer(timerTime, this);
 		
@@ -122,6 +122,7 @@ public class GameStage extends Stage {
 			bob.setAnimation(bob.HAPPY);
 		}
 		else{
+			MusicPlayer.playSound("sound/happy.wav");
 			bub.setAnimation(bub.JUMPING);
 			bob.setAnimation(bob.WHOA);
 		}
@@ -176,7 +177,7 @@ public class GameStage extends Stage {
 	public void timeOut(){
 		if(musicPlayer != null)
 			musicPlayer.close();
-		MusicPlayer.playSound("sound/game_over.wav");
+		MusicPlayer.playSound(Engine.PATH + "sound/game_over.wav");
     	String info = "Bravo !\nVous avez obtenu un score de " + game.getScore() + " !\nArriverez vous à faire mieux la prochaine fois ?";
     	JOptionPane aProposWindow = new JOptionPane();
     	aProposWindow.showMessageDialog(null, info, "Time out !", JOptionPane.INFORMATION_MESSAGE);
