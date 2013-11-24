@@ -24,34 +24,48 @@ import com.mklr.ruzzle.data.RuzzleDictionary;
 public class OptionsWindow extends JDialog {
 	private JPanel container = new JPanel();
 	private JSpinner spinTimer;
-	JComboBox<String> comboBoxAlgo;
-	JComboBox<String> comboBoxDict;
-	JComboBox<Integer> comboBoxBonusLetter2;
+	private JFormattedTextField[][] boardCharArray;
+	private JComboBox<Integer> comboBoxBonusLetter2;
+	private JComboBox<Integer> comboBoxBonusLetter3;
+	private JComboBox<Integer> comboBoxBonusWord2;
+	private JComboBox<Integer> comboBoxBonusWord3;
+	private JComboBox<String> comboBoxAlgo;
+	private JComboBox<String> comboBoxDict;
 	
 	public OptionsWindow(JFrame parent, HashMap<String, RuzzleDictionary> dicList){
 		super(parent, "Partie personnalisée", true);
-		this.setSize(1000, 500);
-		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.initComponent(dicList);
+		//this.setSize(1000, 500);
+		this.pack();
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 	
 	private void initComponent(HashMap<String, RuzzleDictionary> dicList){
-		//VOLET GAUCHE (Saisie du board et des bonus)
+		
+		   //////////////////////////////////////////////////////////////////
+		  ///////////   VOLET GAUCHE (Saisie du board et des bonus)   //////
+		 //////////////////////////////////////////////////////////////////
+		
 		JPanel panGauche = new JPanel();
-		panGauche.setMinimumSize(new Dimension(700, 200));
 		panGauche.setBorder(BorderFactory.createTitledBorder("Plateau de jeu"));
-		//Board
+		panGauche.setLayout(new BoxLayout(panGauche, BoxLayout.PAGE_AXIS));
+		
+		//I/ Board : Saisie des caracteres du Board
+		//1)Le JLabel
+		JLabel labBoard = new JLabel("Caractères du plateau :");
+		
+		//2)Le board
 		JPanel panBoard = new JPanel();
-		panGauche.add(panBoard);
 		panBoard.setLayout(new BoxLayout(panBoard, BoxLayout.PAGE_AXIS));
+		
 		//Creation des JFormatedTextField
 		MaskFormatter format = null;
 		try{
-			format = new MaskFormatter("?");
+			format = new MaskFormatter("?");//On accepte un seul caractere
 		}catch(ParseException e){e.printStackTrace();}
-		JFormattedTextField[][] boardCharArray = new JFormattedTextField[4][];
+		boardCharArray = new JFormattedTextField[4][];
 		if(format != null){
 			for(int i = 0; i < 4; i++){
 				//On defini le nombre de cases
@@ -74,19 +88,57 @@ public class OptionsWindow extends JDialog {
 				}
 			}
 		}
-		//Bonus
-		int[] numCaseBoard = new int[24];
+		
+		
+		//II/ Les Bonus a positionner dans le Board
+		JLabel labBonus = new JLabel("Position des bonus (de gauche à droite, de haut en bas) :");
+		
+		//Initialisation du tableau d'Integer servant de choix pour les Combobox
+		Integer[] numCaseBoard = new Integer[24];
 		for(int i = 0; i < 24; i++){
 			numCaseBoard[i] = i;
 		}
-		//Emplacement du Bonus Lettre compte double
+		
+		//1) Lettre compte double
 		JPanel panBonusLetter2 = new JPanel();
-		panGauche.add(panBonusLetter2);
-		//comboBoxBonusLetter2 = new JComboBox<String>(stringDict);
+		JLabel labBonusLetter2 = new JLabel("Lettre compte double :");
+		comboBoxBonusLetter2 = new JComboBox<Integer>(numCaseBoard);
+		panBonusLetter2.add(labBonusLetter2);
+		panBonusLetter2.add(comboBoxBonusLetter2);
 		
+		//2) Lettre compte triple
+		JPanel panBonusLetter3 = new JPanel();
+		JLabel labBonusLetter3 = new JLabel("Lettre compte triple :");
+		comboBoxBonusLetter3 = new JComboBox<Integer>(numCaseBoard);
+		panBonusLetter3.add(labBonusLetter3);
+		panBonusLetter3.add(comboBoxBonusLetter3);
 		
+		//3) Lettre compte double
+		JPanel panBonusWord2 = new JPanel();
+		JLabel labBonusWord2 = new JLabel("Mot compte double :");
+		comboBoxBonusWord2 = new JComboBox<Integer>(numCaseBoard);
+		panBonusWord2.add(labBonusWord2);
+		panBonusWord2.add(comboBoxBonusWord2);
 		
-		//VOLET DROIT
+		//4) Lettre compte double
+		JPanel panBonusWord3 = new JPanel();
+		JLabel labBonusWord3 = new JLabel("Mot compte triple :");
+		comboBoxBonusWord3 = new JComboBox<Integer>(numCaseBoard);
+		panBonusWord3.add(labBonusWord3);
+		panBonusWord3.add(comboBoxBonusWord3);
+		
+		//Ajout des composant au JPanel Gauche
+		panGauche.add(labBoard); 		labBoard.setAlignmentX(LEFT_ALIGNMENT);
+		panGauche.add(panBoard); 		panBoard.setAlignmentX(LEFT_ALIGNMENT);
+		panGauche.add(labBonus); 		labBonus.setAlignmentX(LEFT_ALIGNMENT);
+		panGauche.add(panBonusLetter2); panBonusLetter2.setAlignmentX(LEFT_ALIGNMENT);
+		panGauche.add(panBonusLetter3); panBonusLetter3.setAlignmentX(LEFT_ALIGNMENT);
+		panGauche.add(panBonusWord2); 	panBonusWord2.setAlignmentX(LEFT_ALIGNMENT);
+		panGauche.add(panBonusWord3); 	panBonusWord3.setAlignmentX(LEFT_ALIGNMENT);
+		
+		   //////////////////////////////////////////////////////////////////
+		  ///////////                VOLET DROIT                      //////
+		 //////////////////////////////////////////////////////////////////
 		JPanel panDroit = new JPanel();
 		panDroit.setLayout(new BoxLayout(panDroit, BoxLayout.PAGE_AXIS));
 		
