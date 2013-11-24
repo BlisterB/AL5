@@ -109,27 +109,31 @@ public class GameStage extends Stage {
 	
 	/** Envoe le mot saisie par le joueur à game et gere les animations du score associé au mot*/
 	public void sendCurrentWord(){
-		//On envoie à game le mot actuel et la liste de marbles associée
-		int scoreOfTheMove = game.getScoreofMove(marblesOfTheCurrentWord, currentWord);
-		System.out.println("Score du mot : " + currentWord + " -> " + scoreOfTheMove);
-		//On anime Bob et Bub en fonction du score obtenu par le mot
-		if(scoreOfTheMove <= 0){
-			bub.setAnimation(bub.FEAR2);
-			bob.setAnimation(bob.STRANGE);
+		if(!currentWord.equals("")){
+			//On envoie à game le mot actuel et la liste de marbles associée
+			int scoreOfTheMove = game.getScoreofMove(marblesOfTheCurrentWord, currentWord);
+			System.out.println("Score du mot : " + currentWord + " -> " + scoreOfTheMove);
+			//On anime Bob et Bub en fonction du score obtenu par le mot
+			if(scoreOfTheMove <= 0){
+				MusicPlayer.playSound("sound/fail.wav");
+				bub.setAnimation(bub.FEAR2);
+				bob.setAnimation(bob.STRANGE);
+			}
+			else if(scoreOfTheMove < 7){
+				MusicPlayer.playSound("sound/youpi.wav");
+				bub.setAnimation(bub.HAPPY);
+				bob.setAnimation(bob.HAPPY);
+			}
+			else{
+				MusicPlayer.playSound("sound/happy.wav");
+				bub.setAnimation(bub.JUMPING);
+				bob.setAnimation(bob.WHOA);
+			}
+			
+			//On efface le mot courant ainsi que sa liste de marble associée
+			currentWord = "";
+			flushSelectedLetter();
 		}
-		else if(scoreOfTheMove < 7){
-			bub.setAnimation(bub.HAPPY);
-			bob.setAnimation(bob.HAPPY);
-		}
-		else{
-			MusicPlayer.playSound("sound/happy.wav");
-			bub.setAnimation(bub.JUMPING);
-			bob.setAnimation(bob.WHOA);
-		}
-		
-		//On efface le mot courant ainsi que sa liste de marble associée
-		currentWord = "";
-		flushSelectedLetter();
 	}
 	
 	public void flushSelectedLetter(){
