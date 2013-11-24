@@ -5,13 +5,13 @@ import java.awt.Image;
 import com.mklr.graphics.engine.Engine;
 
 public class Bob extends Sprite implements Runnable{
-	public static int BUBBLE_LEFT = 1, BUBBLE_RIGHT = 2, STANDING = 3;
+	public static int BUBBLE_LEFT = 1, BUBBLE_RIGHT = 2, STANDING = 3, STRANGE = 4, WHOA = 5, HAPPY = 6;
 	
 	public Bob(int x, int y){
 		super(x, y, 100, 100);
 		
 		//Chargement des images
-		this.sprite_list = new Image[16];
+		this.sprite_list = new Image[24];
 		sprite_list[0] = openImage(Engine.PATH + "img/bob/bob-buble-left1.png");
 		sprite_list[1] = openImage(Engine.PATH + "img/bob/bob-buble-left2.png");
 		sprite_list[2] = openImage(Engine.PATH + "img/bob/bob-buble-left3.png");
@@ -28,6 +28,14 @@ public class Bob extends Sprite implements Runnable{
 		sprite_list[13] = openImage(Engine.PATH + "img/bob/bob-standing4.png");
 		sprite_list[14] = openImage(Engine.PATH + "img/bob/bob-standing5.png");
 		sprite_list[15] = openImage(Engine.PATH + "img/bob/bob-standing6.png");
+		sprite_list[16] = openImage(Engine.PATH + "img/bob/bob-strange1.png");
+		sprite_list[17] = openImage(Engine.PATH + "img/bob/bob-strange2.png");
+		sprite_list[18] = openImage(Engine.PATH + "img/bob/bob-strange3.png");
+		sprite_list[19] = openImage(Engine.PATH + "img/bob/bob-woa1.png");
+		sprite_list[20] = openImage(Engine.PATH + "img/bob/bob-woa2.png");
+		sprite_list[21] = openImage(Engine.PATH + "img/bob/bob-woa3.png");
+		sprite_list[22] = openImage(Engine.PATH + "img/bob/bob-happy1.png");
+		sprite_list[23] = openImage(Engine.PATH + "img/bob/bob-happy2.png");
 	}
 	
 	public Bob(int x, int y,int animation){
@@ -74,7 +82,11 @@ public class Bob extends Sprite implements Runnable{
 			
 			while(animated && animation == STANDING){
 				image = sprite_list[10];
-				Engine.sleep(1500);
+				for(int i = 0; i < 3 && animation == STANDING; i++){//On decoupe l'attente pour permettre de meilleurs transition entre les attente
+					Engine.sleep(500);
+					if(animation != STANDING)
+						break;
+				}
 				//Bub cligne des yeux
 				for(int j = 0; j < 2 && animation == STANDING; j++){
 					image = sprite_list[15];
@@ -82,30 +94,52 @@ public class Bob extends Sprite implements Runnable{
 					image = sprite_list[10];
 					Engine.sleep(180);
 				}
-				Engine.sleep(1000);
+				for(int i = 0; i < 2 && animation == STANDING; i++){//On decoupe l'attente pour permettre de meilleurs transition entre les attente
+					Engine.sleep(500);
+					if(animation != STANDING)
+						break;
+				}
 				//Bub regarde le joueur
 				for(int i = 11; i < 13 && animation == STANDING; i++){
 					image = sprite_list[i];
 					Engine.sleep(180);
 				}
-				Engine.sleep(1000);
+				for(int i = 0; i < 2 && animation == STANDING; i++){//On decoupe l'attente pour permettre de meilleurs transition entre les attente
+					Engine.sleep(500);
+					if(animation != STANDING)
+						break;
+				}
 				for(int i = 12; i > 10 && animation == STANDING; i--){
 					image = sprite_list[i];
 					Engine.sleep(180);
 				}
-				/*
-				//Bub bouge la queue
-				for(int j = 0; j < 2; j++){
-					for(int i = 13; i < 15 && animation == STANDING; i++){
-						image = sprite_list[i];
-						sleep(180);
-					}
-					for(int i = 14; i > 12 && animation == STANDING; i--){
-						image = sprite_list[i];
-						sleep(180);
+			}
+			
+			if(animated && animation == STRANGE){
+				for(int i = 16; i < 19 && animation == STRANGE; i++){
+					image = sprite_list[i];
+					Engine.sleep(180);
+				}
+				animation = STANDING;
+			}
+			if(animated && animation == WHOA){
+				for(int i = 19; i < 22 && animation == WHOA; i++){
+					image = sprite_list[i];
+					Engine.sleep(180);
+				}
+				Engine.sleep(300);
+				animation = STANDING;
+			}
+			if(animated && animation == HAPPY){
+				//Un petit rire 2 fois
+				for(int i = 0; i < 3; i++){
+					for(int j = 22; j < 24; j++){
+						image = sprite_list[j];
+						Engine.sleep(180);
 					}
 				}
-				*/
+				//On revient sur l'animation de base
+				animation = STANDING;
 			}
 		}
 	}

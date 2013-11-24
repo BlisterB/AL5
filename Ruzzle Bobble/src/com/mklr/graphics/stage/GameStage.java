@@ -110,12 +110,15 @@ public class GameStage extends Stage {
 		//On anime Bob et Bub en fonction du score obtenu par le mot
 		if(scoreOfTheMove < 0){
 			bub.setAnimation(bub.FEAR2);
+			bob.setAnimation(bob.STRANGE);
 		}
 		if(scoreOfTheMove > 0 && scoreOfTheMove < 7){
 			bub.setAnimation(bub.HAPPY);
+			bob.setAnimation(bob.HAPPY);
 		}
 		else if(scoreOfTheMove >= 7){
 			bub.setAnimation(bub.JUMPING);
+			bob.setAnimation(bob.WHOA);
 		}
 		
 		//On efface le mot courant ainsi que sa liste de marble associée
