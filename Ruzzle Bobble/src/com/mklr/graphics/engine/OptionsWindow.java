@@ -2,6 +2,8 @@ package com.mklr.graphics.engine;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +16,7 @@ import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -196,6 +199,16 @@ public class OptionsWindow extends JDialog {
 		JPanel panButtons = new JPanel();
 		JButton buttonValider = new JButton("Valider");
 		JButton buttonAnnuler = new JButton("Annuler");
+		buttonValider.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event){
+					valider();
+				}
+		});
+		buttonAnnuler.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event){
+					annuler();
+				}
+		});
 		panButtons.add(buttonValider);
 		panButtons.add(buttonAnnuler);
 		
@@ -206,5 +219,39 @@ public class OptionsWindow extends JDialog {
 		container.add(panDroit, BorderLayout.EAST);
 		container.add(panButtons, BorderLayout.SOUTH);
 		this.getContentPane().add(container);
+	}
+	
+	public void valider(){
+		//Creation du tableau de char
+		char[][] tabChar = new char[4][];
+		for(int i = 0; i < 4; i++){
+			//On defini le nombre de cases
+			if(i == 0 || i == 3)
+				tabChar[i] = new char[5];
+			else
+				tabChar[i] = new char[7];
+		}
+		
+		//On vérifie que le board contient bien que des lettres
+		Character tmp;
+		for(int i = 0; i < boardCharArray.length; i++){
+			for(int j = 0; j < boardCharArray[i].length; j++){
+				tmp = boardCharArray[i][j].getText().charAt(0);
+				if(!Character.isAlphabetic(tmp)){
+					String info = "Un des caractères saisis dans le board n'est pas alphabetique";
+	            	JOptionPane erreur = new JOptionPane();
+	            	erreur.showMessageDialog(null, info, "A propos", JOptionPane.ERROR_MESSAGE);
+	            	return;
+				}
+			}
+		}
+		
+		//On crée l'objet Option associée aux choix de l'utilisateur
+		
+		//On envoie l'objet Option
+	}
+	
+	public void annuler(){
+		this.dispose();
 	}
 }

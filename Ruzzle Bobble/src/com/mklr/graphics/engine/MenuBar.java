@@ -35,6 +35,7 @@ public class MenuBar extends JMenuBar {
 	private LinkedList <JRadioButtonMenuItem> AlgoList;
 	
 	private JMenuItem iStatCreationMot = new JMenuItem("Statistique de generation des mots");
+	private JMenuItem iCommentJouer = new JMenuItem("Comment jouer");
 	//Algo
 	private JMenuItem iAPropos = new JMenuItem("A propos");
 	
@@ -54,7 +55,9 @@ public class MenuBar extends JMenuBar {
 		this.add(mOptions);
 		mOptions.add(mChoixLangue);	
 		mOptions.add(mChoixAlgo);
+		mOptions.add(iStatCreationMot);
 		mOptions.addSeparator();
+		mOptions.add(iCommentJouer);
 		mOptions.add(iAPropos);
 		
 		//Generation des choix de dictionnaire
@@ -88,11 +91,23 @@ public class MenuBar extends JMenuBar {
                 engine.exit();
             }
         });
+        iCommentJouer.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent arg0){
+            	String info = "Ruzzle Bubble est un puzzle game se jouant à la souris.\n"
+            			+ "Lancez une partie normale en cliquant sur le bouton \"Jouer\" à l'écran de titre,\nou créant une partie personnalisée à l'aide du bouton \"Partie personalisée\" dans le menu Fichier.\n"
+            			+ "Lors d'une partie, maintenant le clic de souris sur les lettre du plateau pour former un mot.\n"
+            			+ "Des bulles sont affichées à côté de certaines lettres et correspondent à des bonus :\n"
+		            	+ "\tBulle verte : lettre compte double\n"
+		            	+ "\tBulle bleue : lettre compte triple\n"
+		            	+ "\tBulle rouge : mot compte double\n"
+		            	+ "\tBulle dorée : mot compte triple\n";
+            	JOptionPane.showMessageDialog(null, info, "A propos", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
         iAPropos.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0){
             	String info = "Ruzzle Bubble est un projet universitaire développé par deux étudiants :\n-Mehdi Khelifi\n-Loic Runarvot\n\n Les sprites des mascottes du projet ainsi que les deux pistes musicales sont issus de la série Puzzle Bobble.";
-            	JOptionPane aProposWindow = new JOptionPane();
-            	aProposWindow.showMessageDialog(null, info, "A propos", JOptionPane.INFORMATION_MESSAGE);
+            	JOptionPane.showMessageDialog(null, info, "A propos", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 	}

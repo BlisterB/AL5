@@ -20,7 +20,6 @@ import com.mklr.ruzzle.engine.Marble;
 public class GameStage extends Stage {
 	private Bub bub = new Bub(560, 330, Bub.STANDING);
 	private Bob bob = new Bob(610, 330, Bob.STANDING);
-	private Board board;
 	private String currentWord = "";
 	private ArrayList<Marble> marblesOfTheCurrentWord = new ArrayList<Marble>() ;
 	private LetterSprite[] letter_array = new LetterSprite[24];
@@ -31,7 +30,6 @@ public class GameStage extends Stage {
 	
 	public GameStage(Engine engine, Board board, Game game, int timerTime){
 		super(engine);
-		this.board = board;
 		this.game = game;
 		this.musicPlayer = new MusicPlayer(Engine.PATH + "music/gamestage.mid", true);
 		if(timerTime > 0)
@@ -116,18 +114,18 @@ public class GameStage extends Stage {
 			//On anime Bob et Bub en fonction du score obtenu par le mot
 			if(scoreOfTheMove <= 0){
 				MusicPlayer.playSound("sound/fail.wav");
-				bub.setAnimation(bub.FEAR2);
-				bob.setAnimation(bob.STRANGE);
+				bub.setAnimation(Bub.FEAR2);
+				bob.setAnimation(Bob.STRANGE);
 			}
 			else if(scoreOfTheMove < 7){
 				MusicPlayer.playSound("sound/youpi.wav");
-				bub.setAnimation(bub.HAPPY);
-				bob.setAnimation(bob.HAPPY);
+				bub.setAnimation(Bub.HAPPY);
+				bob.setAnimation(Bob.HAPPY);
 			}
 			else{
 				MusicPlayer.playSound("sound/happy.wav");
-				bub.setAnimation(bub.JUMPING);
-				bob.setAnimation(bob.WHOA);
+				bub.setAnimation(Bub.JUMPING);
+				bob.setAnimation(Bob.WHOA);
 			}
 			
 			//On efface le mot courant ainsi que sa liste de marble associée
@@ -183,8 +181,7 @@ public class GameStage extends Stage {
 			musicPlayer.close();
 		MusicPlayer.playSound(Engine.PATH + "sound/game_over.wav");
     	String info = "Bravo !\nVous avez obtenu un score de " + game.getScore() + " !\nArriverez vous à faire mieux la prochaine fois ?";
-    	JOptionPane aProposWindow = new JOptionPane();
-    	aProposWindow.showMessageDialog(null, info, "Time out !", JOptionPane.INFORMATION_MESSAGE);
+    	JOptionPane.showMessageDialog(null, info, "Time out !", JOptionPane.INFORMATION_MESSAGE);
     	engine.setGameTitle();
 	}
 	
