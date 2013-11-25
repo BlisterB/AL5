@@ -9,9 +9,8 @@ import com.mklr.ruzzle.data.RuzzleDictionary;
 import com.mklr.ruzzle.engine.Board;
 import com.mklr.ruzzle.engine.Game;
 
-/**La classe Engine represente le moteur de jeu
+/**La classe Engine represente le moteur de jeu.
  * C'est elle qui charge les sequences du jeu et commande le raffraichissement du GameScreen.
- * @author Mehdi
  *
  */
 public class Engine implements Runnable{
@@ -22,6 +21,7 @@ public class Engine implements Runnable{
 	HashMap<String, RuzzleDictionary> dicList;
 	private Window window;
 	
+	/**Constructeur, prend en argument la liste des dictionnaires disponibles*/
 	public Engine(HashMap<String, RuzzleDictionary> dicList){
 		this.gamescreen = new GameScreen();
 		this.dicList = dicList;
@@ -37,6 +37,7 @@ public class Engine implements Runnable{
 	 //////////////////////////////////////////////////////////////////	
 
 	//Methode de chargement des sequences
+	/**Methode de chargement de l'ecran de titre*/
 	public void setGameTitle(){
 		//Arret des Thread de GameTitle
 		if(stage != null){
@@ -54,6 +55,7 @@ public class Engine implements Runnable{
 		this.stage = new GameTitle(this);
 		gamescreen.setStage(stage);
 	}
+	/**Methode de chargement de la phase de jeu*/
 	public void setGameStage(){
 		//Arret des Thread de GameTitle
 		if(stage != null)
@@ -78,6 +80,7 @@ public class Engine implements Runnable{
 		gamescreen.setStage(stage);
 	}
 	
+	/**Appel le thread de raffraichissement de l'ecran*/
 	public void run(){
 		refresh_gamescreen();
 	}

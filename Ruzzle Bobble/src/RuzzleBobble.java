@@ -7,7 +7,7 @@ import com.mklr.graphics.engine.Window;
 import com.mklr.ruzzle.data.RuzzleDictionary;
 
 
-
+/** RuzzleBobble est la classe contenant le main et se chargeant du demarrage du programme*/ 
 public class RuzzleBobble {
 	public static final String PATH = "";
     

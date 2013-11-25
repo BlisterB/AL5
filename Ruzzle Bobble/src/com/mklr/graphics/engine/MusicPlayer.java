@@ -2,7 +2,6 @@ package com.mklr.graphics.engine;
 
 import java.io.File;
 import java.io.IOException;
-import javax.sound.sampled.*;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequencer;
