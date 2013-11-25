@@ -95,12 +95,12 @@ public class MenuBar extends JMenuBar {
             public void actionPerformed(ActionEvent arg0){
             	String info = "Ruzzle Bubble est un puzzle game se jouant à la souris.\n"
             			+ "Lancez une partie normale en cliquant sur le bouton \"Jouer\" à l'écran de titre,\nou créant une partie personnalisée à l'aide du bouton \"Partie personalisée\" dans le menu Fichier.\n"
-            			+ "Lors d'une partie, maintenant le clic de souris sur les lettre du plateau pour former un mot.\n"
+            			+ "Lors d'une partie, maintenez le clic de souris sur les lettre du plateau pour former un mot.\n"
             			+ "Des bulles sont affichées à côté de certaines lettres et correspondent à des bonus :\n"
-		            	+ "\tBulle verte : lettre compte double\n"
-		            	+ "\tBulle bleue : lettre compte triple\n"
-		            	+ "\tBulle rouge : mot compte double\n"
-		            	+ "\tBulle dorée : mot compte triple\n";
+		            	+ "\t\t-Bulle verte : lettre compte double\n"
+		            	+ "\t\t-Bulle bleue : lettre compte triple\n"
+		            	+ "\t\t-Bulle rouge : mot compte double\n"
+		            	+ "\t\t-Bulle dorée : mot compte triple\n";
             	JOptionPane.showMessageDialog(null, info, "A propos", JOptionPane.INFORMATION_MESSAGE);
             }
         });
