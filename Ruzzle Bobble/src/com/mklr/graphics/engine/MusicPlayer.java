@@ -11,6 +11,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+/** MusicPlayper permet de lire des fichier MIDI (music) et WAV (sound)*/
 public class MusicPlayer {
 	boolean play; //Defini si le thread de lecture doit continuer (false pour fermer le thread de lecture)
 	boolean loopContinuously; //Defini si la musique doit être jouée en boucle
@@ -23,6 +24,7 @@ public class MusicPlayer {
 	  ///////////////////////// CONSTRUCTEURS //////////////////////////
 	 //////////////////////////////////////////////////////////////////	
 	
+	/** Cree un lecteur MIDI*/
 	public MusicPlayer(final String path, final boolean loopContinuously){
 		play = true;
 		this.loopContinuously = loopContinuously;
@@ -55,7 +57,7 @@ public class MusicPlayer {
 	   //////////////////////////////////////////////////////////////////
 	  ////////////////////////////// METHODES //////////////////////////
 	 //////////////////////////////////////////////////////////////////	
-	
+	/** Ferme le lecteur MIDI */
 	public void close(){
 		if(sequencer != null && sequencer.isRunning()){
 			sequencer.stop();

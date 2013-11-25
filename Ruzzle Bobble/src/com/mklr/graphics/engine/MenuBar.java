@@ -31,9 +31,6 @@ public class MenuBar extends JMenuBar {
 	private JMenu mChoixLangue = new JMenu("Choix de la langue du dictionnaire");
 	private JRadioButtonMenuItem[] dicoRadioArray;
 	
-	private JMenu mChoixAlgo = new JMenu("Choix de l'algorithme de resolution");
-	private LinkedList <JRadioButtonMenuItem> AlgoList;
-	
 	private JMenuItem iStatCreationMot = new JMenuItem("Statistique de generation des mots");
 	private JMenuItem iCommentJouer = new JMenuItem("Comment jouer");
 	//Algo
@@ -53,8 +50,7 @@ public class MenuBar extends JMenuBar {
 		
 		//Menu Option
 		this.add(mOptions);
-		mOptions.add(mChoixLangue);	
-		mOptions.add(mChoixAlgo);
+		mOptions.add(mChoixLangue);
 		mOptions.add(iStatCreationMot);
 		mOptions.addSeparator();
 		mOptions.add(iCommentJouer);
@@ -135,20 +131,6 @@ public class MenuBar extends JMenuBar {
 	 */
 	public void setmChoixLangue(JMenu mChoixLangue) {
 		this.mChoixLangue = mChoixLangue;
-	}
-
-	/**
-	 * @return the mChoixAlgo
-	 */
-	public JMenu getmChoixAlgo() {
-		return mChoixAlgo;
-	}
-
-	/**
-	 * @param mChoixAlgo the mChoixAlgo to set
-	 */
-	public void setmChoixAlgo(JMenu mChoixAlgo) {
-		this.mChoixAlgo = mChoixAlgo;
 	}
 
 	/**
