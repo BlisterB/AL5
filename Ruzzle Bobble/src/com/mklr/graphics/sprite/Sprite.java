@@ -147,12 +147,10 @@ public class Sprite{
 	
 	/** Definie l'action effectuee lors d'un clic sur le Sprite*/
 	public void onClick(){
-		System.out.println("Clic sur " + this);
 	}
 	
 	/** Definie l'action effectuee lors d'un passage sur le Sprite de la souris ayant un bouton enfoncé */
 	public void onMousePressedWay(){
-		
 	}	
 
 	//FONCTION DE FERMETURE DU SPRITE
