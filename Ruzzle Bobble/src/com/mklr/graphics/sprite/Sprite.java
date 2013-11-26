@@ -10,6 +10,12 @@ import javax.imageio.ImageIO;
 
 import com.mklr.graphics.engine.Engine;
 
+/**
+ * La classe Sprite instancie des objets associé à des instances de Stage
+ * Une instance de Sprite contient toutes les informations necessaires à l'affichage du Sprite par une instance de GameScreen
+ * @author Mehdi
+ * 
+ */
 public class Sprite{
 	protected Image image;//L'image actuelle du sprite
 	protected Rectangle rect;//Le rectangle symbolisant l'image dans le JPanel

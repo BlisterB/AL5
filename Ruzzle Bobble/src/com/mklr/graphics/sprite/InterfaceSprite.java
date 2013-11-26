@@ -2,8 +2,13 @@ package com.mklr.graphics.sprite;
 
 import com.mklr.graphics.stage.Stage;
 
+/**
+ * Instancie des Sprite representant un element d'interface graphique
+ * 
+ * @author Mehdi
+ * 
+ */
 
-/** Instancie des Sprite representant un element d'interface graphique*/
 public class InterfaceSprite extends Sprite {
 	private int function; //1 : Valider, 2 : Retour
 	private Stage associatedStage;
