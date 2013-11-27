@@ -14,25 +14,15 @@ import com.mklr.ruzzle.engine.Marble;
 public class SolveByMarbleGrid extends Solver {
     RuzzleDictionary dictionary;
     Marble[][] marblesBoard;
-    ArrayList<SolutionWord> wordsList;
-
-    private double timer;
-    private long wordCount;
-
-    private byte algorithmType;
 
     private BinaryTree<String> __words = new BinaryTree<String>();
 
 
     public SolveByMarbleGrid(Board b, byte algorithmType) {
+        super(algorithmType);
+
         this.dictionary = b.getDico();
         marblesBoard = b.getGrid();
-        wordsList = new ArrayList<SolutionWord>();
-
-        timer = 0.0;
-        wordCount = 0;
-
-        this.algorithmType = algorithmType;
     }
 
     public void solve() {
@@ -69,16 +59,8 @@ public class SolveByMarbleGrid extends Solver {
         SolutionWord.changeSortType(initialSortType);
     }
 
-    public long getWordCount() {
-        return wordCount;
-    }
 
-    public double getTimer() {
-        return timer;
-    }
-
-
-    private void dfs(Integer[] marbleCoo, SolutionWord currentWord, 
+    private void dfs(Integer[] marbleCoo, SolutionWord currentWord,
             int wordLength, Tree<Character> position, LinkedList<Integer[]> path) {
         if (wordLength > dictionary.getMaxLength())
             return;
@@ -165,12 +147,5 @@ public class SolveByMarbleGrid extends Solver {
     			return true;
     	}
     	return false;
-    }
-    
-    /**
-     * @return the wordsList
-     */
-    public ArrayList<SolutionWord> getWordsList() {
-        return wordsList;
     }
 }

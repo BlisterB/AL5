@@ -15,26 +15,18 @@ public class SolveByDictionary extends Solver {
     private RuzzleDictionary dictionary;
     private Marble[][] marblesBoard;
 
-    private ArrayList<SolutionWord> wordsList;
+
     private HashMap<Character, ArrayList<Integer[]>> characterTable;
-
-    private double timer;
-    private long wordCount;
-    private byte algorithmType;
-
     private BinaryTree<String> __words = new BinaryTree<String>();
 
     public SolveByDictionary(Board b, byte algorithmType) {
+        super(algorithmType);
+
         dictionary = b.getDico();
         marblesBoard = b.getBoard();
 
-        timer = 0.0;
-        wordCount = 0;
-
         wordsList = new ArrayList<SolutionWord>();
         characterTable = new HashMap<Character, ArrayList<Integer[]>>();
-
-        this.algorithmType = algorithmType;
     }
 
     public void solve() {
@@ -63,18 +55,6 @@ public class SolveByDictionary extends Solver {
         SolutionWord.changeSortType(sortType);
         Collections.sort(wordsList, new SolutionWord());
         SolutionWord.changeSortType(initialSortType);
-    }
-
-    public ArrayList<SolutionWord> getWordsList() {
-        return wordsList;
-    }
-
-    public long getWordCount() {
-        return wordCount;
-    }
-
-    public double getTimer() {
-        return timer;
     }
 
     private void dfs(Tree<Character> curPos, SolutionWord curWord, int wordLength, LinkedList<Integer[]> path, Integer[] curPosInGrid) {

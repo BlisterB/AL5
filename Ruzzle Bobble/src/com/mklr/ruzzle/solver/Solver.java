@@ -1,5 +1,7 @@
 package com.mklr.ruzzle.solver;
 
+import java.util.ArrayList;
+
 public abstract class Solver {
     public static final byte BREADTH_FIRST_SEARCH = 0;
     public static final byte DEPTH_FIRST_SEARCH = 1;
@@ -8,28 +10,48 @@ public abstract class Solver {
     public static final byte SORT_BY_SCORE = 1;
     public static final byte SORT_BY_WORD_LENGTH = 2;
 
-
-    protected byte sortType;
+    protected byte algorithmType;
+    protected double timer;
+    protected long wordCount;
+    protected ArrayList<SolutionWord> wordsList;
 
     protected Solver() {
 
     }
 
-    protected Solver(byte sortType) {
-        this.sortType = sortType;
+    protected Solver(byte algorithmType) {
+        this.algorithmType = algorithmType;
+        wordsList = new ArrayList<SolutionWord>();
+        timer = 0.0;
+        wordCount = 0;
     }
 
     /**
      * @return the sortType
      */
-    public byte getSortType() {
-        return sortType;
+    public byte getAlgorithmType() {
+        return algorithmType;
     }
 
     /**
-     * @param sortType the sortType to set
+     * @param algorithmType the sortType to set
      */
-    public void setSortType(byte sortType) {
-        this.sortType = sortType;
+    public void setAlgorithmType(byte algorithmType) {
+        this.algorithmType = algorithmType;
+    }
+
+    public abstract void solve();
+    public abstract void solve(byte sortType);
+
+    public ArrayList<SolutionWord> getWordsList() {
+        return wordsList;
+    }
+
+    public long getWordCount() {
+        return wordCount;
+    }
+
+    public double getTimer() {
+        return timer;
     }
 }

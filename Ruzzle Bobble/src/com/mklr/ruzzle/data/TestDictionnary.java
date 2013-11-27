@@ -87,7 +87,7 @@ public class TestDictionnary {
 
 
         System.out.println("====== SOLVER : MARBLE GRID DFS ======");
-        SolveByMarbleGrid solver = new SolveByMarbleGrid(b, Solver.DEPTH_FIRST_SEARCH);
+        Solver solver = new SolveByMarbleGrid(b, Solver.DEPTH_FIRST_SEARCH);
         //long beg = new Date().getTime();
         solver.solve(Solver.SORT_BY_WORD_LENGTH);
         //long end = new Date().getTime();
@@ -103,7 +103,7 @@ public class TestDictionnary {
         System.out.println("\n\n");
 
         System.out.println("====== SOLVER : DICTIONARY DFS ======");
-        SolveByDictionary solver2 = new SolveByDictionary(b, Solver.DEPTH_FIRST_SEARCH);
+        Solver solver2 = new SolveByDictionary(b, Solver.DEPTH_FIRST_SEARCH);
         //long beg2 = new Date().getTime();
         solver2.solve(Solver.SORT_BY_WORD_LENGTH);
         //long end2 = new Date().getTime();
