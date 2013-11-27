@@ -10,11 +10,11 @@ public class GameTimer {
 	public GameTimer(int time, Stage stage){
 		this.time = time;
 		this.stage = stage;
-		run_timmer = true;
 		startTimmer();
 	}
 	
 	public void startTimmer(){
+		run_timmer = true;
 		new Thread(new Runnable(){
 			public void run(){
 				while(time > 0 && run_timmer){
@@ -29,6 +29,10 @@ public class GameTimer {
 					stage.interaction(Stage.TIMMER_END);
 			}
 		}).start();
+	}
+	
+	public void pause(){
+		run_timmer = false;
 	}
 	
 	public void close(){

@@ -27,10 +27,7 @@ import com.mklr.ruzzle.data.RuzzleDictionary;
 public class OptionsWindow extends JDialog {
 	private JPanel container = new JPanel();
 	private JFormattedTextField[][] boardCharArray;
-	private JComboBox<Integer> comboBoxBonusLetter2;
-	private JComboBox<Integer> comboBoxBonusLetter3;
-	private JComboBox<Integer> comboBoxBonusWord2;
-	private JComboBox<Integer> comboBoxBonusWord3;
+	private JComboBox<Integer>[] comboBoxBonus = new JComboBox[4];
 	private JComboBox<String> comboBoxDict;
 	private JSpinner spinTimer;
 	private String[] stringDict;
@@ -112,30 +109,30 @@ public class OptionsWindow extends JDialog {
 		//1) Lettre compte double
 		JPanel panBonusLetter2 = new JPanel();
 		JLabel labBonusLetter2 = new JLabel("Lettre compte double :");
-		comboBoxBonusLetter2 = new JComboBox<Integer>(numCaseBoard);
+		comboBoxBonus[0] = new JComboBox<Integer>(numCaseBoard);
 		panBonusLetter2.add(labBonusLetter2);
-		panBonusLetter2.add(comboBoxBonusLetter2);
+		panBonusLetter2.add(comboBoxBonus[0]);
 		
 		//2) Lettre compte triple
 		JPanel panBonusLetter3 = new JPanel();
 		JLabel labBonusLetter3 = new JLabel("Lettre compte triple :");
-		comboBoxBonusLetter3 = new JComboBox<Integer>(numCaseBoard);
+		comboBoxBonus[1] = new JComboBox<Integer>(numCaseBoard);
 		panBonusLetter3.add(labBonusLetter3);
-		panBonusLetter3.add(comboBoxBonusLetter3);
+		panBonusLetter3.add(comboBoxBonus[1]);
 		
 		//3) Lettre compte double
 		JPanel panBonusWord2 = new JPanel();
 		JLabel labBonusWord2 = new JLabel("Mot compte double :");
-		comboBoxBonusWord2 = new JComboBox<Integer>(numCaseBoard);
+		comboBoxBonus[2] = new JComboBox<Integer>(numCaseBoard);
 		panBonusWord2.add(labBonusWord2);
-		panBonusWord2.add(comboBoxBonusWord2);
+		panBonusWord2.add(comboBoxBonus[2]);
 		
 		//4) Lettre compte double
 		JPanel panBonusWord3 = new JPanel();
 		JLabel labBonusWord3 = new JLabel("Mot compte triple :");
-		comboBoxBonusWord3 = new JComboBox<Integer>(numCaseBoard);
+		comboBoxBonus[3] = new JComboBox<Integer>(numCaseBoard);
 		panBonusWord3.add(labBonusWord3);
-		panBonusWord3.add(comboBoxBonusWord3);
+		panBonusWord3.add(comboBoxBonus[3]);
 		
 		//Ajout des composant au JPanel Gauche et Alignement
 		panGauche.add(labBoard); 		labBoard.setAlignmentX(LEFT_ALIGNMENT);
@@ -264,10 +261,33 @@ public class OptionsWindow extends JDialog {
 		}
 		
 		//Le board saisie est correct
+		int[][] bonusTab = new int[4][2];
+		//Passons au bonus à placer
+		for(int i = 0; i < comboBoxBonus.length; i++){
+			int idBonus = comboBoxBonus[i].getSelectedIndex();
+			if(idBonus>=19){
+				bonusTab[i][0] = 3;
+				bonusTab[i][1] = idBonus - 19;
+			}
+			else if(idBonus >= 12){
+				bonusTab[i][0] = 2;
+				bonusTab[i][1] = idBonus - 12;
+			}
+			else if(idBonus >= 5){
+				bonusTab[i][0] = 1;
+				bonusTab[i][1] = idBonus - 5;
+			}
+			else{
+				bonusTab[i][0] = 0;
+				bonusTab[i][1] = idBonus;
+			}
+		}
+		
+		
 		//On crée l'objet Option associée aux choix de l'utilisateur
 		String lang = stringDict[comboBoxDict.getSelectedIndex()];
 		int timer_time = (Integer)(spinTimer.getValue()) * 1000;
-		Option option = new Option(lang, dicList.get(lang), timer_time, tabChar);
+		Option option = new Option(lang, dicList.get(lang), timer_time, tabChar, bonusTab);
 		
 		//On envoie l'objet Option à l'engine en lancant une parte
 		this.dispose();
