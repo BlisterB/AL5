@@ -23,6 +23,10 @@ public class Option {
 		this.lang = lang;
 		this.dico = dico;
 	}
+	Option(String lang, RuzzleDictionary dico, int timer_time, Character[][] board){
+		this(lang, dico, timer_time);
+		this.board = board;
+	}
 	
 	   //////////////////////////////////////////////////////////////////
 	  ////////////////////////////// METHODES //////////////////////////

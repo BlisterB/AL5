@@ -33,13 +33,19 @@ public class OptionsWindow extends JDialog {
 	private JComboBox<Integer> comboBoxBonusWord3;
 	private JComboBox<String> comboBoxDict;
 	private JSpinner spinTimer;
+	private String[] stringDict;
+	private HashMap<String, RuzzleDictionary> dicList;
+	Engine engine;
 	
 	/** Constructeur de la fenetre de création de partie personalisée, prend en parametre la JFrame parent et la liste dicList des dictionnaires disponibles */
-	public OptionsWindow(JFrame parent, HashMap<String, RuzzleDictionary> dicList){
+	public OptionsWindow(JFrame parent, HashMap<String, RuzzleDictionary> dicList, Engine engine){
 		super(parent, "Partie personnalisée", true);
+		
+		this.dicList = dicList;
+		this.engine = engine;
+		
 		this.setResizable(false);
 		this.initComponent(dicList);
-		//this.setSize(1000, 500);
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
@@ -95,7 +101,7 @@ public class OptionsWindow extends JDialog {
 		
 		
 		//II/ Les Bonus a positionner dans le Board
-		JLabel labBonus = new JLabel("Position des bonus (de gauche à droite, de haut en bas) :");
+		JLabel labBonus = new JLabel("Position des bonus (laisser vide pour une génération automatique) :");
 		
 		//Initialisation du tableau d'Integer servant de choix pour les Combobox
 		Integer[] numCaseBoard = new Integer[24];
@@ -155,7 +161,7 @@ public class OptionsWindow extends JDialog {
 		
 		JLabel labDict = new JLabel("Langue du dictionnaire :");
 		//On creer le tableau de string des cle de dictList
-		String[] stringDict = new String[dicList.size()];
+		stringDict = new String[dicList.size()];
 		int i =0;
 		for(Map.Entry<String, RuzzleDictionary> entry : dicList.entrySet()) {
 		    stringDict[i] = entry.getKey();
@@ -219,35 +225,51 @@ public class OptionsWindow extends JDialog {
 	
 	public void valider(){
 		//Creation du tableau de char
-		char[][] tabChar = new char[4][];
+		Character[][] tabChar = new Character[4][];
 		for(int i = 0; i < 4; i++){
 			//On defini le nombre de cases
 			if(i == 0 || i == 3)
-				tabChar[i] = new char[5];
+				tabChar[i] = new Character[5];
 			else
-				tabChar[i] = new char[7];
+				tabChar[i] = new Character[7];
 		}
 		
-		//On vérifie que le board contient bien que des lettres
+		//On vérifie que le board est vide et que lettres sont valides
+		boolean boardVide = true, boardValide = true;
 		Character tmp;
 		for(int i = 0; i < boardCharArray.length; i++){
 			for(int j = 0; j < boardCharArray[i].length; j++){
 				tmp = boardCharArray[i][j].getText().charAt(0);
+				if(boardCharArray[i][j].getText().charAt(0) != ' '){
+					boardVide = false;
+					System.out.println("Le board saisie n'est pas vide");
+				}
 				if(!Character.isAlphabetic(tmp)){
-					String info = "Un des caractères saisis dans le board n'est pas alphabetique";
-	            	JOptionPane.showMessageDialog(null, info, "A propos", JOptionPane.ERROR_MESSAGE);
-	            	return;
+					boardValide = false;
 				}
 				else{
 					tabChar[i][j] = tmp;
 				}
 			}
 		}
+		if(boardVide){
+			tabChar = null;
+		}
+		else if(!boardValide){
+			String info = "Un des caractères saisis dans le board n'est pas alphabetique";
+        	JOptionPane.showMessageDialog(null, info, "A propos", JOptionPane.ERROR_MESSAGE);
+        	return;
+		}
 		//Le board saisie est correct
 		
 		//On crée l'objet Option associée aux choix de l'utilisateur
+		String lang = stringDict[comboBoxDict.getSelectedIndex()];
+		int timer_time = (Integer)(spinTimer.getValue());
+		Option option = new Option(lang, dicList.get(lang), timer_time, tabChar);
 		
-		//On envoie l'objet Option
+		//On envoie l'objet Option à l'engine en lancant une parte
+		this.dispose();
+		engine.setGameStage(option);
 	}
 	
 	public void annuler(){

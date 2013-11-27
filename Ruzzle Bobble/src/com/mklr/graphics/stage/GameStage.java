@@ -32,6 +32,7 @@ public class GameStage extends Stage {
 		super(engine);
 		this.game = game;
 		this.musicPlayer = new MusicPlayer(Engine.PATH + "music/gamestage.mid", true);
+		System.out.println(timerTime);
 		if(timerTime > 0)
 			this.timer = new GameTimer(timerTime, this);
 		
@@ -144,11 +145,13 @@ public class GameStage extends Stage {
 	
 	public void update(){
 		//Mise a jour du timer
-		timeSprite[0].changeNumber(timer.getDizaineMinute());
-		timeSprite[1].changeNumber(timer.getUniteMinute());
-		timeSprite[2].changeNumber(timer.getDizaineSeconde());
-		timeSprite[3].changeNumber(timer.getUniteSeconde());
-		timeSprite[4].changeNumber(timer.getDiziemeSeconde());
+		if(timer != null){
+			timeSprite[0].changeNumber(timer.getDizaineMinute());
+			timeSprite[1].changeNumber(timer.getUniteMinute());
+			timeSprite[2].changeNumber(timer.getDizaineSeconde());
+			timeSprite[3].changeNumber(timer.getUniteSeconde());
+			timeSprite[4].changeNumber(timer.getDiziemeSeconde());
+		}
 		
 		//Mise a jour du score
 		for(int i = 0; i < scoreSprite.length; i++){
@@ -166,7 +169,8 @@ public class GameStage extends Stage {
 	}
 	
 	public void close(){
-		timer.close();
+		if(timer != null)
+			timer.close();
 		super.close();
 	}	
 

@@ -48,6 +48,7 @@ public class Engine implements Runnable{
 		if(window != null){
 			window.getMenubar().getiQuitterPartie().setEnabled(false);
 			window.getMenubar().getmChoixLangue().setEnabled(true);
+			window.getMenubar().getiPartiePerso().setEnabled(true);
 		}
 		
 		//Lanche de la phase d ecran de titre
@@ -64,6 +65,7 @@ public class Engine implements Runnable{
 		if(window != null){
 			window.getMenubar().getiQuitterPartie().setEnabled(true);
 			window.getMenubar().getmChoixLangue().setEnabled(false);
+			window.getMenubar().getiPartiePerso().setEnabled(false);
 		}
 		
 		//Creation du jeu
@@ -84,9 +86,10 @@ public class Engine implements Runnable{
 		}
 		else{//On doit creer une partie personalisee
 			board = new Board(option.getBoard(), option.getLang(), option.getDico());
-			
 		}
-		
+
+		board = new Board(option);
+		board.init();
 		
 		Game game = new Game(this, board);
 		//Lancement de la phase de jeu
