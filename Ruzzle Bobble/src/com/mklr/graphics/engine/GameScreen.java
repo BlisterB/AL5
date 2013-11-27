@@ -1,8 +1,11 @@
 package com.mklr.graphics.engine;
 
 import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -67,9 +70,12 @@ public class GameScreen extends Canvas implements MouseMotionListener, MouseList
 			
 			//Affichage des derniers mots en GameStage :
 			if(stage instanceof GameStage){
-				for(int i = 0; i < 10 && i < ((GameStage)stage).getLastWords().size(); i++){
-					String mot = ((GameStage)stage).getLastWords().get(i);
-					g2.drawString(mot, 500, 100 + i*20);
+				String mot;
+				for(int i = 0; i < 6 && i < ((GameStage)stage).getLastWords().size(); i++){
+					mot = ((GameStage)stage).getLastWords().get(i);
+					g2.setColor(Color.WHITE);
+					g2.setFont(new Font("Comic sans ms", Font.BOLD, 40));
+					g2.drawString(mot, 580, 120 + i*40);
 				}
 			}
 		}
