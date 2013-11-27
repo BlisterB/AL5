@@ -18,7 +18,7 @@ public class Tree<T>  implements BasicTree<T>  {
      *  tree is non terminal (ie. finish nothing in the tree).
      *  It's the default value when creating a tree
      */
-    public static final int NON_TERMINAL    = 0;
+    public static final int NON_TERMINAL = 0;
     
     /**
      *  Some algorithm could use this constant to determine if the current

@@ -95,6 +95,11 @@ public class SolutionWord
         word += l.getLetter();
         ++length;
     }
+
+    public void addLetter(Character c) {
+        word += c;
+        ++length;
+    }
     
     public void endWord(LinkedList<Integer[]> path, Marble[][] gameBoard) {
     	int multiplicator = 1;

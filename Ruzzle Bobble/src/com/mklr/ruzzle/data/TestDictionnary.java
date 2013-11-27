@@ -1,18 +1,17 @@
 package com.mklr.ruzzle.data;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.*;
 
 import com.mklr.ruzzle.engine.Board;
 import com.mklr.ruzzle.engine.Marble;
 import com.mklr.ruzzle.solver.SolutionWord;
+import com.mklr.ruzzle.solver.SolveByDictionary;
 import com.mklr.ruzzle.solver.SolveByMarbleGrid;
 import com.mklr.ruzzle.solver.Solver;
 
 public class TestDictionnary {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 /*
         RuzzleDictionary d = new RuzzleDictionary();
         Thread t = new Thread(d);
@@ -58,7 +57,7 @@ public class TestDictionnary {
         */
         
         RuzzleDictionary d = new RuzzleDictionary("French", "dict/French.dict");
-        //RuzzleDictionary d = new RuzzleDictionary("enEN", "/usr/share/dict/words");
+      //  RuzzleDictionary d = new RuzzleDictionary("English", "/usr/share/dict/words");
         d.init();
 
         Board b = new Board("French", d);
@@ -70,8 +69,6 @@ public class TestDictionnary {
 
         System.out.println("\n\n");
 
-
-        System.out.println(d.getLetterSet());
        /*
         Random r = new Random();
         for (int i = 0; i < 10000000; i++) {
@@ -86,19 +83,47 @@ public class TestDictionnary {
             }
         }
          */
-        /*
-        System.out.println("====== SOLVER ======");
-        SolveByMarbleGrid solver = new SolveByMarbleGrid(d, b);
+
+
+        System.out.println("====== SOLVER : MARBLE GRID DFS ======");
+        SolveByMarbleGrid solver = new SolveByMarbleGrid(b);
         long beg = new Date().getTime();
         solver.solve(Solver.SORT_BY_WORD_LENGTH);
         long end = new Date().getTime();
-        System.out.println(solver.getWordsList());
-        System.out.println("====== SOLVER ======");
-
-        System.out.println("\n\nAlg done in " + ((double)(end-beg)/(1000.0)) + "s.");
+        //System.out.println(solver.getWordsList());
+        System.out.println("====== SOLVER : MARBLE GRID DFS ======");
+        System.out.println("\nAlg done in " + ((double)(end-beg)/(1000.0)) + "s.");
         System.out.println(solver.getWordsList().size() + " words found...");
-           */
 
+        System.out.println("\n\n");
 
+        System.out.println("====== SOLVER : DICTIONARY DFS ======");
+        SolveByDictionary solver2 = new SolveByDictionary(b);
+        long beg2 = new Date().getTime();
+        solver2.solve(Solver.SORT_BY_WORD_LENGTH);
+        long end2 = new Date().getTime();
+        System.out.println("====== SOLVER : DICTIONARY DFS ======");
+        System.out.println("\nAlg done in " + ((double)(end2-beg2)/(1000.0)) + "s.");
+        System.out.println(solver2.getWordsList().size() + " words found...");
+
+        FileWriter fw = new FileWriter("/home/aaylor/.tmp/result_alg1");
+        BufferedWriter bf = new BufferedWriter(fw);
+        for (SolutionWord sw : solver.getWordsList()) {
+            try {
+                bf.write(sw.toString());
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
+
+        FileWriter fw2 = new FileWriter("/home/aaylor/.tmp/result_alg2");
+        BufferedWriter bf2 = new BufferedWriter(fw2);
+        for (SolutionWord sw : solver2.getWordsList()) {
+            try {
+                bf2.write(sw.toString());
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
     }
 }

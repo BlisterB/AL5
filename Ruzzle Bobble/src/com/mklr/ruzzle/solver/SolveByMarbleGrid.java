@@ -15,8 +15,8 @@ public class SolveByMarbleGrid extends Solver {
     Marble[][] marblesBoard;
     ArrayList<SolutionWord> wordsList;
 
-    public SolveByMarbleGrid(RuzzleDictionary d, Board b) {
-        this.dictionary = d;
+    public SolveByMarbleGrid(Board b) {
+        this.dictionary = b.getDico();
         marblesBoard = b.getGrid();
         wordsList = new ArrayList<SolutionWord>();
     }
@@ -52,18 +52,26 @@ public class SolveByMarbleGrid extends Solver {
             return;
 
         SolutionWord nextWord;
-        Marble m = marblesBoard[marbleCoo[0]][marbleCoo[1]]; 
-        Letter l = m.getLetter();
+        Marble m = marblesBoard[marbleCoo[0]][marbleCoo[1]];                       // Coût 1
+        Letter l = m.getLetter();                                                  // Coût 1
         
-        LinkedList<Integer[]> path_cpy = new LinkedList<Integer[]>(path);
-        path_cpy.add(marbleCoo);
+        LinkedList<Integer[]> path_cpy = new LinkedList<Integer[]>(path);                  // Coût path_cpy size.
+                                                                                   // Voir si CLONE existe pour LinkedList...
+        path_cpy.addFirst(marbleCoo);
 
         if (l.getLetter() == '*') {
             for (Tree<Character> child : position.getListOfChilds().values()) {
-                nextWord = new SolutionWord(currentWord);
-                nextWord.addLetter(dictionary.getLetterSet()
-                            .getLetter(child.getNodeValue()));
+                nextWord = new SolutionWord(currentWord);                  //Coût correspondant à la copie. (voir CLONE)
+                nextWord.addLetter(child.getNodeValue());             //On doit parcourir la liste A CHAQUE FOIS.
+                                                                           //Utiliser une HashMap à la place ?
+                if (child.isTerminal() && !containsWord(nextWord)) {
+                    nextWord.endWord(path_cpy, marblesBoard);
+                    wordsList.add(nextWord);
+                }
+
+
                 for (Integer[] neighbours : m.getNeighbours()) {
+                    //Coût constant.
                     if (!containsNeighbour(path_cpy, neighbours)) {
                         dfs(neighbours, nextWord, 
                                 wordLength + 1, child, path_cpy);
@@ -71,19 +79,31 @@ public class SolveByMarbleGrid extends Solver {
                 }
             }
         } else {
-            nextWord = new SolutionWord(currentWord);
-            Tree<Character> child = position.getChild(l.getLetter());
+            nextWord = new SolutionWord(currentWord);                         //Coût correspondant à la copie. (Voir si CLONE
+                                                                                // n'est pas une meilleure idée....)
+            Tree<Character> child = position.getChild(l.getLetter());         //Coût dépendant du nombre de fils (voir HashMap.get(E))
             if (child == null)
                 return;
 
-            nextWord.addLetter(m);
+            nextWord.addLetter(m);                                           //Coût 1
 
-            if (child.isTerminal() && !containsWord(nextWord)) {
-        	    nextWord.endWord(path_cpy, marblesBoard);
+            if (child.isTerminal() && !containsWord(nextWord)) {             //isTerminal => Coût 1
+                                                                             //containsWord() => Vérifie TOUTE LA LISTE.
+            //Créer un avl pour vérifier si les mots existent ?
+            //Bien que long à mettre en place, il permettra
+            //De chercher les mots bien plus rapidement que une Arraylist. Mais pour afficher les mots à un utilisateur,
+            //il est bien plus pratique d'utiliser une liste.
+            //Implémenter les deux types alors ? Et trouver un moyen d'afficher correctement les AVL pour un utilisateur ?
+            //Ou utiliser simplement l'AVL pour les STRING et non les SOLUTIONWORD ?
+
+                //En tout cas, dans la fonction containsWord : ON PARCOURT TROP DE FOIS LA LISTE.
+                //Si le mot N'EXISTE PAS (cas majoritaire dans un Ruzzle) ON DOIT LA PARCOURIR EN ENTIERE....
+                nextWord.endWord(path_cpy, marblesBoard);
                 wordsList.add(nextWord);
             }
 
             for (Integer[] neighbours : m.getNeighbours()) {
+                //Le coût est constant : de la taille de path_cpy. Qui ne peut pas être plus grande que maxWordLength.
                 if (!containsNeighbour(path_cpy, neighbours)) {
                     dfs(neighbours, nextWord, wordLength+1, child, path_cpy);
                 }

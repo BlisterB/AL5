@@ -256,14 +256,14 @@ public class RuzzleDictionary implements Runnable {
                             new double[]{lastPercentage, lastPercentage + percentage});
                     lastPercentage += percentage;
 
-                    if (letterSet.contains(newOne)) {
+                    if (letterSet.containsValue(newOne)) {
                         System.out.println("Letter " + c + " already exist"
                                 + "DEFAULT VALUE INITIALIZED.");
                         success = false;
                         break;
                     }
 
-                    letterSet.add(newOne);
+                    letterSet.put(c, newOne);
 
                     line = br.readLine();
                 }
@@ -284,7 +284,7 @@ public class RuzzleDictionary implements Runnable {
                 
                 for(int i = 97; i < 123; i++) {
                     double percentage = (100.0/26.0) + lastPercentage;
-                    letterSet.add( new Letter((char)i, 1, 
+                    letterSet.put((char)i, new Letter((char)i, 1,
                                 new double[]{lastPercentage, percentage}));
                     lastPercentage += percentage;
                 }

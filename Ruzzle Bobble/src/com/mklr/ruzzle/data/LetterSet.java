@@ -1,14 +1,13 @@
 package com.mklr.ruzzle.data;
 
-import java.util.HashSet;
-import java.util.Locale;
+import java.util.HashMap;
 
 /**
  * This class represent a Set of letters.
  * @author Loic Runarvot
  * @author Mehdi Khelifi
  */
-public class LetterSet extends HashSet<Letter>
+public class LetterSet extends HashMap<Character, Letter>
 {
 	private static final long serialVersionUID = -7359698600848463258L;
 
@@ -44,18 +43,10 @@ public class LetterSet extends HashSet<Letter>
         this.lang = lang;
     }
 
-    public boolean contains(Letter letter) {
-        for (Letter l : this) {
-            if (l.equals(letter))
-                return true;
-        }
-        return false;
-    }
-
     @Override
     public String toString() {
         String result = "{\n";
-        for(Letter l : this) {
+        for(Letter l : values()) {
             result += l;
         }
         result += "}";
@@ -63,7 +54,7 @@ public class LetterSet extends HashSet<Letter>
     }
 
     public Letter getLetterByPercentage(double percentage) {
-        for (Letter l : this) {
+        for (Letter l : values()) {
             double[] letterPercentages = l.getPercentage();
             if (percentage >= letterPercentages[0] 
                     && percentage < letterPercentages[1])
@@ -80,10 +71,6 @@ public class LetterSet extends HashSet<Letter>
      * @return the letter if it exists
      */
     public Letter getLetter(Character c) {
-        for (Letter l : this) {
-            if (c.equals(l.getLetter()))
-                return l;
-        }
-        return null;
+        return get(c);
     }
 }
