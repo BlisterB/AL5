@@ -78,19 +78,13 @@ public class Engine implements Runnable{
 			//TODO Recuperer le dico et la langue saisie dans la menubar
 			String lang = window.getMenubar().langSelected();
 			System.out.println(lang);
-			
-			//Initialisation du board
-			board = new Board(lang, dicList.get(lang));
-			board.init();
-			
+			option.setBoard(null);
+			option.setLang(lang);
+			option.setDico(dicList.get(lang));
 		}
-		else{//On doit creer une partie personalisee
-			board = new Board(option.getBoard(), option.getLang(), option.getDico());
-		}
-
+		
 		board = new Board(option);
 		board.init();
-		
 		Game game = new Game(this, board);
 		//Lancement de la phase de jeu
 		MusicPlayer.playSound(Engine.PATH + "sound/ready_go.wav");
