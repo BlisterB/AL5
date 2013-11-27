@@ -33,7 +33,7 @@ public class RuzzleBobble {
                 threadArray[i] = new Thread(tmp);
                 threadArray[i].start();
 
-                dicList.put(name, tmp);
+                dicList.put(name.substring(0, name.indexOf('.')), tmp);
             }
         }
 

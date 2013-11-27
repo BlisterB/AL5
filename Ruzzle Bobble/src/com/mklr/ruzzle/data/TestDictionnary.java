@@ -106,6 +106,20 @@ public class TestDictionnary {
         System.out.println("\nAlg done in " + ((double)(end2-beg2)/(1000.0)) + "s.");
         System.out.println(solver2.getWordsList().size() + " words found...");
 
+        System.out.println("\n\nTest des mots de l'algo 1 :");
+        for (SolutionWord sw : solver.getWordsList()) {
+            if (!d.searchWord(sw.getWord())) {
+                System.out.println(sw.getWord());
+            }
+        }
+
+        System.out.println("\n\nTest des mots de l'algo 2 :");
+        for (SolutionWord sw : solver2.getWordsList()) {
+            if (!d.searchWord(sw.getWord())) {
+                System.out.println(sw.getWord());
+            }
+        }
+
         FileWriter fw = new FileWriter("/home/aaylor/.tmp/result_alg1");
         BufferedWriter bf = new BufferedWriter(fw);
         for (SolutionWord sw : solver.getWordsList()) {

@@ -31,7 +31,7 @@ public class SolveByDictionary extends Solver {
 
     public void solve(byte sortType) {
         fillCharacterTable();
-        dfs(dictionary.getDictionaryTree(), new SolutionWord(), 0, null);
+        dfs(dictionary.getDictionaryTree(), new SolutionWord(), 0, null, null);
 
         sort(sortType);
     }
@@ -47,7 +47,7 @@ public class SolveByDictionary extends Solver {
         return wordsList;
     }
 
-    private void dfs(Tree<Character> curPos, SolutionWord curWord, int wordLength, LinkedList<Integer[]> path) {
+    private void dfs(Tree<Character> curPos, SolutionWord curWord, int wordLength, LinkedList<Integer[]> path, Integer[] curPosInGrid) {
         if (path == null) {
             for (Tree<Character> child : curPos.getListOfChilds().values()) {
                 ArrayList<Integer[]> arrayOfPosInGameBoard = characterTable.get(child.getNodeValue());
@@ -62,7 +62,7 @@ public class SolveByDictionary extends Solver {
                     nextWord.addLetter(marblesBoard[posInGameBoard[0]][posInGameBoard[1]]);
                     nextPath.addFirst(posInGameBoard);
 
-                    dfs(child, nextWord, wordLength + 1, nextPath);
+                    dfs(child, nextWord, wordLength + 1, nextPath, posInGameBoard);
                 }
 
                 arrayOfPosInGameBoard = characterTable.get('*');
@@ -76,7 +76,7 @@ public class SolveByDictionary extends Solver {
                     nextWord.addLetter(child.getNodeValue());
                     nextPath.addFirst(posInGameBoard);
 
-                    dfs(child, nextWord, wordLength + 1, nextPath);
+                    dfs(child, nextWord, wordLength + 1, nextPath, posInGameBoard);
                 }
             }
         } else {
@@ -85,8 +85,7 @@ public class SolveByDictionary extends Solver {
                 wordsList.add(curWord);
             }
 
-            Integer[] lastPos = path.getFirst();
-            Marble m = marblesBoard[lastPos[0]][lastPos[1]];
+            Marble m = marblesBoard[curPosInGrid[0]][curPosInGrid[1]];
 
             for (Tree<Character> child : curPos.getListOfChilds().values()) {
                 Character c = child.getNodeValue();
@@ -104,7 +103,7 @@ public class SolveByDictionary extends Solver {
                         nextWord.addLetter(child.getNodeValue());
                         nextPath.addFirst(neighbour);
 
-                        dfs(child, nextWord, wordLength + 1, nextPath);
+                        dfs(child, nextWord, wordLength + 1, nextPath, neighbour);
                     }
 
                     if (c.equals(neighbourCharacter)) {
@@ -114,7 +113,7 @@ public class SolveByDictionary extends Solver {
                         nextWord.addLetter(marblesBoard[neighbour[0]][neighbour[1]]);
                         nextPath.addFirst(neighbour);
 
-                        dfs(child, nextWord, wordLength + 1, nextPath);
+                        dfs(child, nextWord, wordLength + 1, nextPath, neighbour);
                     }
                 }
             }
