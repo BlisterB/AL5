@@ -7,6 +7,7 @@ public class Option {
 	public RuzzleDictionary dico;
 	public int timer_time;
 	public Character[][] board;
+	public int bonus[][];
 	
 	   //////////////////////////////////////////////////////////////////
 	  ///////////////////////// CONSTRUCTEURS //////////////////////////
@@ -23,9 +24,10 @@ public class Option {
 		this.lang = lang;
 		this.dico = dico;
 	}
-	Option(String lang, RuzzleDictionary dico, int timer_time, Character[][] board){
+	Option(String lang, RuzzleDictionary dico, int timer_time, Character[][] board, int[][] bonus){
 		this(lang, dico, timer_time);
 		this.board = board;
+		this.bonus = bonus;
 	}
 	
 	   //////////////////////////////////////////////////////////////////
