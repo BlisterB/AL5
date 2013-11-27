@@ -20,6 +20,8 @@ public class Board extends AbstractGrid<Marble>{
     private String lang;
     private RuzzleDictionary dico;
 
+    private Character[][] board = null;
+
     /**
      * Create the board with row size, the langage and the dictionary.
      * @param lang
@@ -38,7 +40,8 @@ public class Board extends AbstractGrid<Marble>{
         this.lang = lang;
         score = 0;
 
-        fillBoard(board);
+        this.board = board;
+        init();
     }
 
     /**
@@ -112,7 +115,11 @@ public class Board extends AbstractGrid<Marble>{
             tGrid[(2 * row) - i - 1] = new Marble[(2 * row) + (2 * i) + 1];
         }
 
-        fillGrid();
+        if (board == null) {
+            fillGrid();
+        } else {
+            fillGrid(board);
+        }
     }
 
     /**
@@ -150,6 +157,7 @@ public class Board extends AbstractGrid<Marble>{
                 } else {
                     int random = r.nextInt(10000);
                     double randomLetterValue = ((double)random)/100.0;
+                    System.out.println(dico);
                     tGrid[i][j] = new Marble(dico.getLetterSet().getLetterByPercentage(randomLetterValue));
                 }
 
@@ -174,7 +182,7 @@ public class Board extends AbstractGrid<Marble>{
         }
     }
 
-    private void fillBoard(Character[][] b) {
+    private void fillGrid(Character[][] b) {
         for (int i = 0; i < b.length; i++) {
             for (int j = 0; j < b[i].length; j++) {
                 if (b[i][j].equals('*')) {

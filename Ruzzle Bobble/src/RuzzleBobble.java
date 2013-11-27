@@ -22,9 +22,14 @@ public class RuzzleBobble {
         } else if (!folder.isDirectory()) {
         } else {
             File[] subfiles = folder.listFiles();
-            threadArray = new Thread[subfiles.length]; 
+            threadArray = new Thread[subfiles.length + 1];
 
-            int i = 0;
+            RuzzleDictionary t = new RuzzleDictionary();
+            threadArray[0] = new Thread(t);
+            threadArray[0].start();
+            dicList.put("English", t);
+
+            int i = 1;
             for (File dictFile : subfiles) {
                 String name = dictFile.getName();
                 RuzzleDictionary tmp = new RuzzleDictionary(
@@ -51,12 +56,6 @@ public class RuzzleBobble {
 	public static void main(String[] args){
 		HashMap<String, RuzzleDictionary> dicList = findDictionaries();
 
-        /**
-         *  Default dictionary...
-         */
-        dicList.put("English", new RuzzleDictionary());
-		
-		
 		//Creation du moteur de jeu
 		Engine engine = new Engine(dicList);
 		

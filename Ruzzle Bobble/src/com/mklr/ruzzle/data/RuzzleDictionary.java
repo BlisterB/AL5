@@ -40,15 +40,6 @@ public class RuzzleDictionary implements Runnable {
     }
 
     /**
-     * Create the dictionary according to the dictionary path.
-     * The name is set to "UNKNOWN".
-     * @param dictionaryPath path of the dictionary
-     */
-    public RuzzleDictionary(String dictionaryPath) {
-        this("UNKNOWN", dictionaryPath);
-    }
-
-    /**
      * Create the dictionary according to the langage,
      * and the dictionary given.
      * 
@@ -214,6 +205,7 @@ public class RuzzleDictionary implements Runnable {
     private void createLetterSet() {
         letterSet = new LetterSet(lang);
         String path = Engine.PATH + "config/lang/" + lang + ".set";
+        System.out.println("path " + path);
         boolean success = true;
         double lastPercentage = 0.0;
 

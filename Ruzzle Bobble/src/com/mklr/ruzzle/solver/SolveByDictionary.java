@@ -1,5 +1,6 @@
 package com.mklr.ruzzle.solver;
 
+import com.mklr.collection.BinaryTree;
 import com.mklr.collection.Tree;
 import com.mklr.ruzzle.data.RuzzleDictionary;
 import com.mklr.ruzzle.engine.Board;
@@ -16,6 +17,8 @@ public class SolveByDictionary extends Solver {
 
     private ArrayList<SolutionWord> wordsList;
     private HashMap<Character, ArrayList<Integer[]>> characterTable;
+
+    private BinaryTree<String> __words = new BinaryTree<String>();
 
     public SolveByDictionary(Board b) {
         dictionary = b.getDico();
@@ -50,8 +53,21 @@ public class SolveByDictionary extends Solver {
     private void dfs(Tree<Character> curPos, SolutionWord curWord, int wordLength, LinkedList<Integer[]> path, Integer[] curPosInGrid) {
         if (path == null) {
             for (Tree<Character> child : curPos.getListOfChilds().values()) {
-                ArrayList<Integer[]> arrayOfPosInGameBoard = characterTable.get(child.getNodeValue());
+                ArrayList<Integer[]> arrayOfPosInGameBoard = characterTable.get('*');
+                if (arrayOfPosInGameBoard == null)
+                    continue;
 
+                for (Integer[] posInGameBoard : arrayOfPosInGameBoard) {
+                    SolutionWord nextWord = new SolutionWord(curWord);
+                    LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>();
+
+                    nextWord.addLetter(child.getNodeValue());
+                    nextPath.addFirst(posInGameBoard);
+
+                    dfs(child, nextWord, wordLength + 1, nextPath, posInGameBoard);
+                }
+
+                arrayOfPosInGameBoard = characterTable.get(child.getNodeValue());
                 if (arrayOfPosInGameBoard == null)
                     continue;
 
@@ -65,24 +81,12 @@ public class SolveByDictionary extends Solver {
                     dfs(child, nextWord, wordLength + 1, nextPath, posInGameBoard);
                 }
 
-                arrayOfPosInGameBoard = characterTable.get('*');
-                if (arrayOfPosInGameBoard == null)
-                    continue;
-
-                for (Integer[] posInGameBoard : arrayOfPosInGameBoard) {
-                    SolutionWord nextWord = new SolutionWord(curWord);
-                    LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>();
-
-                    nextWord.addLetter(child.getNodeValue());
-                    nextPath.addFirst(posInGameBoard);
-
-                    dfs(child, nextWord, wordLength + 1, nextPath, posInGameBoard);
-                }
             }
         } else {
-            if (curPos.isTerminal() && !containsWord(curWord)) {
+            if (curPos.isTerminal() /*&& !containsWord(curWord)*/ && !__words.childExist(curWord.getWord())) {
                 curWord.endWord(path, marblesBoard);
-                wordsList.add(curWord);
+                //wordsList.add(curWord);
+                __words.add(curWord.getWord(), null);
             }
 
             Marble m = marblesBoard[curPosInGrid[0]][curPosInGrid[1]];

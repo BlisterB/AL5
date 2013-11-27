@@ -1,6 +1,9 @@
 package com.mklr.collection;
 
-public class BinaryTree<T> implements BasicTree<T>
+import java.util.Comparator;
+import java.lang.Comparable;
+
+public class BinaryTree<T extends Comparable<T>> implements BasicTree<T>
 {
     public final static byte ORDINARY   = 0x0000;
     public final static byte ABRTREE    = 0x0001;
@@ -9,6 +12,20 @@ public class BinaryTree<T> implements BasicTree<T>
     T nodeValue;
     BinaryTree<T> leftNode;
     BinaryTree<T> rightNode;
+
+    public BinaryTree() {
+        this(null, null, null);
+    }
+
+    public BinaryTree(T nodeValue) {
+        this(nodeValue, null, null);
+    }
+
+    public BinaryTree(T nodeValue, BinaryTree<T> leftNode, BinaryTree<T> rightNode) {
+        this.nodeValue = nodeValue;
+        this.leftNode = leftNode;
+        this.rightNode = rightNode;
+    }
 
     /**
      * @return the nodeValue
@@ -54,8 +71,36 @@ public class BinaryTree<T> implements BasicTree<T>
     
     @Override
     public void add(T newValue, BasicTree<T> newTree) {
-        // TODO Auto-generated method stub
+        BinaryTree<T> curPos = this;
 
+        if (curPos.nodeValue == null) {
+            nodeValue = newValue;
+            rightNode = null;
+            leftNode = null;
+            return;
+        }
+
+        while (true) {
+            System.out.println("ADD " + newValue);
+            int res = newValue.compareTo(curPos.nodeValue);
+            if (res < 0) {
+                if (curPos.leftNode == null) {
+                    curPos.leftNode = new BinaryTree<T>(newValue);
+                    return;
+                } else {
+                    curPos = curPos.leftNode;
+                }
+            } else if (res == 0) {
+                return;
+            } else {
+                if (curPos.rightNode == null) {
+                    curPos.rightNode = new BinaryTree<T>(newValue);
+                    return;
+                } else {
+                    curPos = curPos.rightNode;
+                }
+            }
+        }
     }
 
     @Override
@@ -66,8 +111,31 @@ public class BinaryTree<T> implements BasicTree<T>
 
     @Override
     public boolean childExist(T valueToSearch) {
-        // TODO Auto-generated method stub
-        return false;
+        BinaryTree<T> curPos = this;
+
+        if (curPos.nodeValue == null)
+            return false;
+
+        while (true) {
+            int res = valueToSearch.compareTo(curPos.nodeValue);
+            if (res < 0) {
+                if (curPos.leftNode == null) {
+                    return false;
+                } else {
+                    curPos = curPos.leftNode;
+                    continue;
+                }
+            } else if (res == 0) {
+                return true;
+            } else {
+                if (curPos.rightNode == null) {
+                    return false;
+                } else {
+                    curPos = curPos.rightNode;
+                    continue;
+                }
+            }
+        }
     }
 
     @Override
