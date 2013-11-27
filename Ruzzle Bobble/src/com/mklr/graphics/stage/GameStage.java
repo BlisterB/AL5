@@ -32,7 +32,6 @@ public class GameStage extends Stage {
 		super(engine);
 		this.game = game;
 		this.musicPlayer = new MusicPlayer(Engine.PATH + "music/gamestage.mid", true);
-		System.out.println(timerTime);
 		if(timerTime > 0)
 			this.timer = new GameTimer(timerTime, this);
 		

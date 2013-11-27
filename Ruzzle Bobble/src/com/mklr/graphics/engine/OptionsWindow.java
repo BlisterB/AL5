@@ -266,7 +266,7 @@ public class OptionsWindow extends JDialog {
 		//Le board saisie est correct
 		//On crée l'objet Option associée aux choix de l'utilisateur
 		String lang = stringDict[comboBoxDict.getSelectedIndex()];
-		int timer_time = (Integer)(spinTimer.getValue());
+		int timer_time = (Integer)(spinTimer.getValue()) * 1000;
 		Option option = new Option(lang, dicList.get(lang), timer_time, tabChar);
 		
 		//On envoie l'objet Option à l'engine en lancant une parte
