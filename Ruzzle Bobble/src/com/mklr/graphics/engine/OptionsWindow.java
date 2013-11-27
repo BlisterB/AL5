@@ -64,7 +64,7 @@ public class OptionsWindow extends JDialog {
 		
 		//I/ Board : Saisie des caracteres du Board
 		//1)Le JLabel
-		JLabel labBoard = new JLabel("Caractères du plateau :");
+		JLabel labBoard = new JLabel("Caractères du plateau (laisser vide pour une génération automatique) :");
 		
 		//2)Le board
 		JPanel panBoard = new JPanel();
@@ -101,7 +101,7 @@ public class OptionsWindow extends JDialog {
 		
 		
 		//II/ Les Bonus a positionner dans le Board
-		JLabel labBonus = new JLabel("Position des bonus (laisser vide pour une génération automatique) :");
+		JLabel labBonus = new JLabel("Position des bonus (de gauche à droite, de haut en bas) :");
 		
 		//Initialisation du tableau d'Integer servant de choix pour les Combobox
 		Integer[] numCaseBoard = new Integer[24];
@@ -252,16 +252,18 @@ public class OptionsWindow extends JDialog {
 				}
 			}
 		}
+		//Si le board est vide on le met à null (ce qui correspond a une generation automatique)
 		if(boardVide){
 			tabChar = null;
 		}
+		//Si il n'est pas valide on enpeche l'a finalisation de la fonction et on previent l'utilisateur
 		else if(!boardValide){
 			String info = "Un des caractères saisis dans le board n'est pas alphabetique";
         	JOptionPane.showMessageDialog(null, info, "A propos", JOptionPane.ERROR_MESSAGE);
         	return;
 		}
-		//Le board saisie est correct
 		
+		//Le board saisie est correct
 		//On crée l'objet Option associée aux choix de l'utilisateur
 		String lang = stringDict[comboBoxDict.getSelectedIndex()];
 		int timer_time = (Integer)(spinTimer.getValue());
