@@ -54,8 +54,8 @@ public class Engine implements Runnable{
 		this.stage = new GameTitle(this);
 		gamescreen.setStage(stage);
 	}
-	/**Methode de chargement de la phase de jeu*/
-	public void setGameStage(){
+	/**Methode de chargement de la phase de jeu, si le parametre Option est null, on charge une partie non personalisee*/
+	public void setGameStage(Option option){
 		//Arret des Thread de GameTitle
 		if(stage != null)
 			this.stage.close();
@@ -67,14 +67,31 @@ public class Engine implements Runnable{
 		}
 		
 		//Creation du jeu
-		Board board = new Board("French", dicList.get("French.dict"));
-		board.init();
+		Board board = null;
+		if(option == null){//On doit creer une partie normale
+			option = new Option();
+			//Timer
+			option.setTimer_time(1000*60*2);
+			
+			//TODO Recuperer le dico et la langue saisie dans la menubar
+			String lang = window.getMenubar().langSelected();
+			System.out.println(lang);
+			
+			//Initialisation du board
+			board = new Board(lang, dicList.get(lang));
+			board.init();
+			
+		}
+		else{//On doit creer une partie personalisee
+			board = new Board(option.getBoard(), option.getLang(), option.getDico());
+			
+		}
+		
+		
 		Game game = new Game(this, board);
-		
-		
 		//Lancement de la phase de jeu
 		MusicPlayer.playSound(Engine.PATH + "sound/ready_go.wav");
-		this.stage = new GameStage(this, board, game, 1000 * 60 * 2);
+		this.stage = new GameStage(this, board, game, option.getTimer_time());
 		gamescreen.setStage(stage);
 	}
 	

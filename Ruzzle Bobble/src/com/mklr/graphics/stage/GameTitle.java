@@ -90,7 +90,7 @@ public class GameTitle extends Stage{
 	
 	public void interaction(int function){
 		if (function == 1){//Clic sur le bouton jouer
-			engine.setGameStage();
+			engine.setGameStage(null);
 		}
 	}
 	

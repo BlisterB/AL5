@@ -30,10 +30,11 @@ public class MenuBar extends JMenuBar {
 	
 	private JMenu mChoixLangue = new JMenu("Choix de la langue du dictionnaire");
 	private JRadioButtonMenuItem[] dicoRadioArray;
+	private ButtonGroup dicoRadioGroup;
 	
 	private JMenuItem iStatCreationMot = new JMenuItem("Statistique de generation des mots");
 	private JMenuItem iCommentJouer = new JMenuItem("Comment jouer");
-	//Algo
+	
 	private JMenuItem iAPropos = new JMenuItem("A propos");
 	
 	public MenuBar(final Engine engine){
@@ -59,9 +60,9 @@ public class MenuBar extends JMenuBar {
 		//Generation des choix de dictionnaire
 		dicList = engine.getDicList();
 		dicoRadioArray = new JRadioButtonMenuItem[dicList.size()];
-	    ButtonGroup dicoRadioGroup = new ButtonGroup();
+	    dicoRadioGroup = new ButtonGroup();
 		int i =0;
-		for(Map.Entry<String, RuzzleDictionary> entry : dicList.entrySet()) {
+		for(Map.Entry<String, RuzzleDictionary> entry : dicList.entrySet()){
 		    String cle = entry.getKey();
 		    dicoRadioArray[i] = new JRadioButtonMenuItem(cle);
 		    if(i == 0)
@@ -110,10 +111,16 @@ public class MenuBar extends JMenuBar {
 	
 	public void run_game(){
 		iPartiePerso.setEnabled(false);
-		engine.setGameStage();
+		engine.setGameStage(null);
 	}
 
-
+	public String langSelected(){
+		for(JRadioButtonMenuItem i : dicoRadioArray){
+			if(i.isSelected())
+				return i.getText();
+		}
+		return "French";
+	}
 	
 	   //////////////////////////////////////////////////////////////////
 	  ///////////////////////// ACCESSEURS MODIFIEURS///////////////////
@@ -159,6 +166,20 @@ public class MenuBar extends JMenuBar {
 	 */
 	public void setiQuitterPartie(JMenuItem iQuitterPartie) {
 		this.iQuitterPartie = iQuitterPartie;
+	}
+
+	/**
+	 * @return the dicoRadioGroup
+	 */
+	public ButtonGroup getDicoRadioGroup() {
+		return dicoRadioGroup;
+	}
+
+	/**
+	 * @param dicoRadioGroup the dicoRadioGroup to set
+	 */
+	public void setDicoRadioGroup(ButtonGroup dicoRadioGroup) {
+		this.dicoRadioGroup = dicoRadioGroup;
 	}
 	
 	

@@ -208,6 +208,15 @@ public class OptionsWindow extends JDialog {
 		this.getContentPane().add(container);
 	}
 	
+	public void lireTab(char[][] tab){
+		for(int i = 0; i < tab.length; i++){
+			for(int j = 0; j < tab[i].length; j++){
+				System.out.print(tab[i][j] + " ");
+			}
+			System.out.println("\n");
+		}
+	}
+	
 	public void valider(){
 		//Creation du tableau de char
 		char[][] tabChar = new char[4][];
@@ -229,8 +238,12 @@ public class OptionsWindow extends JDialog {
 	            	JOptionPane.showMessageDialog(null, info, "A propos", JOptionPane.ERROR_MESSAGE);
 	            	return;
 				}
+				else{
+					tabChar[i][j] = tmp;
+				}
 			}
 		}
+		//Le board saisie est correct
 		
 		//On crée l'objet Option associée aux choix de l'utilisateur
 		
