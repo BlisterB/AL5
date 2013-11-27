@@ -1,9 +1,11 @@
 package com.mklr.graphics.stage;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
+import com.mklr.graphics.engine.DisplayWordsWindow;
 import com.mklr.graphics.engine.Engine;
 import com.mklr.graphics.engine.GameTimer;
 import com.mklr.graphics.engine.MusicPlayer;
@@ -26,6 +28,7 @@ public class GameStage extends Stage {
 	private GameTimer timer;
 	private NumberSprite[] timeSprite;
 	private NumberSprite[] scoreSprite; //0 est l'unite, 1 la dizaine etc.
+	private LinkedList<String> lastWords = new LinkedList<String>();
 	private Game game;
 	
 	public GameStage(Engine engine, Board board, Game game, int timerTime){
@@ -37,8 +40,7 @@ public class GameStage extends Stage {
 		
 		//Background et interface
 		background = new Sprite(Engine.PATH + "img/background/game_stage.png");
-		sprite_list.add(new InterfaceSprite(Engine.PATH + "img/interface/afficher_les_mots.png", 50, 375, 275, 50, 1, this)); //Bouton Valider
-		//sprite_list.add(new Sprite(Engine.PATH + "img/interface/interface_game.png", 0, 0, 0, 0));
+		sprite_list.add(new InterfaceSprite(Engine.PATH + "img/interface/afficher_les_mots.png", 50, 375, 275, 50, 1, this));
 		
 		//Chargement des lettres du board
 		Marble[][] tab = board.getBoard();
@@ -121,11 +123,13 @@ public class GameStage extends Stage {
 				MusicPlayer.playSound("sound/youpi.wav");
 				bub.setAnimation(Bub.HAPPY);
 				bob.setAnimation(Bob.HAPPY);
+				lastWords.addFirst(currentWord);
 			}
 			else{
 				MusicPlayer.playSound("sound/happy.wav");
 				bub.setAnimation(Bub.JUMPING);
 				bob.setAnimation(Bob.WHOA);
+				lastWords.addFirst(currentWord);
 			}
 			
 			//On efface le mot courant ainsi que sa liste de marble associée
@@ -177,6 +181,11 @@ public class GameStage extends Stage {
 		super.interaction(i);
 		if(i == TIMMER_END)
 			timeOut();
+		if(i == VALIDATE){
+			timer.pause();
+			DisplayWordsWindow w = new DisplayWordsWindow(null, engine);
+			timer.startTimmer();
+		}
 	}
 	
 	public void timeOut(){
@@ -324,6 +333,13 @@ public class GameStage extends Stage {
 	 */
 	public void setTimeSprite(NumberSprite[] timeSprite) {
 		this.timeSprite = timeSprite;
+	}
+
+	/**
+	 * @return the lastWords
+	 */
+	public LinkedList<String> getLastWords() {
+		return lastWords;
 	}
 	
 }

@@ -64,6 +64,14 @@ public class GameScreen extends Canvas implements MouseMotionListener, MouseList
 					}
 				}
 			}
+			
+			//Affichage des derniers mots en GameStage :
+			if(stage instanceof GameStage){
+				for(int i = 0; i < 10 && i < ((GameStage)stage).getLastWords().size(); i++){
+					String mot = ((GameStage)stage).getLastWords().get(i);
+					g2.drawString(mot, 500, 100 + i*20);
+				}
+			}
 		}
 	}
 
