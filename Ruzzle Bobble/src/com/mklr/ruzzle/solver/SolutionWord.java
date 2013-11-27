@@ -61,7 +61,11 @@ public class SolutionWord
     @Override
     public int compareTo(SolutionWord o) {
         if (SORT_TYPE == Solver.SORT_BY_WORD_LENGTH) {
-            return o.length - length;
+            if (length != o.length) {
+                return o.length - length;
+            } else {
+                return word.compareTo(o.word);
+            }
         } else if (SORT_TYPE == Solver.SORT_BY_NAME) {
             return word.compareTo(o.word);
         } else {

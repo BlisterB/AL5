@@ -78,9 +78,10 @@ public class SolveByMarbleGrid extends Solver {
                 nextWord = new SolutionWord(currentWord);                  //Coût correspondant à la copie. (voir CLONE)
                 nextWord.addLetter(child.getNodeValue());             //On doit parcourir la liste A CHAQUE FOIS.
                                                                            //Utiliser une HashMap à la place ?
-                if (child.isTerminal() && !containsWord(nextWord)) {
+                if (child.isTerminal() && /*!containsWord(nextWord))*/ __words.childExist(nextWord.getWord())) {
                     nextWord.endWord(path_cpy, marblesBoard);
                     wordsList.add(nextWord);
+                    __words.add(nextWord.getWord(), null);
                 }
 
 
