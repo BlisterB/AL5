@@ -10,6 +10,12 @@ import javax.imageio.ImageIO;
 
 import com.mklr.graphics.engine.Engine;
 
+/**
+ * La classe Sprite instancie des objets associé à des instances de Stage
+ * Une instance de Sprite contient toutes les informations necessaires à l'affichage du Sprite par une instance de GameScreen
+ * @author Mehdi
+ * 
+ */
 public class Sprite{
 	protected Image image;//L'image actuelle du sprite
 	protected Rectangle rect;//Le rectangle symbolisant l'image dans le JPanel
@@ -147,12 +153,10 @@ public class Sprite{
 	
 	/** Definie l'action effectuee lors d'un clic sur le Sprite*/
 	public void onClick(){
-		System.out.println("Clic sur " + this);
 	}
 	
 	/** Definie l'action effectuee lors d'un passage sur le Sprite de la souris ayant un bouton enfoncé */
 	public void onMousePressedWay(){
-		
 	}	
 
 	//FONCTION DE FERMETURE DU SPRITE

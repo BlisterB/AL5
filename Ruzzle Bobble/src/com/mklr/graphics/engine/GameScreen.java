@@ -1,14 +1,13 @@
 package com.mklr.graphics.engine;
 
 import java.awt.AlphaComposite;
+import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-
-import javax.swing.JPanel;
 
 import com.mklr.graphics.sprite.LetterSprite;
 import com.mklr.graphics.sprite.Sprite;
@@ -20,7 +19,7 @@ import com.mklr.graphics.stage.Stage;
  * @author Mehdi
  *
  */
-public class GameScreen extends JPanel implements MouseMotionListener, MouseListener {
+public class GameScreen extends Canvas implements MouseMotionListener, MouseListener {
 	private Stage stage;
 	private Sprite lastSpritePointed;
 	
@@ -37,7 +36,7 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
 	 //////////////////////////////////////////////////////////////////	
 	
 	/**La methode paintComponent recupere la liste de sprite de la sequence en cours et les affiches successivement**/
-	public void paintComponent(Graphics g){
+	public void paint(Graphics g){
 		Graphics2D g2 = (Graphics2D) g ;
 		
 		Sprite sprite;//Tampon

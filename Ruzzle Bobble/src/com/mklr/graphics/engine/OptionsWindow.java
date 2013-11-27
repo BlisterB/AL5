@@ -31,7 +31,6 @@ public class OptionsWindow extends JDialog {
 	private JComboBox<Integer> comboBoxBonusLetter3;
 	private JComboBox<Integer> comboBoxBonusWord2;
 	private JComboBox<Integer> comboBoxBonusWord3;
-	private JComboBox<String> comboBoxAlgo;
 	private JComboBox<String> comboBoxDict;
 	private JSpinner spinTimer;
 	
@@ -149,18 +148,7 @@ public class OptionsWindow extends JDialog {
 		JPanel panDroit = new JPanel();
 		panDroit.setLayout(new BoxLayout(panDroit, BoxLayout.PAGE_AXIS));
 		
-		//I/ Algorithme de Parcours
-		JPanel panAlgo = new JPanel();
-		panAlgo.setLayout(new BoxLayout(panAlgo, BoxLayout.LINE_AXIS));
-		panAlgo.setBorder(BorderFactory.createTitledBorder("Algorithme"));
-		
-		JLabel labAlgo = new JLabel("Algorithme de parcours :");
-		String[] stringAlgo = {"Algo 1", "Algo 2", "Algo 3", "Algo 4"};
-		comboBoxAlgo = new JComboBox<String>(stringAlgo);
-		panAlgo.add(labAlgo);		labAlgo.setAlignmentX(LEFT_ALIGNMENT);
-		panAlgo.add(comboBoxAlgo);	comboBoxAlgo.setAlignmentX(LEFT_ALIGNMENT);
-		
-		//II/ Dictionnaire
+		//I/ Dictionnaire
 		JPanel panDict = new JPanel();
 		panDict.setLayout(new BoxLayout(panDict, BoxLayout.LINE_AXIS));
 		panDict.setBorder(BorderFactory.createTitledBorder("Dictionnaire"));
@@ -177,7 +165,7 @@ public class OptionsWindow extends JDialog {
 		panDict.add(labDict);		labDict.setAlignmentX(LEFT_ALIGNMENT);
 		panDict.add(comboBoxDict);	comboBoxDict.setAlignmentX(LEFT_ALIGNMENT);
 		
-		//III/ Timer
+		//II/ Timer
 		JPanel panTimer = new JPanel();
 		panTimer.setLayout(new BoxLayout(panTimer, BoxLayout.LINE_AXIS));
 		panTimer.setBorder(BorderFactory.createTitledBorder("Timer"));
@@ -189,7 +177,6 @@ public class OptionsWindow extends JDialog {
 		panTimer.add(spinTimer);	spinTimer.setAlignmentX(LEFT_ALIGNMENT);
 		
 		//Ajout des composants au JPanel Droit et Alignement
-		panDroit.add(panAlgo);		panAlgo.setAlignmentX(LEFT_ALIGNMENT);
 		panDroit.add(panDict);		panDict.setAlignmentX(LEFT_ALIGNMENT);
 		panDroit.add(panTimer);		panTimer.setAlignmentX(LEFT_ALIGNMENT);
 		
@@ -239,8 +226,7 @@ public class OptionsWindow extends JDialog {
 				tmp = boardCharArray[i][j].getText().charAt(0);
 				if(!Character.isAlphabetic(tmp)){
 					String info = "Un des caractères saisis dans le board n'est pas alphabetique";
-	            	JOptionPane erreur = new JOptionPane();
-	            	erreur.showMessageDialog(null, info, "A propos", JOptionPane.ERROR_MESSAGE);
+	            	JOptionPane.showMessageDialog(null, info, "A propos", JOptionPane.ERROR_MESSAGE);
 	            	return;
 				}
 			}

@@ -45,15 +45,12 @@ public class Window extends JFrame {
         };
         this.addWindowListener(exitListener);
 	    
-	    //Conteneurs
-	    JPanel conteneur = new JPanel();
-	    conteneur.setLayout(new BoxLayout(conteneur, BoxLayout.PAGE_AXIS));
-	    conteneur.add(gamescreen);
-	    this.getContentPane().add(conteneur);
+	    //Ajout du gamescreen au content pane
+	    this.getContentPane().add(gamescreen);
 	    
 	    //Affichage de la fenetre et ajustement de sa taille
 	    setResizable(false);
-	    setSize(800,500);
+	    this.pack();
 	    this.setLocationRelativeTo(null);
 	    this.setVisible(true);
 	}
