@@ -18,14 +18,23 @@ public class SolveByDictionary extends Solver {
     private ArrayList<SolutionWord> wordsList;
     private HashMap<Character, ArrayList<Integer[]>> characterTable;
 
+    private double timer;
+    private long wordCount;
+    private byte algorithmType;
+
     private BinaryTree<String> __words = new BinaryTree<String>();
 
-    public SolveByDictionary(Board b) {
+    public SolveByDictionary(Board b, byte algorithmType) {
         dictionary = b.getDico();
         marblesBoard = b.getBoard();
 
+        timer = 0.0;
+        wordCount = 0;
+
         wordsList = new ArrayList<SolutionWord>();
         characterTable = new HashMap<Character, ArrayList<Integer[]>>();
+
+        this.algorithmType = algorithmType;
     }
 
     public void solve() {
@@ -33,8 +42,18 @@ public class SolveByDictionary extends Solver {
     }
 
     public void solve(byte sortType) {
+        long beg = System.currentTimeMillis();
+
         fillCharacterTable();
-        dfs(dictionary.getDictionaryTree(), new SolutionWord(), 0, null, null);
+        if ((algorithmType & Solver.DEPTH_FIRST_SEARCH) == Solver.DEPTH_FIRST_SEARCH) {
+            dfs(dictionary.getDictionaryTree(), new SolutionWord(), 0, null, null);
+        } else {
+            bfs();
+        }
+        long end = System.currentTimeMillis();
+
+        timer = ((double)end - (double)beg)/1000.0;
+        wordCount = wordsList.size();
 
         sort(sortType);
     }
@@ -48,6 +67,14 @@ public class SolveByDictionary extends Solver {
 
     public ArrayList<SolutionWord> getWordsList() {
         return wordsList;
+    }
+
+    public long getWordCount() {
+        return wordCount;
+    }
+
+    public double getTimer() {
+        return timer;
     }
 
     private void dfs(Tree<Character> curPos, SolutionWord curWord, int wordLength, LinkedList<Integer[]> path, Integer[] curPosInGrid) {

@@ -87,25 +87,32 @@ public class TestDictionnary {
 
 
         System.out.println("====== SOLVER : MARBLE GRID DFS ======");
-        SolveByMarbleGrid solver = new SolveByMarbleGrid(b);
-        long beg = new Date().getTime();
+        SolveByMarbleGrid solver = new SolveByMarbleGrid(b, Solver.DEPTH_FIRST_SEARCH);
+        //long beg = new Date().getTime();
         solver.solve(Solver.SORT_BY_WORD_LENGTH);
-        long end = new Date().getTime();
+        //long end = new Date().getTime();
         //System.out.println(solver.getWordsList());
         System.out.println("====== SOLVER : MARBLE GRID DFS ======");
-        System.out.println("\nAlg done in " + ((double)(end-beg)/(1000.0)) + "s.");
-        System.out.println(solver.getWordsList().size() + " words found...");
+//        System.out.println("\nAlg done in " + ((double)(end-beg)/(1000.0)) + "s.");
+  //      System.out.println(solver.getWordsList().size() + " words found...");
+        System.out.println("\nAlg done in " + solver.getTimer() + "s.");
+        System.out.println(solver.getWordCount() + " words found...");
+
+
 
         System.out.println("\n\n");
 
         System.out.println("====== SOLVER : DICTIONARY DFS ======");
-        SolveByDictionary solver2 = new SolveByDictionary(b);
-        long beg2 = new Date().getTime();
+        SolveByDictionary solver2 = new SolveByDictionary(b, Solver.DEPTH_FIRST_SEARCH);
+        //long beg2 = new Date().getTime();
         solver2.solve(Solver.SORT_BY_WORD_LENGTH);
-        long end2 = new Date().getTime();
+        //long end2 = new Date().getTime();
         System.out.println("====== SOLVER : DICTIONARY DFS ======");
-        System.out.println("\nAlg done in " + ((double)(end2-beg2)/(1000.0)) + "s.");
-        System.out.println(solver2.getWordsList().size() + " words found...");
+        //System.out.println("\nAlg done in " + ((double)(end2-beg2)/(1000.0)) + "s.");
+        System.out.println("\nAlg done in " + solver2.getTimer() + "s.");
+        //System.out.println(solver2.getWordsList().size() + " words found...");
+        System.out.println(solver2.getWordCount() + " words found...");
+
 
         System.out.println("\n\nTest des mots de l'algo 1 :");
         for (SolutionWord sw : solver.getWordsList()) {

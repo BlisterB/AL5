@@ -16,13 +16,23 @@ public class SolveByMarbleGrid extends Solver {
     Marble[][] marblesBoard;
     ArrayList<SolutionWord> wordsList;
 
+    private double timer;
+    private long wordCount;
+
+    private byte algorithmType;
+
     private BinaryTree<String> __words = new BinaryTree<String>();
 
 
-    public SolveByMarbleGrid(Board b) {
+    public SolveByMarbleGrid(Board b, byte algorithmType) {
         this.dictionary = b.getDico();
         marblesBoard = b.getGrid();
         wordsList = new ArrayList<SolutionWord>();
+
+        timer = 0.0;
+        wordCount = 0;
+
+        this.algorithmType = algorithmType;
     }
 
     public void solve() {
@@ -33,12 +43,21 @@ public class SolveByMarbleGrid extends Solver {
         if (!wordsList.isEmpty())
             return;
 
-        for (int i = 0; i < marblesBoard.length; i++) {
-            for (int j = 0; j < marblesBoard[i].length; j++){
-                dfs(new Integer[]{i, j}, new SolutionWord(), 0,
-                        dictionary.getDictionaryTree(), new LinkedList<Integer[]>());
+        long beg = System.currentTimeMillis();
+        if ((algorithmType & Solver.DEPTH_FIRST_SEARCH) == Solver.DEPTH_FIRST_SEARCH) {
+            for (int i = 0; i < marblesBoard.length; i++) {
+                for (int j = 0; j < marblesBoard[i].length; j++){
+                    dfs(new Integer[]{i, j}, new SolutionWord(), 0,
+                            dictionary.getDictionaryTree(), new LinkedList<Integer[]>());
+                }
             }
+        }   else {
+            bfs();
         }
+        long end = System.currentTimeMillis();
+
+        timer = ((double)end - (double)beg)/1000.0;
+        wordCount = wordsList.size();
 
         sort(sortType);
     }
@@ -49,6 +68,15 @@ public class SolveByMarbleGrid extends Solver {
         Collections.sort(wordsList, new SolutionWord());
         SolutionWord.changeSortType(initialSortType);
     }
+
+    public long getWordCount() {
+        return wordCount;
+    }
+
+    public double getTimer() {
+        return timer;
+    }
+
 
     private void dfs(Integer[] marbleCoo, SolutionWord currentWord, 
             int wordLength, Tree<Character> position, LinkedList<Integer[]> path) {
