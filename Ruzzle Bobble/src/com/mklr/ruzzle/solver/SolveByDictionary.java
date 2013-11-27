@@ -85,7 +85,7 @@ public class SolveByDictionary extends Solver {
         } else {
             if (curPos.isTerminal() /*&& !containsWord(curWord)*/ && !__words.childExist(curWord.getWord())) {
                 curWord.endWord(path, marblesBoard);
-                //wordsList.add(curWord);
+                wordsList.add(curWord);
                 __words.add(curWord.getWord(), null);
             }
 

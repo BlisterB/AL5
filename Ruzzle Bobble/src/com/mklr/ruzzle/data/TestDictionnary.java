@@ -56,11 +56,12 @@ public class TestDictionnary {
         System.out.println(al);
         */
         
-        RuzzleDictionary d = new RuzzleDictionary("French", "dict/French.dict");
-      //  RuzzleDictionary d = new RuzzleDictionary("English", "/usr/share/dict/words");
+        //RuzzleDictionary d = new RuzzleDictionary("French", "dict/French.dict");
+        RuzzleDictionary d = new RuzzleDictionary("English", "/usr/share/dict/words");
         d.init();
 
-        Board b = new Board("French", d);
+        Board b = new Board("English", d);
+        //Board b = new Board("French", d);
         b.init();
 
         System.out.println("====== BOARD ======");

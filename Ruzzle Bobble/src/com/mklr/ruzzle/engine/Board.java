@@ -8,6 +8,7 @@ import java.util.Random;
 import com.mklr.collection.AbstractGrid;
 import com.mklr.ruzzle.data.RuzzleDictionary;
 import com.mklr.ruzzle.data.Letter;
+import com.mklr.graphics.engine.Option;
 
 /**
  * Create the board for the ruzzle game.
@@ -16,7 +17,6 @@ import com.mklr.ruzzle.data.Letter;
  * @author Mehdi Khelifi
  */
 public class Board extends AbstractGrid<Marble>{
-    private int score;
     private String lang;
     private RuzzleDictionary dico;
 
@@ -30,18 +30,15 @@ public class Board extends AbstractGrid<Marble>{
     public Board(String lang, RuzzleDictionary dico) {
         super(2);
         this.dico = dico;
-        score = 0;
         this.lang = lang;
     }
 
-    public Board(Character[][] board, String lang, RuzzleDictionary dico) {
+    public Board(Option o) {
         super(2);
-        this.dico = dico;
-        this.lang = lang;
-        score = 0;
 
-        this.board = board;
-        init();
+        board = o.getBoard();
+        dico = o.getDico();
+        lang = o.getLang();
     }
 
     /**
@@ -59,20 +56,6 @@ public class Board extends AbstractGrid<Marble>{
     }
 
     /**
-     * @return the score
-     */
-    public int getScore() {
-        return score;
-    }
-
-    /**
-     * @param score the score to set
-     */
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    /**
      * @return the lang
      */
     public String getLang() {
@@ -82,7 +65,7 @@ public class Board extends AbstractGrid<Marble>{
     /**
      * @param lang the locale to set
      */
-    public void setLocale(String lang) {
+    public void setLang(String lang) {
         this.lang = lang;
     }
 
@@ -157,7 +140,6 @@ public class Board extends AbstractGrid<Marble>{
                 } else {
                     int random = r.nextInt(10000);
                     double randomLetterValue = ((double)random)/100.0;
-                    System.out.println(dico);
                     tGrid[i][j] = new Marble(dico.getLetterSet().getLetterByPercentage(randomLetterValue));
                 }
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import com.mklr.collection.BinaryTree;
 import com.mklr.collection.Tree;
 import com.mklr.ruzzle.data.Letter;
 import com.mklr.ruzzle.data.RuzzleDictionary;
@@ -14,6 +15,9 @@ public class SolveByMarbleGrid extends Solver {
     RuzzleDictionary dictionary;
     Marble[][] marblesBoard;
     ArrayList<SolutionWord> wordsList;
+
+    private BinaryTree<String> __words = new BinaryTree<String>();
+
 
     public SolveByMarbleGrid(Board b) {
         this.dictionary = b.getDico();
@@ -87,8 +91,10 @@ public class SolveByMarbleGrid extends Solver {
 
             nextWord.addLetter(m);                                           //Coût 1
 
-            if (child.isTerminal() && !containsWord(nextWord)) {             //isTerminal => Coût 1
-                                                                             //containsWord() => Vérifie TOUTE LA LISTE.
+            //if (child.isTerminal() && !containsWord(nextWord)) {
+            if (child.isTerminal() /*&& !containsWord(curWord)*/ && !__words.childExist(nextWord.getWord())) {
+
+                    //containsWord() => Vérifie TOUTE LA LISTE.
             //Créer un avl pour vérifier si les mots existent ?
             //Bien que long à mettre en place, il permettra
             //De chercher les mots bien plus rapidement que une Arraylist. Mais pour afficher les mots à un utilisateur,
@@ -100,6 +106,7 @@ public class SolveByMarbleGrid extends Solver {
                 //Si le mot N'EXISTE PAS (cas majoritaire dans un Ruzzle) ON DOIT LA PARCOURIR EN ENTIERE....
                 nextWord.endWord(path_cpy, marblesBoard);
                 wordsList.add(nextWord);
+                __words.add(nextWord.getWord(), null);
             }
 
             for (Integer[] neighbours : m.getNeighbours()) {

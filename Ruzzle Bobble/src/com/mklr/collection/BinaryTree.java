@@ -81,7 +81,6 @@ public class BinaryTree<T extends Comparable<T>> implements BasicTree<T>
         }
 
         while (true) {
-            System.out.println("ADD " + newValue);
             int res = newValue.compareTo(curPos.nodeValue);
             if (res < 0) {
                 if (curPos.leftNode == null) {

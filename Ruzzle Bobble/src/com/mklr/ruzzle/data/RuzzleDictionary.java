@@ -205,7 +205,6 @@ public class RuzzleDictionary implements Runnable {
     private void createLetterSet() {
         letterSet = new LetterSet(lang);
         String path = Engine.PATH + "config/lang/" + lang + ".set";
-        System.out.println("path " + path);
         boolean success = true;
         double lastPercentage = 0.0;
 
