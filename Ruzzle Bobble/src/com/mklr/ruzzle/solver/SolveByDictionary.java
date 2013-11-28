@@ -129,11 +129,11 @@ public class SolveByDictionary extends Solver {
     }
 
     private void bfs() {
-        Queue<BFSData> queue = new LinkedList<BFSData>();
+        Queue<BFSDatas> queue = new LinkedList<BFSDatas>();
 
-        queue.add(new BFSData(dictionary.getDictionaryTree(), new SolutionWord(), null, new LinkedList<Integer[]>()));
+        queue.add(new BFSDatas(dictionary.getDictionaryTree(), new SolutionWord(), null, new LinkedList<Integer[]>()));
         while(queue.peek() != null) {
-            BFSData bfsd = queue.poll();
+            BFSDatas bfsd = queue.poll();
 
             if (bfsd.getCurrentWord().getLength() > 1
                     && bfsd.getCurrentPosition().isTerminal()
@@ -151,7 +151,7 @@ public class SolveByDictionary extends Solver {
                         continue;
 
                     for (Integer[] boardPosition : posOfCharacterInBoard) {
-                        BFSData nextDatas = new BFSData(bfsd);
+                        BFSDatas nextDatas = new BFSDatas(bfsd);
 
                         nextDatas.getCurrentWord().addLetter(child.getNodeValue());
                         nextDatas.getPathToGetCurrentWord().addFirst(boardPosition);
@@ -167,7 +167,7 @@ public class SolveByDictionary extends Solver {
                         continue;
 
                     for (Integer[] boardPosition : posOfCharacterInBoard) {
-                        BFSData nextDatas = new BFSData(bfsd);
+                        BFSDatas nextDatas = new BFSDatas(bfsd);
 
                         nextDatas.getCurrentWord().addLetter(marblesBoard[boardPosition[0]][boardPosition[1]]);
                         nextDatas.getPathToGetCurrentWord().addFirst(boardPosition);
@@ -191,7 +191,7 @@ public class SolveByDictionary extends Solver {
                         Character neighbourCharacter = marblesBoard[neighbour[0]][neighbour[1]].getLetter().getLetter();
 
                         if (neighbourCharacter.equals('*')) {
-                            BFSData nextData = new BFSData(bfsd);
+                            BFSDatas nextData = new BFSDatas(bfsd);
 
                             nextData.getCurrentWord().addLetter(child.getNodeValue());
                             nextData.getPathToGetCurrentWord().addFirst(neighbour);
@@ -202,7 +202,7 @@ public class SolveByDictionary extends Solver {
                         }
 
                         if (c.equals(neighbourCharacter)) {
-                            BFSData nextData = new BFSData(bfsd);
+                            BFSDatas nextData = new BFSDatas(bfsd);
 
                             nextData.getCurrentWord().addLetter(marblesBoard[neighbour[0]][neighbour[1]]);
                             nextData.getPathToGetCurrentWord().addFirst(neighbour);

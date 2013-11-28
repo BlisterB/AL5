@@ -6,13 +6,13 @@ import java.util.LinkedList;
 
 /**
  */
-public class BFSData {
+public class BFSDatas {
     private Tree<Character> currentPosition;
     private SolutionWord currentWord;
     private Integer[] positionBoard;
     private LinkedList<Integer[]> pathToGetCurrentWord;
 
-    BFSData(Tree<Character> currentPosition, SolutionWord currentWord,
+    BFSDatas(Tree<Character> currentPosition, SolutionWord currentWord,
             Integer[] positionInBoard, LinkedList<Integer[]> pathToGetCurrentWord) {
         this.currentPosition = currentPosition;
         this.currentWord = currentWord;
@@ -20,7 +20,7 @@ public class BFSData {
         this.pathToGetCurrentWord = pathToGetCurrentWord;
     }
 
-    BFSData(BFSData data) {
+    BFSDatas(BFSDatas data) {
         currentPosition = data.currentPosition;
         currentWord = new SolutionWord(data.currentWord);
         positionBoard = data.positionBoard;
