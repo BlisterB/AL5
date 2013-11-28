@@ -1,5 +1,7 @@
 package com.mklr.graphics.engine;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -12,16 +14,32 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import com.mklr.ruzzle.engine.Board;
+import com.mklr.ruzzle.solver.SolveByDictionary;
+import com.mklr.ruzzle.solver.SolveByMarbleGrid;
+import com.mklr.ruzzle.solver.Solver;
+
 
 public class DisplayWordsWindow extends JDialog {
 	Engine engine;
+	Board board;
 	String[] algoTabString = {"DFS Grille", "BFS Grille", "DFS Arbre", "BFS Arbre"};
+	JRadioButton[] sortTypeTab = new JRadioButton[3];
 	JComboBox<String> comboBoxAlgo;
-
-	public DisplayWordsWindow(JFrame parent, Engine engine){
+	JPanel container;
+	Solver tabSolver[];
+	
+	public DisplayWordsWindow(JFrame parent, Engine engine, Board board){
 		super(parent, "Partie personnalisée", true);
 
 		this.engine = engine;
+		this.board = board;
+		
+		tabSolver = new Solver[4];
+		tabSolver[0] = new SolveByMarbleGrid(board,Solver.DEPTH_FIRST_SEARCH);
+		tabSolver[1] = new SolveByMarbleGrid(board,Solver.BREADTH_FIRST_SEARCH);
+		tabSolver[2] = new SolveByDictionary(board,Solver.DEPTH_FIRST_SEARCH);
+		tabSolver[3] = new SolveByDictionary(board,Solver.BREADTH_FIRST_SEARCH);
 		
 		this.setResizable(false);
 		this.addSearshPanel();
@@ -55,15 +73,15 @@ public class DisplayWordsWindow extends JDialog {
 		JPanel panTri = new JPanel();
 		panTri.setLayout(new BoxLayout(panTri, BoxLayout.LINE_AXIS));
 		ButtonGroup groupOption = new ButtonGroup();
-		JRadioButton radioAlphabetique = new JRadioButton("Par ordre alphabetique");	groupOption.add(radioAlphabetique);
-		JRadioButton radioTaille = new JRadioButton("Par taille du mot");				groupOption.add(radioTaille);
-		JRadioButton radioScore = new JRadioButton("Par score");						groupOption.add(radioScore);
+		sortTypeTab[0] = new JRadioButton("Par ordre alphabetique");	groupOption.add(sortTypeTab[0]);
+		sortTypeTab[1] = new JRadioButton("Par taille du mot");			groupOption.add(sortTypeTab[1]);
+		sortTypeTab[2] = new JRadioButton("Par score");					groupOption.add(sortTypeTab[2]);
 		
 		panOption.add(labOption);
 		panOption.add(panTri);
-		panTri.add(radioAlphabetique);
-		panTri.add(radioTaille);
-		panTri.add(radioScore);
+		panTri.add(sortTypeTab[0]);
+		panTri.add(sortTypeTab[1]);
+		panTri.add(sortTypeTab[2]);
 		
 		//III/Bouton recherche
 		JButton buttonValider = new JButton("Valider");
@@ -78,5 +96,26 @@ public class DisplayWordsWindow extends JDialog {
 		container.setLayout(new BorderLayout());
 		container.add(panHaut, BorderLayout.SOUTH);
 		this.getContentPane().add(container);
+		
+		//Ajout des Action Listener
+        buttonValider.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent arg0){
+                        solve();
+                }
+        });
+	}
+	
+	public void addWordArray(){
+		
+	}
+	
+	public void solve(){
+		//On recupere l'id de l'algo choisi
+		int solverChosed = comboBoxAlgo.getSelectedIndex();
+		//On recupere l'option de tri
+		int optionTri;
+		if(sortTypeTab[0].isSelected()) optionTri = Solver.SORT_BY_NAME;
+		else if(sortTypeTab[1].isSelected())
+		tabSolver[solverChosed].solve();
 	}
 }

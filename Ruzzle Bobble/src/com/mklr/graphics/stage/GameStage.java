@@ -20,6 +20,9 @@ import com.mklr.ruzzle.engine.Game;
 import com.mklr.ruzzle.engine.Marble;
 
 public class GameStage extends Stage {
+	private Game game;
+	private Board board;
+	
 	private Bub bub = new Bub(560, 330, Bub.STANDING);
 	private Bob bob = new Bob(610, 330, Bob.STANDING);
 	private String currentWord = "";
@@ -29,11 +32,11 @@ public class GameStage extends Stage {
 	private NumberSprite[] timeSprite;
 	private NumberSprite[] scoreSprite; //0 est l'unite, 1 la dizaine etc.
 	private LinkedList<String> lastWords = new LinkedList<String>();
-	private Game game;
 	
 	public GameStage(Engine engine, Board board, Game game, int timerTime){
 		super(engine);
 		this.game = game;
+		this.board = board;
 		this.musicPlayer = new MusicPlayer(Engine.PATH + "music/gamestage.mid", true);
 		if(timerTime > 0)
 			this.timer = new GameTimer(timerTime, this);
@@ -183,7 +186,7 @@ public class GameStage extends Stage {
 			timeOut();
 		if(i == VALIDATE){
 			timer.pause();
-			DisplayWordsWindow w = new DisplayWordsWindow(null, engine);
+			DisplayWordsWindow w = new DisplayWordsWindow(null, engine, board);
 			timer.startTimmer();
 		}
 	}

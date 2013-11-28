@@ -1,8 +1,6 @@
 package com.mklr.graphics.engine;
 
 import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -11,6 +9,8 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+
+import javax.swing.JPanel;
 
 import com.mklr.graphics.sprite.LetterSprite;
 import com.mklr.graphics.sprite.Sprite;
@@ -22,7 +22,7 @@ import com.mklr.graphics.stage.Stage;
  * @author Mehdi
  *
  */
-public class GameScreen extends Canvas implements MouseMotionListener, MouseListener {
+public class GameScreen extends JPanel implements MouseMotionListener, MouseListener {
 	private Stage stage;
 	private Sprite lastSpritePointed;
 	
@@ -72,10 +72,10 @@ public class GameScreen extends Canvas implements MouseMotionListener, MouseList
 			if(stage instanceof GameStage){
 				String mot;
 				for(int i = 0; i < 6 && i < ((GameStage)stage).getLastWords().size(); i++){
-					mot = ((GameStage)stage).getLastWords().get(i);
-					g2.setColor(Color.WHITE);
-					g2.setFont(new Font("Comic sans ms", Font.BOLD, 40));
-					g2.drawString(mot, 580, 120 + i*40);
+                    mot = ((GameStage)stage).getLastWords().get(i);
+                    g2.setColor(Color.WHITE);
+                    g2.setFont(new Font("Comic sans ms", Font.BOLD, 40));
+                    g2.drawString(mot, 580, 120 + i*40);
 				}
 			}
 		}
