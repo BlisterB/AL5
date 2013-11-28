@@ -42,6 +42,7 @@ public abstract class Solver {
 
     public abstract void solve();
     public abstract void solve(byte sortType);
+    //protected abstract void addWord(SolutionWord sw);
 
     public ArrayList<SolutionWord> getWordsList() {
         return wordsList;

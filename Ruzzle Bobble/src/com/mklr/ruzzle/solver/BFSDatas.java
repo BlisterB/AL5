@@ -12,6 +12,10 @@ public class BFSDatas {
     private Integer[] positionBoard;
     private LinkedList<Integer[]> pathToGetCurrentWord;
 
+    BFSDatas() {
+
+    }
+
     BFSDatas(Tree<Character> currentPosition, SolutionWord currentWord,
             Integer[] positionInBoard, LinkedList<Integer[]> pathToGetCurrentWord) {
         this.currentPosition = currentPosition;

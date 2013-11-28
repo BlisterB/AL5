@@ -98,7 +98,19 @@ public class TestDictionnary {
         System.out.println("\nAlg done in " + solver.getTimer() + "s.");
         System.out.println(solver.getWordCount() + " words found...");
 
+        System.out.println("\n\n");
 
+        System.out.println("====== SOLVER : MARBLE GRID BFS ======");
+        Solver solver4 = new SolveByMarbleGrid(b, Solver.BREADTH_FIRST_SEARCH);
+        //long beg = new Date().getTime();
+        solver4.solve(Solver.SORT_BY_WORD_LENGTH);
+        //long end = new Date().getTime();
+        //System.out.println(solver.getWordsList());
+        System.out.println("====== SOLVER : MARBLE GRID BFS ======");
+//        System.out.println("\nAlg done in " + ((double)(end-beg)/(1000.0)) + "s.");
+        //      System.out.println(solver.getWordsList().size() + " words found...");
+        System.out.println("\nAlg done in " + solver4.getTimer() + "s.");
+        System.out.println(solver4.getWordCount() + " words found...");
 
         System.out.println("\n\n");
 
@@ -148,6 +160,13 @@ public class TestDictionnary {
             }
         }
 
+        System.out.println("\n\nTest des mots de l'algo 4 :");
+        for (SolutionWord sw : solver4.getWordsList()) {
+            if (!d.searchWord(sw.getWord())) {
+                System.out.println(sw.getWord());
+            }
+        }
+
         FileWriter fw = new FileWriter("/home/aaylor/.tmp/result_alg1");
         BufferedWriter bf = new BufferedWriter(fw);
         for (SolutionWord sw : solver.getWordsList()) {
@@ -163,6 +182,26 @@ public class TestDictionnary {
         for (SolutionWord sw : solver2.getWordsList()) {
             try {
                 bf2.write(sw.toString());
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
+
+        FileWriter fw3 = new FileWriter("/home/aaylor/.tmp/result_alg3");
+        BufferedWriter bf3 = new BufferedWriter(fw3);
+        for (SolutionWord sw : solver3.getWordsList()) {
+            try {
+                bf3.write(sw.toString());
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
+
+        FileWriter fw4 = new FileWriter("/home/aaylor/.tmp/result_alg4");
+        BufferedWriter bf4 = new BufferedWriter(fw4);
+        for (SolutionWord sw : solver4.getWordsList()) {
+            try {
+                bf4.write(sw.toString());
             } catch (IOException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }

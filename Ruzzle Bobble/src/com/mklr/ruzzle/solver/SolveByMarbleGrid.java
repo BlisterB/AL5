@@ -3,6 +3,7 @@ package com.mklr.ruzzle.solver;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Queue;
 
 import com.mklr.collection.BinaryTree;
 import com.mklr.collection.Tree;
@@ -34,15 +35,15 @@ public class SolveByMarbleGrid extends Solver {
             return;
 
         long beg = System.currentTimeMillis();
-        if ((algorithmType & Solver.DEPTH_FIRST_SEARCH) == Solver.DEPTH_FIRST_SEARCH) {
-            for (int i = 0; i < marblesBoard.length; i++) {
-                for (int j = 0; j < marblesBoard[i].length; j++){
+        for (int i = 0; i < marblesBoard.length; i++) {
+            for (int j = 0; j < marblesBoard[i].length; j++){
+                if ((algorithmType & Solver.DEPTH_FIRST_SEARCH) == Solver.DEPTH_FIRST_SEARCH) {
                     dfs(new Integer[]{i, j}, new SolutionWord(), 0,
-                            dictionary.getDictionaryTree(), new LinkedList<Integer[]>());
+                        dictionary.getDictionaryTree(), new LinkedList<Integer[]>());
+                } else {
+                    bfs(new Integer[]{i, j});
                 }
             }
-        }   else {
-            bfs();
         }
         long end = System.currentTimeMillis();
 
@@ -104,17 +105,6 @@ public class SolveByMarbleGrid extends Solver {
 
             //if (child.isTerminal() && !containsWord(nextWord)) {
             if (child.isTerminal() /*&& !containsWord(curWord)*/ && !__words.childExist(nextWord.getWord())) {
-
-                    //containsWord() => Vérifie TOUTE LA LISTE.
-            //Créer un avl pour vérifier si les mots existent ?
-            //Bien que long à mettre en place, il permettra
-            //De chercher les mots bien plus rapidement que une Arraylist. Mais pour afficher les mots à un utilisateur,
-            //il est bien plus pratique d'utiliser une liste.
-            //Implémenter les deux types alors ? Et trouver un moyen d'afficher correctement les AVL pour un utilisateur ?
-            //Ou utiliser simplement l'AVL pour les STRING et non les SOLUTIONWORD ?
-
-                //En tout cas, dans la fonction containsWord : ON PARCOURT TROP DE FOIS LA LISTE.
-                //Si le mot N'EXISTE PAS (cas majoritaire dans un Ruzzle) ON DOIT LA PARCOURIR EN ENTIERE....
                 nextWord.endWord(path_cpy, marblesBoard);
                 wordsList.add(nextWord);
                 __words.add(nextWord.getWord(), null);
@@ -129,8 +119,79 @@ public class SolveByMarbleGrid extends Solver {
         }
     }
 
-    private void bfs() {
+    private void bfs(Integer[] startMarble) {
+        Queue<BFSDatas> queue = initQueue(startMarble);
 
+        while (queue.peek() != null) {
+            BFSDatas currentDatas = queue.poll();
+
+            if (currentDatas.getCurrentPosition().isTerminal()
+                    && !__words.childExist(currentDatas.getCurrentWord().getWord())) {
+                currentDatas.getCurrentWord().endWord(currentDatas.getPathToGetCurrentWord(), marblesBoard);
+                wordsList.add(currentDatas.getCurrentWord());
+                __words.add(currentDatas.getCurrentWord().getWord(), null);
+            }
+
+            Integer[] currentPosition = currentDatas.getPositionBoard();
+            Marble m = marblesBoard[currentPosition[0]][currentPosition[1]];
+
+            for (Integer[] neighbour : m.getNeighbours()) {
+                Marble neighbourMarble = marblesBoard[neighbour[0]][neighbour[1]];
+                Letter l = neighbourMarble.getLetter();
+
+                LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>(currentDatas.getPathToGetCurrentWord());
+                nextPath.add(neighbour);
+
+                if (containsNeighbour(currentDatas.getPathToGetCurrentWord(), neighbour))
+                    continue;
+
+                if (l.getLetter() == '*') {
+                    for (Tree<Character> child : currentDatas.getCurrentPosition().getListOfChilds().values()) {
+                        SolutionWord nextWord = new SolutionWord(currentDatas.getCurrentWord());
+                        nextWord.addLetter(child.getNodeValue());
+
+                        queue.add(new BFSDatas(child, nextWord, neighbour, nextPath));
+                    }
+                } else {
+                    Tree<Character> child = currentDatas.getCurrentPosition().getChild(l.getLetter());
+                    if (child == null)
+                        continue;
+
+                    SolutionWord nextWord = new SolutionWord(currentDatas.getCurrentWord());
+                    nextWord.addLetter(neighbourMarble);
+
+                    queue.add(new BFSDatas(child, nextWord, neighbour, nextPath));
+                }
+            }
+        }
+    }
+
+    private Queue<BFSDatas> initQueue(Integer[] startMarble) {
+        Queue<BFSDatas> queue = new LinkedList<BFSDatas>();
+
+        Marble m = marblesBoard[startMarble[0]][startMarble[1]];
+
+        LinkedList<Integer[]> path = new LinkedList<Integer[]>();
+        path.add(startMarble);
+
+
+        if (m.getLetter().getLetter() == '*') {
+            for (int i = 97; i <= 122; i++) {
+                char c = (char)i;
+
+                SolutionWord sw = new SolutionWord();
+                sw.addLetter(c);
+
+                queue.add(new BFSDatas(dictionary.getDictionaryTree().getChild(c), sw, startMarble, path));
+            }
+        } else {
+            SolutionWord sw = new SolutionWord();
+            sw.addLetter(m);
+
+            queue.add(new BFSDatas(dictionary.getDictionaryTree().getChild(m.getLetter().getLetter()), sw, startMarble, path));
+        }
+
+        return queue;
     }
 
     private boolean containsWord(SolutionWord s) {
