@@ -31,6 +31,7 @@ public class DisplayWordsWindow extends JDialog {
 	JRadioButton[] sortTypeTab = new JRadioButton[3];
 	JComboBox<String> comboBoxAlgo;
 	JPanel container;
+	JPanel panSearsh = getSearshPanel();
 	Solver tabSolver[];
 	
 	public DisplayWordsWindow(JFrame parent, Engine engine, Board board){
@@ -45,14 +46,20 @@ public class DisplayWordsWindow extends JDialog {
 		tabSolver[2] = new SolveByDictionary(board,Solver.DEPTH_FIRST_SEARCH);
 		tabSolver[3] = new SolveByDictionary(board,Solver.BREADTH_FIRST_SEARCH);
 		
+		//Container
+		container = new JPanel();
+		container.setLayout(new BorderLayout());
+		container.add(panSearsh, BorderLayout.NORTH);
+		getContentPane().add(container);
+		
+		//Propriété de la fenetre
 		this.setResizable(false);
-		this.addSearshPanel();
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 	
-	public void addSearshPanel(){
+	public JPanel getSearshPanel(){
 		
 		   //////////////////////////////////////////////////////////////////
 		  //   VOLET DU HAUT (choix de l'algo et des options de tri )    ///
@@ -78,6 +85,7 @@ public class DisplayWordsWindow extends JDialog {
 		panTri.setLayout(new BoxLayout(panTri, BoxLayout.LINE_AXIS));
 		ButtonGroup groupOption = new ButtonGroup();
 		sortTypeTab[0] = new JRadioButton("Par ordre alphabetique");	groupOption.add(sortTypeTab[0]);
+		sortTypeTab[0].setSelected(true);
 		sortTypeTab[1] = new JRadioButton("Par taille du mot");			groupOption.add(sortTypeTab[1]);
 		sortTypeTab[2] = new JRadioButton("Par score");					groupOption.add(sortTypeTab[2]);
 		
@@ -95,22 +103,41 @@ public class DisplayWordsWindow extends JDialog {
 		panHaut.add(panOption);
 		panHaut.add(buttonValider);
 		
-		//Container
-		container = new JPanel();
-		container.setLayout(new BorderLayout());
-		container.add(panHaut, BorderLayout.SOUTH);
-		this.getContentPane().add(container);
-		
 		//Ajout des Action Listener
         buttonValider.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent arg0){
                         solve();
                 }
         });
+        
+        return panHaut;
 	}
 	
-	public void addWordArray(){
+	public JPanel getTablePanel(ArrayList<SolutionWord> list, long numberSolution, double time){
+		JPanel pan = new JPanel();
+		pan.setLayout(new BoxLayout(pan, BoxLayout.PAGE_AXIS));
 		
+		//Label
+		JLabel lab = new JLabel(numberSolution + " mots trouvés en " + time + " secondes :");
+		pan.add(lab);
+		
+		//On formate les donnees obtenu en vue des les integreer au JTable
+		Object[][] contenuTab = new Object[list.size()][];
+		int i = 0;
+		for(SolutionWord sw : list){
+			contenuTab[i] = new Object[2]; 
+			contenuTab[i][0] = sw.getWord();
+			contenuTab[i][1] = sw.getScore();
+			i++;
+		}
+		//Titre de colone
+		String[] tabTitre= {"Mot","Score"};
+		
+		//Creation du tableau et ajout a pan
+		JTable tableau = new JTable(contenuTab, tabTitre);
+		pan.add(new JScrollPane(tableau));
+		
+		return pan;
 	}
 	
 	public void solve(){
@@ -126,22 +153,13 @@ public class DisplayWordsWindow extends JDialog {
 		Solver s = tabSolver[solverChosed];
 		s.solve(optionTri);
 		
-		//On formate les donnees obtenu en vue des les integreer au JTable
-		ArrayList<SolutionWord> list = s.getWordsList();
-		Object[][] contenuTab = new Object[list.size()][];
-		int i = 0;
-		for(SolutionWord sw : list){
-			contenuTab[i] = new Object[2]; 
-			contenuTab[i][0] = sw.getWord();
-			contenuTab[i][1] = sw.getScore();
-			i++;
-		}
-		//Titre de colone
-		String[] tabTitre= {"Mot","Score"};
+		//On recupere le JPanel disposat les solutions
+		JPanel panTable = getTablePanel(s.getWordsList(), s.getWordCount(), s.getTimer());
 		
-
-		JTable tableau = new JTable(contenuTab, tabTitre);
-		this.container.add(new JScrollPane(tableau));
+		//On re agence la fenetre
+		container.removeAll();
+		container.add(panSearsh, BorderLayout.NORTH);
+		container.add(panTable, BorderLayout.SOUTH);
 		this.pack();
 		this.setLocationRelativeTo(null);
 	}
