@@ -69,7 +69,11 @@ public class SolutionWord
         } else if (SORT_TYPE == Solver.SORT_BY_NAME) {
             return word.compareTo(o.word);
         } else {
-            return o.score - score;
+            if (score == o.score) {
+                return word.compareTo(o.word);
+            } else {
+                return o.score - score;
+            }
         }
     }
 
