@@ -21,6 +21,7 @@ public class Board extends AbstractGrid<Marble>{
     private RuzzleDictionary dico;
 
     private Character[][] board = null;
+    private Option boardOption = null;
 
     /**
      * Create the board with row size, the langage and the dictionary.
@@ -39,6 +40,7 @@ public class Board extends AbstractGrid<Marble>{
         board = o.getBoard();
         dico = o.getDico();
         lang = o.getLang();
+        boardOption = o;
     }
 
     /**
@@ -172,8 +174,15 @@ public class Board extends AbstractGrid<Marble>{
                 } else {
                     tGrid[i][j] = new Marble(dico.getLetterSet().getLetter(b[i][j]));
                 }
+
+                addNeighbours(i, j);
             }
         }
+
+        tGrid[boardOption.bonus[0][0]][boardOption.bonus[0][1]].setBonus(Marble.LETTER_COUNT_DOUBLE);
+        tGrid[boardOption.bonus[1][0]][boardOption.bonus[1][1]].setBonus(Marble.LETTER_COUNT_TRIPLE);
+        tGrid[boardOption.bonus[2][0]][boardOption.bonus[2][1]].setBonus(Marble.WORD_COUNT_DOUBLE);
+        tGrid[boardOption.bonus[3][0]][boardOption.bonus[3][1]].setBonus(Marble.WORD_COUNT_DOUBLE);
     }
 
     /**

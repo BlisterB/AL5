@@ -31,8 +31,10 @@ public class SolveByMarbleGrid extends Solver {
     }
 
     public void solve(byte sortType) {
-        if (!wordsList.isEmpty())
+        if (!wordsList.isEmpty()) {
+            sort(sortType);
             return;
+        }
 
         long beg = System.currentTimeMillis();
         for (int i = 0; i < marblesBoard.length; i++) {

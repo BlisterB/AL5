@@ -31,8 +31,12 @@ public class SolveByDictionary extends Solver {
     }
 
     public void solve(byte sortType) {
-        long beg = System.currentTimeMillis();
+        if (!wordsList.isEmpty()) {
+            sort(sortType);
+            return;
+        }
 
+        long beg = System.currentTimeMillis();
         fillCharacterTable();
         if ((algorithmType & Solver.DEPTH_FIRST_SEARCH) == Solver.DEPTH_FIRST_SEARCH) {
             dfs(dictionary.getDictionaryTree(), new SolutionWord(), 0, null, null);
