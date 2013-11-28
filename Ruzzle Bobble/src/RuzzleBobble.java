@@ -22,14 +22,9 @@ public class RuzzleBobble {
         } else if (!folder.isDirectory()) {
         } else {
             File[] subfiles = folder.listFiles();
-            threadArray = new Thread[subfiles.length + 1];
+            threadArray = new Thread[subfiles.length];
 
-            RuzzleDictionary t = new RuzzleDictionary();
-            threadArray[0] = new Thread(t);
-            threadArray[0].start();
-            dicList.put("English", t);
-
-            int i = 1;
+            int i = 0;
             for (File dictFile : subfiles) {
                 String name = dictFile.getName();
                 RuzzleDictionary tmp = new RuzzleDictionary(
@@ -68,8 +63,9 @@ public class RuzzleBobble {
         int i = 1;
         while (!allFinished()) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(1000);
             } catch (Exception e) {
+                e.printStackTrace();
             }
             System.out.println("i : " + i + "\n");
             i++;
