@@ -6,10 +6,7 @@ import com.mklr.ruzzle.data.RuzzleDictionary;
 import com.mklr.ruzzle.engine.Board;
 import com.mklr.ruzzle.engine.Marble;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 public class SolveByDictionary extends Solver {
     private RuzzleDictionary dictionary;
@@ -128,43 +125,96 @@ public class SolveByDictionary extends Solver {
                     }
                 }
             }
-                        /*
-            for (Integer[] neighbour : m.getNeighbours()) {
-                Character c = marblesBoard[neighbour[0]][neighbour[1]].getLetter().getLetter();
-
-                if (containsNeighbour(path, neighbour))
-                    continue;
-
-                if (c.equals('*')) {
-                    for (Tree<Character> child : curPos.getListOfChilds().values()) {
-                        SolutionWord nextWord = new SolutionWord(curWord);
-                        LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>(path);
-
-                        nextWord.addLetter(child.getNodeValue());
-                        nextPath.addFirst(neighbour);
-
-                        dfs(child, nextWord, wordLength + 1, nextPath);
-                    }
-                } else {
-                    for (Tree<Character> child : curPos.getListOfChilds().values())  {
-                        if (c.equals(child.getNodeValue())) {
-                            SolutionWord nextWord = new SolutionWord(curWord);
-                            LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>(path);
-
-                            nextWord.addLetter(marblesBoard[neighbour[0]][neighbour[1]]);
-                            nextPath.addFirst(neighbour);
-
-                            dfs(child, nextWord, wordLength + 1, nextPath);
-                        }
-                    }
-                }
-            }
-            */
         }
     }
 
     private void bfs() {
+        Queue<BFSData> queue = new LinkedList<BFSData>();
 
+        queue.add(new BFSData(dictionary.getDictionaryTree(), new SolutionWord(), null, new LinkedList<Integer[]>()));
+        while(queue.peek() != null) {
+            BFSData bfsd = queue.poll();
+
+            if (bfsd.getCurrentWord().getLength() > 1
+                    && bfsd.getCurrentPosition().isTerminal()
+                    && !__words.childExist(bfsd.getCurrentWord().getWord())) {
+                bfsd.getCurrentWord().endWord(bfsd.getPathToGetCurrentWord(), marblesBoard);
+                wordsList.add(bfsd.getCurrentWord());
+                __words.add(bfsd.getCurrentWord().getWord(), null);
+            }
+
+            if (bfsd.getPositionBoard() == null) {
+                for (Tree<Character> child : bfsd.getCurrentPosition().getListOfChilds().values()) {
+                    ArrayList<Integer[]> posOfCharacterInBoard = characterTable.get('*');
+
+                    if (posOfCharacterInBoard == null)
+                        continue;
+
+                    for (Integer[] boardPosition : posOfCharacterInBoard) {
+                        BFSData nextDatas = new BFSData(bfsd);
+
+                        nextDatas.getCurrentWord().addLetter(child.getNodeValue());
+                        nextDatas.getPathToGetCurrentWord().addFirst(boardPosition);
+                        nextDatas.setPositionBoard(boardPosition);
+                        nextDatas.setCurrentPosition(child);
+
+                        queue.add(nextDatas);
+                    }
+
+                    posOfCharacterInBoard = characterTable.get(child.getNodeValue());
+
+                    if (posOfCharacterInBoard == null)
+                        continue;
+
+                    for (Integer[] boardPosition : posOfCharacterInBoard) {
+                        BFSData nextDatas = new BFSData(bfsd);
+
+                        nextDatas.getCurrentWord().addLetter(marblesBoard[boardPosition[0]][boardPosition[1]]);
+                        nextDatas.getPathToGetCurrentWord().addFirst(boardPosition);
+                        nextDatas.setPositionBoard(boardPosition);
+                        nextDatas.setCurrentPosition(child);
+
+                        queue.add(nextDatas);
+                    }
+                }
+            } else {
+                Integer[] pos = bfsd.getPositionBoard();
+                Marble m = marblesBoard[pos[0]][pos[1]];
+
+                for (Tree<Character> child : bfsd.getCurrentPosition().getListOfChilds().values()) {
+                    Character c = child.getNodeValue();
+
+                    for (Integer[] neighbour : m.getNeighbours()) {
+                        if (containsNeighbour(bfsd.getPathToGetCurrentWord(), neighbour))
+                            continue;
+
+                        Character neighbourCharacter = marblesBoard[neighbour[0]][neighbour[1]].getLetter().getLetter();
+
+                        if (neighbourCharacter.equals('*')) {
+                            BFSData nextData = new BFSData(bfsd);
+
+                            nextData.getCurrentWord().addLetter(child.getNodeValue());
+                            nextData.getPathToGetCurrentWord().addFirst(neighbour);
+                            nextData.setPositionBoard(neighbour);
+                            nextData.setCurrentPosition(child);
+
+                            queue.add(nextData);
+                        }
+
+                        if (c.equals(neighbourCharacter)) {
+                            BFSData nextData = new BFSData(bfsd);
+
+                            nextData.getCurrentWord().addLetter(marblesBoard[neighbour[0]][neighbour[1]]);
+                            nextData.getPathToGetCurrentWord().addFirst(neighbour);
+                            nextData.setPositionBoard(neighbour);
+                            nextData.setCurrentPosition(child);
+
+                            queue.add(nextData);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void fillCharacterTable() {

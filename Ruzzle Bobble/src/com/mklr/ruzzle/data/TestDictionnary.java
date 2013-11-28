@@ -113,6 +113,19 @@ public class TestDictionnary {
         //System.out.println(solver2.getWordsList().size() + " words found...");
         System.out.println(solver2.getWordCount() + " words found...");
 
+        System.out.println("\n\n");
+
+        System.out.println("====== SOLVER : DICTIONARY BFS ======");
+        Solver solver3 = new SolveByDictionary(b, Solver.BREADTH_FIRST_SEARCH);
+        //long beg2 = new Date().getTime();
+        solver3.solve(Solver.SORT_BY_WORD_LENGTH);
+        //long end2 = new Date().getTime();
+        System.out.println("====== SOLVER : DICTIONARY BFS ======");
+        //System.out.println("\nAlg done in " + ((double)(end2-beg2)/(1000.0)) + "s.");
+        System.out.println("\nAlg done in " + solver3.getTimer() + "s.");
+        //System.out.println(solver2.getWordsList().size() + " words found...");
+        System.out.println(solver3.getWordCount() + " words found...");
+
 
         System.out.println("\n\nTest des mots de l'algo 1 :");
         for (SolutionWord sw : solver.getWordsList()) {
@@ -123,6 +136,13 @@ public class TestDictionnary {
 
         System.out.println("\n\nTest des mots de l'algo 2 :");
         for (SolutionWord sw : solver2.getWordsList()) {
+            if (!d.searchWord(sw.getWord())) {
+                System.out.println(sw.getWord());
+            }
+        }
+
+        System.out.println("\n\nTest des mots de l'algo 3 :");
+        for (SolutionWord sw : solver3.getWordsList()) {
             if (!d.searchWord(sw.getWord())) {
                 System.out.println(sw.getWord());
             }
