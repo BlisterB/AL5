@@ -2,6 +2,7 @@ package com.mklr.graphics.engine;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -13,8 +14,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 import com.mklr.ruzzle.engine.Board;
+import com.mklr.ruzzle.solver.SolutionWord;
 import com.mklr.ruzzle.solver.SolveByDictionary;
 import com.mklr.ruzzle.solver.SolveByMarbleGrid;
 import com.mklr.ruzzle.solver.Solver;
@@ -92,7 +96,7 @@ public class DisplayWordsWindow extends JDialog {
 		panHaut.add(buttonValider);
 		
 		//Container
-		JPanel container = new JPanel();
+		container = new JPanel();
 		container.setLayout(new BorderLayout());
 		container.add(panHaut, BorderLayout.SOUTH);
 		this.getContentPane().add(container);
@@ -113,9 +117,32 @@ public class DisplayWordsWindow extends JDialog {
 		//On recupere l'id de l'algo choisi
 		int solverChosed = comboBoxAlgo.getSelectedIndex();
 		//On recupere l'option de tri
-		int optionTri;
+		byte optionTri;
 		if(sortTypeTab[0].isSelected()) optionTri = Solver.SORT_BY_NAME;
-		else if(sortTypeTab[1].isSelected())
-		tabSolver[solverChosed].solve();
+		else if(sortTypeTab[1].isSelected()) optionTri = Solver.SORT_BY_WORD_LENGTH;
+		else optionTri = Solver.SORT_BY_SCORE;
+		
+		//On lance la generation des solutions
+		Solver s = tabSolver[solverChosed];
+		s.solve(optionTri);
+		
+		//On formate les donnees obtenu en vue des les integreer au JTable
+		ArrayList<SolutionWord> list = s.getWordsList();
+		Object[][] contenuTab = new Object[list.size()][];
+		int i = 0;
+		for(SolutionWord sw : list){
+			contenuTab[i] = new Object[2]; 
+			contenuTab[i][0] = sw.getWord();
+			contenuTab[i][1] = sw.getScore();
+			i++;
+		}
+		//Titre de colone
+		String[] tabTitre= {"Mot","Score"};
+		
+
+		JTable tableau = new JTable(contenuTab, tabTitre);
+		this.container.add(new JScrollPane(tableau));
+		this.pack();
+		this.setLocationRelativeTo(null);
 	}
 }
