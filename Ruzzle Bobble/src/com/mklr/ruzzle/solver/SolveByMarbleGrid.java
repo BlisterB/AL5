@@ -40,8 +40,8 @@ public class SolveByMarbleGrid extends Solver {
         for (int i = 0; i < marblesBoard.length; i++) {
             for (int j = 0; j < marblesBoard[i].length; j++){
                 if ((algorithmType & Solver.DEPTH_FIRST_SEARCH) == Solver.DEPTH_FIRST_SEARCH) {
-                    dfs(new Integer[]{i, j}, new SolutionWord(), 0,
-                        dictionary.getDictionaryTree(), new LinkedList<Integer[]>());
+                    dfs(new AlgorithmsDatas(dictionary.getDictionaryTree(), new SolutionWord(),
+                            new Integer[]{i, j}, new LinkedList<Integer[]>()));
                 } else {
                     bfs(new Integer[]{i, j});
                 }
@@ -62,62 +62,61 @@ public class SolveByMarbleGrid extends Solver {
         SolutionWord.changeSortType(initialSortType);
     }
 
-
-    private void dfs(Integer[] marbleCoo, SolutionWord currentWord,
-            int wordLength, Tree<Character> position, LinkedList<Integer[]> path) {
-        if (wordLength > dictionary.getMaxLength())
+    private void dfs(AlgorithmsDatas datas) {
+        if (datas.getCurrentWord().getLength() > dictionary.getMaxLength())
             return;
 
-        SolutionWord nextWord;
-        Marble m = marblesBoard[marbleCoo[0]][marbleCoo[1]];                       // Coût 1
-        Letter l = m.getLetter();                                                  // Coût 1
-        
-        LinkedList<Integer[]> path_cpy = new LinkedList<Integer[]>(path);                  // Coût path_cpy size.
-                                                                                   // Voir si CLONE existe pour LinkedList...
-        path_cpy.addFirst(marbleCoo);
+        Tree<Character> currentPositionInTree =
+                datas.getCurrentPositionInTree();
+        SolutionWord currentWord =
+                datas.getCurrentWord();
+        LinkedList<Integer[]> currentPathToGetTheWord =
+                datas.getCurrentPathToGetTheCurrentWord();
+        Integer[] currentPositionInBoard =
+                datas.getCurrentPositionInBoard();
 
-        if (l.getLetter() == '*') {
-            for (Tree<Character> child : position.getListOfChilds().values()) {
-                nextWord = new SolutionWord(currentWord);                  //Coût correspondant à la copie. (voir CLONE)
-                nextWord.addLetter(child.getNodeValue());             //On doit parcourir la liste A CHAQUE FOIS.
-                                                                           //Utiliser une HashMap à la place ?
-                if (child.isTerminal() && /*!containsWord(nextWord))*/ !__words.childExist(nextWord.getWord())) {
-                    nextWord.endWord(path_cpy, marblesBoard);
-                    wordsList.add(nextWord);
-                    __words.add(nextWord.getWord(), null);
-                }
+        if (currentPositionInTree.isTerminal()
+                && !__words.childExist(currentWord.getWord())) {
+            currentWord.endWord(currentPathToGetTheWord, marblesBoard);
+            wordsList.add(currentWord);
+            __words.add(currentWord.getWord(), null);
+        }
 
 
-                for (Integer[] neighbours : m.getNeighbours()) {
-                    //Coût constant.
-                    if (!containsNeighbour(path_cpy, neighbours)) {
-                        dfs(neighbours, nextWord, 
-                                wordLength + 1, child, path_cpy);
+        Marble currentMarble =
+                marblesBoard[currentPositionInBoard[0]][currentPositionInBoard[1]];
+        Letter currentLetterInMarble = currentMarble.getLetter();
+
+        LinkedList<Integer[]> nextPath =
+                new LinkedList<Integer[]>(currentPathToGetTheWord);
+        nextPath.add(currentPositionInBoard);
+
+        if (currentLetterInMarble.getLetter() == '*') {
+            for (Tree<Character> child : currentPositionInTree.getListOfChilds().values()) {
+                SolutionWord nextWord = new SolutionWord(currentWord);
+                nextWord.addLetter(child.getNodeValue());
+
+                for (Integer[] neighbour : currentMarble.getNeighbours()) {
+                    if (!containsNeighbour(nextPath, neighbour)) {
+                        dfs(new AlgorithmsDatas(child, nextWord, neighbour, nextPath));
                     }
                 }
             }
         } else {
-            nextWord = new SolutionWord(currentWord);                         //Coût correspondant à la copie. (Voir si CLONE
-                                                                                // n'est pas une meilleure idée....)
-            Tree<Character> child = position.getChild(l.getLetter());         //Coût dépendant du nombre de fils (voir HashMap.get(E))
+            Tree<Character> child =
+                    currentPositionInTree.getChild(currentLetterInMarble.getLetter());
             if (child == null)
                 return;
 
-            nextWord.addLetter(m);                                           //Coût 1
+            SolutionWord nextWord = new SolutionWord(currentWord);
+            nextWord.addLetter(currentMarble);
 
-            //if (child.isTerminal() && !containsWord(nextWord)) {
-            if (child.isTerminal() /*&& !containsWord(curWord)*/ && !__words.childExist(nextWord.getWord())) {
-                nextWord.endWord(path_cpy, marblesBoard);
-                wordsList.add(nextWord);
-                __words.add(nextWord.getWord(), null);
-            }
-
-            for (Integer[] neighbours : m.getNeighbours()) {
-                //Le coût est constant : de la taille de path_cpy. Qui ne peut pas être plus grande que maxWordLength.
-                if (!containsNeighbour(path_cpy, neighbours)) {
-                    dfs(neighbours, nextWord, wordLength+1, child, path_cpy);
+            for (Integer[] neighbour : currentMarble.getNeighbours()) {
+                if (!containsNeighbour(nextPath, neighbour)) {
+                    dfs(new AlgorithmsDatas(child, nextWord, neighbour, nextPath));
                 }
             }
+
         }
     }
 
