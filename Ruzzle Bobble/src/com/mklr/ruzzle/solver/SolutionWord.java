@@ -16,7 +16,7 @@ public class SolutionWord
     private int length;
     private int score;
     private int wordMultiplicator = 1;
-    
+
     public SolutionWord() {
     	word = "";
     	length = 0;

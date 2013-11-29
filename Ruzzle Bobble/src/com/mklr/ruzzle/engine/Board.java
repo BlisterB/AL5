@@ -182,7 +182,7 @@ public class Board extends AbstractGrid<Marble>{
         tGrid[boardOption.bonus[0][0]][boardOption.bonus[0][1]].setBonus(Marble.LETTER_COUNT_DOUBLE);
         tGrid[boardOption.bonus[1][0]][boardOption.bonus[1][1]].setBonus(Marble.LETTER_COUNT_TRIPLE);
         tGrid[boardOption.bonus[2][0]][boardOption.bonus[2][1]].setBonus(Marble.WORD_COUNT_DOUBLE);
-        tGrid[boardOption.bonus[3][0]][boardOption.bonus[3][1]].setBonus(Marble.WORD_COUNT_DOUBLE);
+        tGrid[boardOption.bonus[3][0]][boardOption.bonus[3][1]].setBonus(Marble.WORD_COUNT_TRIPLE);
     }
 
     /**
