@@ -120,6 +120,7 @@ public class SolveByMarbleGrid extends Solver {
         }
     }
 
+
     private void bfs(Integer[] startMarble) {
         Queue<BFSDatas> queue = initQueue(startMarble);
 

@@ -14,26 +14,32 @@ public class RuzzleBobble {
     private static Thread[] threadArray;
 
     private static HashMap<String, RuzzleDictionary> findDictionaries() {
-        HashMap<String, RuzzleDictionary> dicList = 
-            new HashMap<String, RuzzleDictionary>();
+        HashMap<String, RuzzleDictionary> dicList = new HashMap<String, RuzzleDictionary>();
         File folder = new File("dict/");
 
         if (!folder.exists()) {
         } else if (!folder.isDirectory()) {
         } else {
             File[] subfiles = folder.listFiles();
-            threadArray = new Thread[subfiles.length];
+            threadArray = new Thread[subfiles.length + 1];
 
-            int i = 0;
-            for (File dictFile : subfiles) {
-                String name = dictFile.getName();
-                RuzzleDictionary tmp = new RuzzleDictionary(
-                        name.substring(0, name.indexOf('.')), "dict/" + name);
-                
+            for (int i = 0; i < threadArray.length; i++) {
+                String name;
+                RuzzleDictionary tmp;
+
+                if (i == 0) {
+                    name = "English";
+                    tmp = new RuzzleDictionary();
+                } else {
+                    name = subfiles[i - 1].getName();
+                    name = name.substring(0, name.indexOf('.'));
+                    tmp = new RuzzleDictionary(name, "dict/" + subfiles[i - 1].getName());
+                }
+
                 threadArray[i] = new Thread(tmp);
                 threadArray[i].start();
 
-                dicList.put(name.substring(0, name.indexOf('.')), tmp);
+                dicList.put(name, tmp);
             }
         }
 
