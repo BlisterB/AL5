@@ -133,92 +133,86 @@ public class SolveByDictionary extends Solver {
     }
 
     private void bfs() {
-        Queue<BFSDatas> queue = new LinkedList<BFSDatas>();
+        Queue<AlgorithmsDatas> queue = initQueue(dictionary.getDictionaryTree());
 
-        queue.add(new BFSDatas(dictionary.getDictionaryTree(), new SolutionWord(), null, new LinkedList<Integer[]>()));
         while(queue.peek() != null) {
-            BFSDatas bfsd = queue.poll();
+            AlgorithmsDatas datas = queue.poll();
 
-            if (bfsd.getCurrentWord().getLength() > 1
-                    && bfsd.getCurrentPosition().isTerminal()
-                    && !__words.childExist(bfsd.getCurrentWord().getWord())) {
-                bfsd.getCurrentWord().endWord(bfsd.getPathToGetCurrentWord(), marblesBoard);
-                wordsList.add(bfsd.getCurrentWord());
-                __words.add(bfsd.getCurrentWord().getWord(), null);
+            Tree<Character> currentPositionInTree = datas.getCurrentPositionInTree();
+            SolutionWord currentWord = datas.getCurrentWord();
+            LinkedList<Integer[]> currentPathToGetTheWord = datas.getCurrentPathToGetTheCurrentWord();
+            Integer[] currentPositionInBoard = datas.getCurrentPositionInBoard();
+
+            if (currentWord.getLength() > 1
+                    && currentPositionInTree.isTerminal()
+                    && !__words.childExist(currentWord.getWord())) {
+                datas.getCurrentWord().endWord(currentPathToGetTheWord, marblesBoard);
+                wordsList.add(currentWord);
+                __words.add(currentWord.getWord(), null);
             }
 
-            if (bfsd.getPositionBoard() == null) {
-                for (Tree<Character> child : bfsd.getCurrentPosition().getListOfChilds().values()) {
-                    ArrayList<Integer[]> posOfCharacterInBoard = characterTable.get('*');
 
-                    if (posOfCharacterInBoard == null)
-                        continue;
+            Integer[] pos = datas.getCurrentPositionInBoard();
+            Marble m = marblesBoard[pos[0]][pos[1]];
 
-                    for (Integer[] boardPosition : posOfCharacterInBoard) {
-                        BFSDatas nextDatas = new BFSDatas(bfsd);
+            for (Tree<Character> child : currentPositionInTree.getListOfChilds().values()) {
+                Character c = child.getNodeValue();
 
-                        nextDatas.getCurrentWord().addLetter(child.getNodeValue());
-                        nextDatas.getPathToGetCurrentWord().addFirst(boardPosition);
-                        nextDatas.setPositionBoard(boardPosition);
-                        nextDatas.setCurrentPosition(child);
-
-                        queue.add(nextDatas);
-                    }
-
-                    posOfCharacterInBoard = characterTable.get(child.getNodeValue());
-
-                    if (posOfCharacterInBoard == null)
-                        continue;
-
-                    for (Integer[] boardPosition : posOfCharacterInBoard) {
-                        BFSDatas nextDatas = new BFSDatas(bfsd);
-
-                        nextDatas.getCurrentWord().addLetter(marblesBoard[boardPosition[0]][boardPosition[1]]);
-                        nextDatas.getPathToGetCurrentWord().addFirst(boardPosition);
-                        nextDatas.setPositionBoard(boardPosition);
-                        nextDatas.setCurrentPosition(child);
-
-                        queue.add(nextDatas);
-                    }
-                }
-            } else {
-                Integer[] pos = bfsd.getPositionBoard();
-                Marble m = marblesBoard[pos[0]][pos[1]];
-
-                for (Tree<Character> child : bfsd.getCurrentPosition().getListOfChilds().values()) {
-                    Character c = child.getNodeValue();
-
-                    for (Integer[] neighbour : m.getNeighbours()) {
-                        if (containsNeighbour(bfsd.getPathToGetCurrentWord(), neighbour))
+                for (Integer[] neighbour : m.getNeighbours()) {
+                    if (containsNeighbour(currentPathToGetTheWord, neighbour))
                             continue;
 
-                        Character neighbourCharacter = marblesBoard[neighbour[0]][neighbour[1]].getLetter().getLetter();
+                    Character neighbourCharacter = marblesBoard[neighbour[0]][neighbour[1]].getLetter().getLetter();
 
-                        if (neighbourCharacter.equals('*')) {
-                            BFSDatas nextData = new BFSDatas(bfsd);
+                    if (neighbourCharacter.equals('*') || neighbourCharacter.equals(c)) {
+                        SolutionWord nextWord = new SolutionWord(currentWord);
+                        nextWord.addLetter(child.getNodeValue());
 
-                            nextData.getCurrentWord().addLetter(child.getNodeValue());
-                            nextData.getPathToGetCurrentWord().addFirst(neighbour);
-                            nextData.setPositionBoard(neighbour);
-                            nextData.setCurrentPosition(child);
+                        LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>(currentPathToGetTheWord);
+                        nextPath.add(neighbour);
 
-                            queue.add(nextData);
-                        }
-
-                        if (c.equals(neighbourCharacter)) {
-                            BFSDatas nextData = new BFSDatas(bfsd);
-
-                            nextData.getCurrentWord().addLetter(marblesBoard[neighbour[0]][neighbour[1]]);
-                            nextData.getPathToGetCurrentWord().addFirst(neighbour);
-                            nextData.setPositionBoard(neighbour);
-                            nextData.setCurrentPosition(child);
-
-                            queue.add(nextData);
-                        }
+                        queue.add(new AlgorithmsDatas(child, nextWord, neighbour, nextPath));
                     }
                 }
             }
         }
+    }
+
+    private Queue<AlgorithmsDatas> initQueue(Tree<Character> firstPosition) {
+        Queue<AlgorithmsDatas> queue = new LinkedList<AlgorithmsDatas>();
+
+        for (Tree<Character> child : firstPosition.getListOfChilds().values()) {
+            ArrayList<Integer[]> positionsOfEachCurrentCharacter = characterTable.get('*');
+
+            if (positionsOfEachCurrentCharacter != null) {
+                for (Integer[] positionInBoard : positionsOfEachCurrentCharacter) {
+                    SolutionWord newWord = new SolutionWord();
+                    newWord.addLetter(child.getNodeValue());
+
+                    LinkedList<Integer[]> newPath = new LinkedList<Integer[]>();
+                    newPath.addFirst(positionInBoard);
+
+                    queue.add(new AlgorithmsDatas(child, newWord, positionInBoard, newPath));
+                }
+            }
+
+            positionsOfEachCurrentCharacter = characterTable.get(child.getNodeValue());
+            if (positionsOfEachCurrentCharacter == null)
+                continue;
+
+            for (Integer[] positionInBoard : positionsOfEachCurrentCharacter) {
+                SolutionWord newWord = new SolutionWord();
+                newWord.addLetter(child.getNodeValue());
+
+                LinkedList<Integer[]> newPath = new LinkedList<Integer[]>();
+                newPath.addFirst(positionInBoard);
+
+                queue.add(new AlgorithmsDatas(child, newWord, positionInBoard, newPath));
+            }
+
+        }
+
+        return queue;
     }
 
     private void fillCharacterTable() {

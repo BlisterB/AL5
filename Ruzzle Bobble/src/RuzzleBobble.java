@@ -41,6 +41,7 @@ public class RuzzleBobble {
 
                 dicList.put(name, tmp);
             }
+
         }
 
         return dicList;

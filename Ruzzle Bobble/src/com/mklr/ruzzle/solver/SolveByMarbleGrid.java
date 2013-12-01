@@ -122,60 +122,63 @@ public class SolveByMarbleGrid extends Solver {
 
 
     private void bfs(Integer[] startMarble) {
-        Queue<BFSDatas> queue = initQueue(startMarble);
+        Queue<AlgorithmsDatas> queue = initQueue(startMarble);
 
         while (queue.peek() != null) {
-            BFSDatas currentDatas = queue.poll();
+            AlgorithmsDatas currentDatas = queue.poll();
 
-            if (currentDatas.getCurrentPosition().isTerminal()
-                    && !__words.childExist(currentDatas.getCurrentWord().getWord())) {
-                currentDatas.getCurrentWord().endWord(currentDatas.getPathToGetCurrentWord(), marblesBoard);
-                wordsList.add(currentDatas.getCurrentWord());
-                __words.add(currentDatas.getCurrentWord().getWord(), null);
+            Tree<Character> currentPositionInTree = currentDatas.getCurrentPositionInTree();
+            SolutionWord currentWord = currentDatas.getCurrentWord();
+            LinkedList<Integer[]> currentPathToGetTheWord = currentDatas.getCurrentPathToGetTheCurrentWord();
+            Integer[] currentPositionInBoard = currentDatas.getCurrentPositionInBoard();
+
+            if (currentPositionInTree.isTerminal()
+                    && !__words.childExist(currentWord.getWord())) {
+                currentWord.endWord(currentPathToGetTheWord, marblesBoard);
+                wordsList.add(currentWord);
+                __words.add(currentWord.getWord(), null);
             }
-
-            Integer[] currentPosition = currentDatas.getPositionBoard();
-            Marble m = marblesBoard[currentPosition[0]][currentPosition[1]];
+;
+            Marble m = marblesBoard[currentPositionInBoard[0]][currentPositionInBoard[1]];
 
             for (Integer[] neighbour : m.getNeighbours()) {
                 Marble neighbourMarble = marblesBoard[neighbour[0]][neighbour[1]];
                 Letter l = neighbourMarble.getLetter();
 
-                LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>(currentDatas.getPathToGetCurrentWord());
+                LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>(currentPathToGetTheWord);
                 nextPath.add(neighbour);
 
-                if (containsNeighbour(currentDatas.getPathToGetCurrentWord(), neighbour))
+                if (containsNeighbour(currentPathToGetTheWord, neighbour))
                     continue;
 
                 if (l.getLetter() == '*') {
-                    for (Tree<Character> child : currentDatas.getCurrentPosition().getListOfChilds().values()) {
+                    for (Tree<Character> child : currentPositionInTree.getListOfChilds().values()) {
                         SolutionWord nextWord = new SolutionWord(currentDatas.getCurrentWord());
                         nextWord.addLetter(child.getNodeValue());
 
-                        queue.add(new BFSDatas(child, nextWord, neighbour, nextPath));
+                        queue.add(new AlgorithmsDatas(child, nextWord, neighbour, nextPath));
                     }
                 } else {
-                    Tree<Character> child = currentDatas.getCurrentPosition().getChild(l.getLetter());
+                    Tree<Character> child = currentPositionInTree.getChild(l.getLetter());
                     if (child == null)
                         continue;
 
                     SolutionWord nextWord = new SolutionWord(currentDatas.getCurrentWord());
                     nextWord.addLetter(neighbourMarble);
 
-                    queue.add(new BFSDatas(child, nextWord, neighbour, nextPath));
+                    queue.add(new AlgorithmsDatas(child, nextWord, neighbour, nextPath));
                 }
             }
         }
     }
 
-    private Queue<BFSDatas> initQueue(Integer[] startMarble) {
-        Queue<BFSDatas> queue = new LinkedList<BFSDatas>();
+    private Queue<AlgorithmsDatas> initQueue(Integer[] startMarble) {
+        Queue<AlgorithmsDatas> queue = new LinkedList<AlgorithmsDatas>();
 
         Marble m = marblesBoard[startMarble[0]][startMarble[1]];
 
         LinkedList<Integer[]> path = new LinkedList<Integer[]>();
         path.add(startMarble);
-
 
         if (m.getLetter().getLetter() == '*') {
             for (int i = 97; i <= 122; i++) {
@@ -184,13 +187,13 @@ public class SolveByMarbleGrid extends Solver {
                 SolutionWord sw = new SolutionWord();
                 sw.addLetter(c);
 
-                queue.add(new BFSDatas(dictionary.getDictionaryTree().getChild(c), sw, startMarble, path));
+                queue.add(new AlgorithmsDatas(dictionary.getDictionaryTree().getChild(c), sw, startMarble, path));
             }
         } else {
             SolutionWord sw = new SolutionWord();
             sw.addLetter(m);
 
-            queue.add(new BFSDatas(dictionary.getDictionaryTree().getChild(m.getLetter().getLetter()), sw, startMarble, path));
+            queue.add(new AlgorithmsDatas(dictionary.getDictionaryTree().getChild(m.getLetter().getLetter()), sw, startMarble, path));
         }
 
         return queue;
