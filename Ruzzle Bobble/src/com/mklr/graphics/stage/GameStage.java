@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import com.mklr.graphics.engine.DisplayWordsWindow;
 import com.mklr.graphics.engine.Engine;
+import com.mklr.graphics.engine.GameOverWindow;
 import com.mklr.graphics.engine.GameTimer;
 import com.mklr.graphics.engine.MusicPlayer;
 import com.mklr.graphics.sprite.Bob;
@@ -43,7 +44,7 @@ public class GameStage extends Stage {
 		
 		//Background et interface
 		background = new Sprite(Engine.PATH + "img/background/game_stage.png");
-		sprite_list.add(new InterfaceSprite(Engine.PATH + "img/interface/afficher_les_mots.png", 50, 375, 275, 50, 1, this));
+		sprite_list.add(new InterfaceSprite(Engine.PATH + "img/interface/afficher_les_mots.png", 50, 375, 375, 50, 1, this));
 		
 		//Chargement des lettres du board
 		Marble[][] tab = board.getBoard();
@@ -195,8 +196,7 @@ public class GameStage extends Stage {
 		if(musicPlayer != null)
 			musicPlayer.close();
 		MusicPlayer.playSound(Engine.PATH + "sound/game_over.wav");
-    	String info = "Bravo !\nVous avez obtenu un score de " + game.getScore() + " !\nArriverez vous à faire mieux la prochaine fois ?";
-    	JOptionPane.showMessageDialog(null, info, "Time out !", JOptionPane.INFORMATION_MESSAGE);
+		new GameOverWindow(engine.getWindow(), engine, board, game);
     	engine.setGameTitle();
 	}
 	

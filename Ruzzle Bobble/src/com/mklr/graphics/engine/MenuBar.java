@@ -32,7 +32,6 @@ public class MenuBar extends JMenuBar {
 	private JRadioButtonMenuItem[] dicoRadioArray;
 	private ButtonGroup dicoRadioGroup;
 	
-	private JMenuItem iStatCreationMot = new JMenuItem("Statistique de generation des mots");
 	private JMenuItem iCommentJouer = new JMenuItem("Comment jouer");
 	
 	private JMenuItem iAPropos = new JMenuItem("A propos");
@@ -52,7 +51,6 @@ public class MenuBar extends JMenuBar {
 		//Menu Option
 		this.add(mOptions);
 		mOptions.add(mChoixLangue);
-		mOptions.add(iStatCreationMot);
 		mOptions.addSeparator();
 		mOptions.add(iCommentJouer);
 		mOptions.add(iAPropos);

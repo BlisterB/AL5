@@ -33,6 +33,7 @@ public class DisplayWordsWindow extends JDialog {
 	JPanel container;
 	JPanel panSearsh = getSearshPanel();
 	Solver tabSolver[];
+	Solver lastSolverUsed;
 	
 	public DisplayWordsWindow(JFrame parent, Engine engine, Board board){
 		super(parent, "Partie personnalisée", true);
@@ -149,6 +150,8 @@ public class DisplayWordsWindow extends JDialog {
 		else if(sortTypeTab[1].isSelected()) optionTri = Solver.SORT_BY_WORD_LENGTH;
 		else optionTri = Solver.SORT_BY_SCORE;
 		
+		//TODO Si c'est la premiere fois qu'on solve ou si on utilise un solver different, il faut relancer solver
+		//Dans le cas contraire on a juste a trier les resultat déjà obtenu
 		//On lance la generation des solutions
 		Solver s = tabSolver[solverChosed];
 		s.solve(optionTri);

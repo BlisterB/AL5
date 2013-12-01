@@ -87,7 +87,16 @@ public class Game {
         return lastWord;
     }
 
-    private boolean wordAlreadyGiven(String word) {
+    
+    
+    /**
+	 * @return the wordsGiven
+	 */
+	public ArrayList<String> getWordsGiven() {
+		return wordsGiven;
+	}
+
+	private boolean wordAlreadyGiven(String word) {
         char[] wordGivenCharArray = word.toCharArray();
 
         for (String currentWord : wordsGiven) {
