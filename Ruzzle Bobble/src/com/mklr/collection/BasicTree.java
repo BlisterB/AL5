@@ -11,8 +11,9 @@ public interface BasicTree<T>
     /**
      * Add the next tree to the current, associated with the value given
      * @param newValue element associated to the tree
+     * @param newTree tree to add
      */
-    public void add(T newValue);
+    public void add(T newValue, BasicTree<T> newTree);
     
 
     /**

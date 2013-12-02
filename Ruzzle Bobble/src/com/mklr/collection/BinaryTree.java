@@ -1,5 +1,6 @@
 package com.mklr.collection;
 
+import java.util.Comparator;
 import java.lang.Comparable;
 
 public class BinaryTree<T extends Comparable<T>> implements BasicTree<T>
@@ -69,30 +70,34 @@ public class BinaryTree<T extends Comparable<T>> implements BasicTree<T>
     }
 
     @Override
-    public void add(T newValue) {
-        if (nodeValue == null) {
+    public void add(T newValue, BasicTree<T> newTree) {
+        BinaryTree<T> curPos = this;
+
+        if (curPos.nodeValue == null) {
             nodeValue = newValue;
             rightNode = null;
             leftNode = null;
             return;
         }
 
-        int res = newValue.compareTo(nodeValue);
-        if (res < 0) {
-            if (leftNode == null) {
-                leftNode = new BinaryTree<T>(newValue);
+        while (true) {
+            int res = newValue.compareTo(curPos.nodeValue);
+            if (res < 0) {
+                if (curPos.leftNode == null) {
+                    curPos.leftNode = new BinaryTree<T>(newValue);
+                    return;
+                } else {
+                    curPos = curPos.leftNode;
+                }
+            } else if (res == 0) {
                 return;
             } else {
-                leftNode.add(newValue);
-            }
-        } else if (res == 0) {
-            return;
-        } else {
-            if (rightNode == null) {
-                rightNode = new BinaryTree<T>(newValue);
-                return;
-            } else {
-                rightNode.add(newValue);
+                if (curPos.rightNode == null) {
+                    curPos.rightNode = new BinaryTree<T>(newValue);
+                    return;
+                } else {
+                    curPos = curPos.rightNode;
+                }
             }
         }
     }

@@ -113,6 +113,7 @@ public class Board extends AbstractGrid<Marble>{
     private void fillGrid() {
         Random r = new Random();
         int[][] jokers = new int[2][];
+        int[][] blackMarble = new int[2][];
 
         for (int i = 0; i < jokers.length; i++) {
             do {
@@ -132,6 +133,30 @@ public class Board extends AbstractGrid<Marble>{
                 }
             } while(true);
         }
+
+        do {
+            int r_first = r.nextInt(2 * row);
+            int r_second = r.nextInt(tGrid[r_first].length);
+
+            if ((jokers[0][0] != r_first && jokers[0][1] != r_second)
+                    || (jokers[1][0] != r_first && jokers[1][1] != r_second)) {
+                blackMarble[0] = new int[]{r_first, r_second};
+                break;
+            }
+        } while(true);
+
+        do {
+            int r_first = r.nextInt(2 * row);
+            int r_second = r.nextInt(tGrid[r_first].length);
+
+            if ((jokers[0][0] != r_first && jokers[0][1] != r_second)
+                    || (jokers[1][0] != r_first && jokers[1][1] != r_second)
+                    || (blackMarble[0][0] != r_first && blackMarble[0][1] != r_second)) {
+                blackMarble[1] = new int[]{r_first, r_second};
+                break;
+            }
+        } while(true);
+
 
         for (int i = 0; i < tGrid.length; i++) {
             for (int j = 0; j < tGrid[i].length; j++) {
@@ -171,6 +196,8 @@ public class Board extends AbstractGrid<Marble>{
             for (int j = 0; j < b[i].length; j++) {
                 if (b[i][j].equals('*')) {
                     tGrid[i][j] = new Marble(new Letter('*', 0));
+                } else if (b[i][j].equals('-')) {
+                    tGrid[i][j] = new Marble(new Letter('-', 0));
                 } else {
                     tGrid[i][j] = new Marble(dico.getLetterSet().getLetter(b[i][j]));
                 }
