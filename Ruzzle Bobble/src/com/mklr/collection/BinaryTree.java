@@ -1,6 +1,5 @@
 package com.mklr.collection;
 
-import java.util.Comparator;
 import java.lang.Comparable;
 
 public class BinaryTree<T extends Comparable<T>> implements BasicTree<T>
@@ -68,7 +67,7 @@ public class BinaryTree<T extends Comparable<T>> implements BasicTree<T>
     public void setRightNode(BinaryTree<T> rightNode) {
         this.rightNode = rightNode;
     }
-    
+
     @Override
     public void add(T newValue, BasicTree<T> newTree) {
         BinaryTree<T> curPos = this;

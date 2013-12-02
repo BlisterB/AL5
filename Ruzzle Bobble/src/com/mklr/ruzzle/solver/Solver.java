@@ -1,6 +1,7 @@
 package com.mklr.ruzzle.solver;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 public abstract class Solver {
     public static final byte BREADTH_FIRST_SEARCH = 0;
@@ -15,6 +16,8 @@ public abstract class Solver {
     protected long wordCount;
     protected ArrayList<SolutionWord> wordsList;
 
+    protected TreeMap<String, SolutionWord> __tmp_wordsList;
+
     protected Solver() {
 
     }
@@ -22,6 +25,9 @@ public abstract class Solver {
     protected Solver(byte algorithmType) {
         this.algorithmType = algorithmType;
         wordsList = new ArrayList<SolutionWord>();
+
+        __tmp_wordsList = new TreeMap<String, SolutionWord>();
+
         timer = 0.0;
         wordCount = 0;
     }
@@ -42,7 +48,6 @@ public abstract class Solver {
 
     public abstract void solve();
     public abstract void solve(byte sortType);
-    //protected abstract void addWord(SolutionWord sw);
 
     public ArrayList<SolutionWord> getWordsList() {
         return wordsList;
@@ -54,5 +59,16 @@ public abstract class Solver {
 
     public double getTimer() {
         return timer;
+    }
+
+    protected void addWord(SolutionWord currentWord) {
+        if (__tmp_wordsList.containsKey(currentWord.getWord())) {
+            SolutionWord tmpWord = __tmp_wordsList.get(currentWord.getWord());
+            if (tmpWord.getScore() < currentWord.getScore()) {
+                __tmp_wordsList.put(currentWord.getWord(), currentWord);
+            }
+        } else {
+            __tmp_wordsList.put(currentWord.getWord(), currentWord);
+        }
     }
 }

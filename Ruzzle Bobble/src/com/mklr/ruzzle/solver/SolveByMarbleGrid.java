@@ -47,6 +47,7 @@ public class SolveByMarbleGrid extends Solver {
                 }
             }
         }
+        wordsList = new ArrayList<SolutionWord>(__tmp_wordsList.values());
         long end = System.currentTimeMillis();
 
         timer = ((double)end - (double)beg)/1000.0;
@@ -75,13 +76,10 @@ public class SolveByMarbleGrid extends Solver {
         Integer[] currentPositionInBoard =
                 datas.getCurrentPositionInBoard();
 
-        if (currentPositionInTree.isTerminal()
-                && !__words.childExist(currentWord.getWord())) {
+        if (currentPositionInTree.isTerminal()) {
             currentWord.endWord(currentPathToGetTheWord, marblesBoard);
-            wordsList.add(currentWord);
-            __words.add(currentWord.getWord(), null);
+            addWord(currentWord);
         }
-
 
         Marble currentMarble =
                 marblesBoard[currentPositionInBoard[0]][currentPositionInBoard[1]];
@@ -132,11 +130,9 @@ public class SolveByMarbleGrid extends Solver {
             LinkedList<Integer[]> currentPathToGetTheWord = currentDatas.getCurrentPathToGetTheCurrentWord();
             Integer[] currentPositionInBoard = currentDatas.getCurrentPositionInBoard();
 
-            if (currentPositionInTree.isTerminal()
-                    && !__words.childExist(currentWord.getWord())) {
+            if (currentPositionInTree.isTerminal()) {
                 currentWord.endWord(currentPathToGetTheWord, marblesBoard);
-                wordsList.add(currentWord);
-                __words.add(currentWord.getWord(), null);
+                addWord(currentWord);
             }
 ;
             Marble m = marblesBoard[currentPositionInBoard[0]][currentPositionInBoard[1]];
@@ -199,15 +195,6 @@ public class SolveByMarbleGrid extends Solver {
         return queue;
     }
 
-    private boolean containsWord(SolutionWord s) {
-    	String word = s.getWord();
-    	for (SolutionWord as : wordsList) {
-    		if (word.equals(as.getWord()))
-    			return true;
-    	}
-    	return false;
-    }
-    
     private boolean containsNeighbour(LinkedList<Integer[]> path, Integer[] neighbour) {
     	for (Integer[] i : path) {
     		if (i[0].equals(neighbour[0]) && i[1].equals(neighbour[1]))

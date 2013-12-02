@@ -9,7 +9,7 @@ import com.mklr.ruzzle.engine.Marble;
 public class SolutionWord 
         implements Comparator<SolutionWord>, Comparable<SolutionWord> {
 
-    public static byte SORT_TYPE = Solver.SORT_BY_WORD_LENGTH;    
+    public static byte SORT_TYPE = Solver.SORT_BY_WORD_LENGTH;
 
     private LinkedList<Integer[]> solutionPath;
     private String word;
@@ -58,6 +58,14 @@ public class SolutionWord
         this.score = score;
     }
 
+    public LinkedList<Integer[]> getSolutionPath() {
+        return solutionPath;
+    }
+
+    public void setSolutionPath(LinkedList<Integer[]> solutionPath) {
+        this.solutionPath = solutionPath;
+    }
+
     @Override
     public int compareTo(SolutionWord o) {
         if (SORT_TYPE == Solver.SORT_BY_WORD_LENGTH) {
@@ -85,9 +93,7 @@ public class SolutionWord
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof SolutionWord) {
-            return word.equals(((SolutionWord)obj).word)
-                && score == ((SolutionWord)obj).score
-                && length == ((SolutionWord)obj).length;
+            return word.equals(((SolutionWord)obj).word);
         }
         return false;
     }

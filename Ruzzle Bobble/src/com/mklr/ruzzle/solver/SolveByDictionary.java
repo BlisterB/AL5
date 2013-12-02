@@ -43,6 +43,7 @@ public class SolveByDictionary extends Solver {
         } else {
             bfs();
         }
+        wordsList = new ArrayList<SolutionWord>(__tmp_wordsList.values());
         long end = System.currentTimeMillis();
 
         timer = ((double)end - (double)beg)/1000.0;
@@ -81,10 +82,9 @@ public class SolveByDictionary extends Solver {
         Integer[] currentPositionInBoard = datas.getCurrentPositionInBoard();
 
 
-        if (currentPositionInTree.isTerminal() && !__words.childExist(currentWord.getWord())) {
+        if (currentPositionInTree.isTerminal()) {
             currentWord.endWord(currentPathToGetTheWord, marblesBoard);
-            wordsList.add(currentWord);
-            __words.add(currentWord.getWord(), null);
+            addWord(currentWord);
         }
 
         Marble m = marblesBoard[currentPositionInBoard[0]][currentPositionInBoard[1]];
@@ -122,12 +122,9 @@ public class SolveByDictionary extends Solver {
             LinkedList<Integer[]> currentPathToGetTheWord = datas.getCurrentPathToGetTheCurrentWord();
             Integer[] currentPositionInBoard = datas.getCurrentPositionInBoard();
 
-            if (currentWord.getLength() > 1
-                    && currentPositionInTree.isTerminal()
-                    && !__words.childExist(currentWord.getWord())) {
-                datas.getCurrentWord().endWord(currentPathToGetTheWord, marblesBoard);
-                wordsList.add(currentWord);
-                __words.add(currentWord.getWord(), null);
+            if (currentWord.getLength() > 1 && currentPositionInTree.isTerminal()) {
+                currentWord.endWord(currentPathToGetTheWord, marblesBoard);
+                addWord(currentWord);
             }
 
 
@@ -206,15 +203,6 @@ public class SolveByDictionary extends Solver {
 
             characterTable.put(c, tmp);
         }
-    }
-
-    private boolean containsWord(SolutionWord word) {
-        String _w = word.getWord();
-        for (SolutionWord sw : wordsList) {
-            if (_w.equals(sw.getWord()))
-                return true;
-        }
-        return false;
     }
 
     private boolean containsNeighbour(LinkedList<Integer[]> path, Integer[] neighbour) {
