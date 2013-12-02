@@ -39,7 +39,7 @@ public class SolveByDictionary extends Solver {
         long beg = System.currentTimeMillis();
         fillCharacterTable();
         if ((algorithmType & Solver.DEPTH_FIRST_SEARCH) == Solver.DEPTH_FIRST_SEARCH) {
-            dfs(dictionary.getDictionaryTree(), new SolutionWord(), 0, null, null);
+            initDfs(dictionary.getDictionaryTree());
         } else {
             bfs();
         }
@@ -58,75 +58,54 @@ public class SolveByDictionary extends Solver {
         SolutionWord.changeSortType(initialSortType);
     }
 
-    private void dfs(Tree<Character> curPos, SolutionWord curWord, int wordLength, LinkedList<Integer[]> path, Integer[] curPosInGrid) {
-        if (path == null) {
-            for (Tree<Character> child : curPos.getListOfChilds().values()) {
-                ArrayList<Integer[]> arrayOfPosInGameBoard = characterTable.get('*');
-                if (arrayOfPosInGameBoard == null)
+    private void initDfs(Tree<Character> firstPosition) {
+        for (Tree<Character> child : firstPosition.getListOfChilds().values()) {
+            ArrayList<Integer[]> positionOfEachCharacter = characterTable.get(child.getNodeValue());
+
+            for (Integer[] positionInGameBoard : positionOfEachCharacter) {
+                SolutionWord newWord = new SolutionWord();
+                newWord.addLetter(child.getNodeValue());
+
+                LinkedList<Integer[]> newPath = new LinkedList<Integer[]>();
+                newPath.addFirst(positionInGameBoard);
+
+                dfs(new AlgorithmsDatas(child, newWord, positionInGameBoard, newPath));
+            }
+        }
+    }
+
+    private void dfs(AlgorithmsDatas datas) {
+        Tree<Character> currentPositionInTree = datas.getCurrentPositionInTree();
+        SolutionWord currentWord = datas.getCurrentWord();
+        LinkedList<Integer[]> currentPathToGetTheWord = datas.getCurrentPathToGetTheCurrentWord();
+        Integer[] currentPositionInBoard = datas.getCurrentPositionInBoard();
+
+
+        if (currentPositionInTree.isTerminal() && !__words.childExist(currentWord.getWord())) {
+            currentWord.endWord(currentPathToGetTheWord, marblesBoard);
+            wordsList.add(currentWord);
+            __words.add(currentWord.getWord(), null);
+        }
+
+        Marble m = marblesBoard[currentPositionInBoard[0]][currentPositionInBoard[1]];
+
+        for (Tree<Character> child : currentPositionInTree.getListOfChilds().values()) {
+            Character c = child.getNodeValue();
+
+            for (Integer[] neighbour : m.getNeighbours()) {
+                if (containsNeighbour(currentPathToGetTheWord, neighbour))
                     continue;
 
-                for (Integer[] posInGameBoard : arrayOfPosInGameBoard) {
-                    SolutionWord nextWord = new SolutionWord(curWord);
-                    LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>();
+                Character neighbourCharacter = marblesBoard[neighbour[0]][neighbour[1]].getLetter().getLetter();
 
+                if (neighbourCharacter.equals('*') || neighbourCharacter.equals(c)) {
+                    SolutionWord nextWord = new SolutionWord(currentWord);
                     nextWord.addLetter(child.getNodeValue());
-                    nextPath.addFirst(posInGameBoard);
 
-                    dfs(child, nextWord, wordLength + 1, nextPath, posInGameBoard);
-                }
+                    LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>(currentPathToGetTheWord);
+                    nextPath.addFirst(neighbour);
 
-                arrayOfPosInGameBoard = characterTable.get(child.getNodeValue());
-                if (arrayOfPosInGameBoard == null)
-                    continue;
-
-                for (Integer[] posInGameBoard : arrayOfPosInGameBoard) {
-                    SolutionWord nextWord = new SolutionWord(curWord);
-                    LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>();
-
-                    nextWord.addLetter(marblesBoard[posInGameBoard[0]][posInGameBoard[1]]);
-                    nextPath.addFirst(posInGameBoard);
-
-                    dfs(child, nextWord, wordLength + 1, nextPath, posInGameBoard);
-                }
-
-            }
-        } else {
-            if (curPos.isTerminal() /*&& !containsWord(curWord)*/ && !__words.childExist(curWord.getWord())) {
-                curWord.endWord(path, marblesBoard);
-                wordsList.add(curWord);
-                __words.add(curWord.getWord(), null);
-            }
-
-            Marble m = marblesBoard[curPosInGrid[0]][curPosInGrid[1]];
-
-            for (Tree<Character> child : curPos.getListOfChilds().values()) {
-                Character c = child.getNodeValue();
-
-                for (Integer[] neighbour : m.getNeighbours()) {
-                    if (containsNeighbour(path, neighbour))
-                        continue;
-
-                    Character neighbourCharacter = marblesBoard[neighbour[0]][neighbour[1]].getLetter().getLetter();
-
-                    if (neighbourCharacter.equals('*')) {
-                        SolutionWord nextWord = new SolutionWord(curWord);
-                        LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>(path);
-
-                        nextWord.addLetter(child.getNodeValue());
-                        nextPath.addFirst(neighbour);
-
-                        dfs(child, nextWord, wordLength + 1, nextPath, neighbour);
-                    }
-
-                    if (c.equals(neighbourCharacter)) {
-                        SolutionWord nextWord = new SolutionWord(curWord);
-                        LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>(path);
-
-                        nextWord.addLetter(marblesBoard[neighbour[0]][neighbour[1]]);
-                        nextPath.addFirst(neighbour);
-
-                        dfs(child, nextWord, wordLength + 1, nextPath, neighbour);
-                    }
+                    dfs(new AlgorithmsDatas(child, nextWord, neighbour, nextPath));
                 }
             }
         }
@@ -182,21 +161,7 @@ public class SolveByDictionary extends Solver {
         Queue<AlgorithmsDatas> queue = new LinkedList<AlgorithmsDatas>();
 
         for (Tree<Character> child : firstPosition.getListOfChilds().values()) {
-            ArrayList<Integer[]> positionsOfEachCurrentCharacter = characterTable.get('*');
-
-            if (positionsOfEachCurrentCharacter != null) {
-                for (Integer[] positionInBoard : positionsOfEachCurrentCharacter) {
-                    SolutionWord newWord = new SolutionWord();
-                    newWord.addLetter(child.getNodeValue());
-
-                    LinkedList<Integer[]> newPath = new LinkedList<Integer[]>();
-                    newPath.addFirst(positionInBoard);
-
-                    queue.add(new AlgorithmsDatas(child, newWord, positionInBoard, newPath));
-                }
-            }
-
-            positionsOfEachCurrentCharacter = characterTable.get(child.getNodeValue());
+            ArrayList<Integer[]> positionsOfEachCurrentCharacter = characterTable.get(child.getNodeValue());
             if (positionsOfEachCurrentCharacter == null)
                 continue;
 
@@ -220,14 +185,26 @@ public class SolveByDictionary extends Solver {
             for (int j = 0; j < marblesBoard[i].length; j++) {
                 Character c = marblesBoard[i][j].getLetter().getLetter();
 
-                if (characterTable.containsKey(c)) {
-                    characterTable.get(c).add(new Integer[]{i, j});
+                if (c.equals('*')) {
+                    for (int charCode = 97; charCode < 123; charCode++) {
+                        addCharacterToCharacterTable((char)charCode, new Integer[]{i, j});
+                    }
+                    continue;
                 } else {
-                    ArrayList<Integer[]> tmp = new ArrayList<Integer[]>();
-                    tmp.add(new Integer[]{i, j});
-                    characterTable.put(c, tmp);
+                    addCharacterToCharacterTable(c, new Integer[]{i, j});
                 }
             }
+        }
+    }
+
+    private void addCharacterToCharacterTable(Character c, Integer[] position) {
+        if (characterTable.containsKey(c)) {
+            characterTable.get(c).add(position);
+        } else {
+            ArrayList<Integer[]> tmp = new ArrayList<Integer[]>();
+            tmp.add(position);
+
+            characterTable.put(c, tmp);
         }
     }
 
