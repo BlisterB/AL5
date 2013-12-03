@@ -164,6 +164,9 @@ public class Board extends AbstractGrid<Marble>{
                 if ((jokers[0][0] == i && jokers[0][1] == j)
                         || (jokers[1][0] == i && jokers[1][1] == j)) {
                     tGrid[i][j] = new Marble(new Letter('*', 0));
+                } else if ((blackMarble[0][0] == i && blackMarble[0][1] == j)
+                        || (blackMarble[1][0] == i && blackMarble[1][1] == j)) {
+                    tGrid[i][j] = new Marble(new Letter('-', 0));
                 } else {
                     int random = r.nextInt(10000);
                     double randomLetterValue = ((double)random)/100.0;
@@ -171,7 +174,6 @@ public class Board extends AbstractGrid<Marble>{
                 }
 
                 addNeighbours(i, j);
-
             }
         }
 
@@ -182,8 +184,9 @@ public class Board extends AbstractGrid<Marble>{
             do {
                 int r_first = r.nextInt(2*row);
                 int r_second = r.nextInt(tGrid[r_first].length);
-                if (tGrid[r_first][r_second].getBonus() == Marble.NO_BONUS &&
-                        tGrid[r_first][r_second].getLetter().getLetter() != '*') {
+                if (tGrid[r_first][r_second].getBonus() == Marble.NO_BONUS
+                        && tGrid[r_first][r_second].getLetter().getLetter() != '*'
+                        && tGrid[r_first][r_second].getLetter().getLetter() != '-') {
                     tGrid[r_first][r_second].setBonus(bonus);
                     break;
                 }

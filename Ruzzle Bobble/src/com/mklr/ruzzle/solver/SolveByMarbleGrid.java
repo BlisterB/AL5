@@ -156,9 +156,9 @@ public class SolveByMarbleGrid extends Solver {
 
                         queue.add(new AlgorithmsDatas(child, nextWord, neighbour, nextPath));
                     }
-                } /*else if (l.getLetter() == '-') {
-                    /* does nothing here
-                } */else {
+                } else if (l.getLetter() == '-') {
+                    /* does nothing here */
+                } else {
                     Tree<Character> child = currentPositionInTree.getChild(l.getLetter());
                     if (child == null)
                         continue;
@@ -189,9 +189,9 @@ public class SolveByMarbleGrid extends Solver {
 
                 queue.add(new AlgorithmsDatas(dictionary.getDictionaryTree().getChild(c), sw, startMarble, path));
             }
-        } /*else if (m.getLetter().getLetter() == '-') {
-            /* Does nothing...
-        } */else {
+        } else if (m.getLetter().getLetter() == '-') {
+            /* Does nothing here ... */
+        } else {
             SolutionWord sw = new SolutionWord();
             sw.addLetter(m);
 

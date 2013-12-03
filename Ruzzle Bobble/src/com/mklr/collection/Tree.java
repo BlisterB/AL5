@@ -141,9 +141,8 @@ public class Tree<T>  implements BasicTree<T>  {
     }
 
     @Override
-    public void add(T newValue, BasicTree<T> newTree) {
-        if (newTree instanceof Tree<?>)
-            listOfChilds.put(newValue, (Tree<T>)newTree);
+    public void add(T newValue) {
+        listOfChilds.put(newValue, new Tree<T>(newValue));
     }
 
     @Override

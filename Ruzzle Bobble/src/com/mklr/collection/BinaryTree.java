@@ -70,34 +70,31 @@ public class BinaryTree<T extends Comparable<T>> implements BasicTree<T>
     }
 
     @Override
-    public void add(T newValue, BasicTree<T> newTree) {
-        BinaryTree<T> curPos = this;
-
-        if (curPos.nodeValue == null) {
+    public void add(T newValue) {
+        if (nodeValue == null) {
             nodeValue = newValue;
             rightNode = null;
             leftNode = null;
             return;
         }
 
-        while (true) {
-            int res = newValue.compareTo(curPos.nodeValue);
-            if (res < 0) {
-                if (curPos.leftNode == null) {
-                    curPos.leftNode = new BinaryTree<T>(newValue);
-                    return;
-                } else {
-                    curPos = curPos.leftNode;
-                }
-            } else if (res == 0) {
+
+        int res = newValue.compareTo(nodeValue);
+        if (res < 0) {
+            if (leftNode == null) {
+                leftNode = new BinaryTree<T>(newValue);
                 return;
             } else {
-                if (curPos.rightNode == null) {
-                    curPos.rightNode = new BinaryTree<T>(newValue);
-                    return;
-                } else {
-                    curPos = curPos.rightNode;
-                }
+                leftNode.add(newValue);
+            }
+        } else if (res == 0) {
+            return;
+        } else {
+            if (rightNode == null) {
+                rightNode = new BinaryTree<T>(newValue);
+                return;
+            } else {
+                rightNode.add(newValue);
             }
         }
     }

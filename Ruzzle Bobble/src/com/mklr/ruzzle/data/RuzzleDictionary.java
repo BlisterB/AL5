@@ -180,8 +180,8 @@ public class RuzzleDictionary implements Runnable {
                             Tree<Character> tmp = cur_pos.getChild(c);
 
                             if (tmp == null) {
-                                tmp = new Tree<Character>(c);
-                                cur_pos.add(c, tmp);
+                                cur_pos.add(c);
+                                tmp = cur_pos.getChild(c);
                             }
                                 
                             cur_pos = tmp;
