@@ -111,7 +111,7 @@ public class GameStage extends Stage {
 		currentWord = currentWord + letter;
 	}
 	
-	/** Envoe le mot saisie par le joueur à game et gere les animations du score associé au mot*/
+	/** Envoie le mot saisie par le joueur à game et gere les animations du score associé au mot*/
 	public void sendCurrentWord(){
 		if(!currentWord.equals("")){
 			//On envoie à game le mot actuel et la liste de marbles associée

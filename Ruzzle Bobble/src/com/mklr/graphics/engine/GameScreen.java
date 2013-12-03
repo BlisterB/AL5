@@ -134,12 +134,15 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
 		        	Sprite s;
 			        for(int i = 0; i < stage.getSpriteList().size(); i++){
 			        	s = stage.getSpriteList().get(i);
+			        	//Detection de la collision entre s et la souris
 			        	if(s.isInCollision(e.getX(), e.getY())){
 			        		s = stage.getSpriteList().get(i);
+			        		//Si s est le sprite d'une lettre
 			        		if(s instanceof LetterSprite){
 			        			if(lastSpritePointed instanceof LetterSprite || lastSpritePointed == null)
-			        				if(((LetterSprite)s).addLettertoCurrentWorld((LetterSprite)lastSpritePointed))
-			        					lastSpritePointed = s;
+			        				if(((LetterSprite)s).getLetter() != '-')
+				        				if(((LetterSprite)s).addLettertoCurrentWorld((LetterSprite)lastSpritePointed))
+				        					lastSpritePointed = s;
 			        		}
 			        	}
 			        }
