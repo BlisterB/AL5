@@ -62,6 +62,8 @@ public class SolveByDictionary extends Solver {
     private void initDfs(Tree<Character> firstPosition) {
         for (Tree<Character> child : firstPosition.getListOfChilds().values()) {
             ArrayList<Integer[]> positionOfEachCharacter = characterTable.get(child.getNodeValue());
+            if (positionOfEachCharacter == null)
+                continue;
 
             for (Integer[] positionInGameBoard : positionOfEachCharacter) {
                 SolutionWord newWord = new SolutionWord();
