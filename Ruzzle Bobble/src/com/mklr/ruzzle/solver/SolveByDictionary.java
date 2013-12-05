@@ -1,6 +1,5 @@
 package com.mklr.ruzzle.solver;
 
-import com.mklr.collection.BinaryTree;
 import com.mklr.collection.Tree;
 import com.mklr.ruzzle.data.RuzzleDictionary;
 import com.mklr.ruzzle.engine.Board;
@@ -8,13 +7,39 @@ import com.mklr.ruzzle.engine.Marble;
 
 import java.util.*;
 
+/**
+ *  Classe qui implémente un algorithme de résolution par Dictionnaire.
+ *  Cet algorithme va parcourir le dictionnaire afin de trouver dans le
+ *  plateau si les mots existent.
+ *  (Cette partie sera détaillée dans chacun des deux type d'algorithmes
+ *  disponible...)
+ *
+ *  @author Loic Runarvot
+ *  @author Mehdi Khelifi
+ */
 public class SolveByDictionary extends Solver {
+
+    /**
+     *  Le dictionnaire des mots existant.
+     */
     private RuzzleDictionary dictionary;
+
+    /**
+     *  Plateau dans lequel rechercher les mots.
+     */
     private Marble[][] marblesBoard;
 
-
+    /**
+     * Cet objet est utilisé pour "mapper" les caractères telle que chaque
+     * caractère possède une liste de tableau d'entier correspondant à chacune
+     * des positions dans le tableau.
+     *
+     * Exemple :
+     *   {'c' : [liste de position (i, j) dans le plateau pour le caractère c]}
+     */
     private HashMap<Character, ArrayList<Integer[]>> characterTable;
-    private BinaryTree<String> __words = new BinaryTree<String>();
+
+
 
     public SolveByDictionary(Board b, byte algorithmType) {
         super(algorithmType);
@@ -25,6 +50,8 @@ public class SolveByDictionary extends Solver {
         wordsList = new ArrayList<SolutionWord>();
         characterTable = new HashMap<Character, ArrayList<Integer[]>>();
     }
+
+
 
     public void solve() {
         solve(Solver.SORT_BY_WORD_LENGTH);
@@ -52,6 +79,10 @@ public class SolveByDictionary extends Solver {
         sort(sortType);
     }
 
+    /**
+     * Tri la liste des mots.
+     * @param sortType
+     */
     public void sort(byte sortType) {
         byte initialSortType = SolutionWord.SORT_TYPE;
         SolutionWord.changeSortType(sortType);
@@ -59,6 +90,17 @@ public class SolveByDictionary extends Solver {
         SolutionWord.changeSortType(initialSortType);
     }
 
+
+
+    /**
+     * Initialisation de l'algorithme DFS.
+     * Pour chaque fils de firstPosition (dans la majorité des cas, on se
+     * rapporte aux 26 lettres de l'alphabet), puis pour chaque position
+     * de ces lettres on lance la partie principale de l'algorithme dfs.
+     * (voir fonction 'dfs()')
+     *
+     * @param firstPosition
+     */
     private void initDfs(Tree<Character> firstPosition) {
         for (Tree<Character> child : firstPosition.getListOfChilds().values()) {
             ArrayList<Integer[]> positionOfEachCharacter = characterTable.get(child.getNodeValue());
@@ -77,6 +119,21 @@ public class SolveByDictionary extends Solver {
         }
     }
 
+    /**
+     *  Partie principale de l'algorithme DFS.
+     *
+     *  Au départ on teste si le mot courant peut être ajouter.
+     *  On tente d'ajouter le mot (voir la fonction 'Solver.addWord')
+     *
+     *  Puis ensuite, pour chaque fils de la position courante dans l'arbre
+     *  on teste si la caractère existe (c'est à dire la lettre même, ou la
+     *  lettre joker '*') parmi les voisins.
+     *  Si cela existe, on créer une nouvelle donnée, et on relance le dfs.
+     *  Sinon on ne fait absolument rien.
+     *
+     *  @see AlgorithmsDatas
+     *  @param datas
+     */
     private void dfs(AlgorithmsDatas datas) {
         Tree<Character> currentPositionInTree = datas.getCurrentPositionInTree();
         SolutionWord currentWord = datas.getCurrentWord();
@@ -95,9 +152,6 @@ public class SolveByDictionary extends Solver {
             Character c = child.getNodeValue();
 
             for (Integer[] neighbour : m.getNeighbours()) {
-                if (containsNeighbour(currentPathToGetTheWord, neighbour))
-                    continue;
-
                 Character neighbourCharacter = marblesBoard[neighbour[0]][neighbour[1]].getLetter().getLetter();
 
                 if (neighbourCharacter.equals('*') || neighbourCharacter.equals(c)) {
@@ -109,53 +163,26 @@ public class SolveByDictionary extends Solver {
 
                     dfs(new AlgorithmsDatas(child, nextWord, neighbour, nextPath));
                 }
+
+                if (containsNeighbour(currentPathToGetTheWord, neighbour))
+                    continue;
             }
         }
     }
 
-    private void bfs() {
-        Queue<AlgorithmsDatas> queue = initQueue(dictionary.getDictionaryTree());
-
-        while(queue.peek() != null) {
-            AlgorithmsDatas datas = queue.poll();
-
-            Tree<Character> currentPositionInTree = datas.getCurrentPositionInTree();
-            SolutionWord currentWord = datas.getCurrentWord();
-            LinkedList<Integer[]> currentPathToGetTheWord = datas.getCurrentPathToGetTheCurrentWord();
-            Integer[] currentPositionInBoard = datas.getCurrentPositionInBoard();
-
-            if (currentWord.getLength() > 1 && currentPositionInTree.isTerminal()) {
-                currentWord.endWord(currentPathToGetTheWord, marblesBoard);
-                addWord(currentWord);
-            }
 
 
-            Integer[] pos = datas.getCurrentPositionInBoard();
-            Marble m = marblesBoard[pos[0]][pos[1]];
-
-            for (Tree<Character> child : currentPositionInTree.getListOfChilds().values()) {
-                Character c = child.getNodeValue();
-
-                for (Integer[] neighbour : m.getNeighbours()) {
-                    if (containsNeighbour(currentPathToGetTheWord, neighbour))
-                            continue;
-
-                    Character neighbourCharacter = marblesBoard[neighbour[0]][neighbour[1]].getLetter().getLetter();
-
-                    if (neighbourCharacter.equals('*') || neighbourCharacter.equals(c)) {
-                        SolutionWord nextWord = new SolutionWord(currentWord);
-                        nextWord.addLetter(child.getNodeValue());
-
-                        LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>(currentPathToGetTheWord);
-                        nextPath.add(neighbour);
-
-                        queue.add(new AlgorithmsDatas(child, nextWord, neighbour, nextPath));
-                    }
-                }
-            }
-        }
-    }
-
+    /**
+     *  Initialise la file nécessaire pour l'algorithme BFS.
+     *  Pour chaque fils de la première position, puis pour chaque position
+     *  de ces fils dans le plateau on ajoute dans la file un objet de donnée.
+     *
+     *  Cette fonction est appelé au début de l'algoritme BFS.
+     *
+     *  @see AlgorithmsDatas
+     *  @param firstPosition
+     *  @return the initialized queue
+     */
     private Queue<AlgorithmsDatas> initQueue(Tree<Character> firstPosition) {
         Queue<AlgorithmsDatas> queue = new LinkedList<AlgorithmsDatas>();
 
@@ -179,6 +206,80 @@ public class SolveByDictionary extends Solver {
         return queue;
     }
 
+    /**
+     *  Partie principal de l'algorithme BFS.
+     *
+     *  Cet algorithme se déroule jusqu'à ce que la file soit vide.
+     *
+     *  On teste d'abord si le mot existe.
+     *  Si oui, alors on l'ajoute (voir la fonction 'Solver.addWord')
+     *
+     *  Ensuite pour chaque fils de la position courante de l'arbre, on teste
+     *  chaque voisins de la position courante dans le plateau.
+     *  Si la lettre du fils existe dans un des voisins (ie. lettre courante
+     *  ainsi que le joker '*'), alors on ajoute un nouvel objet de donnée
+     *  dans la file.
+     */
+    private void bfs() {
+        Queue<AlgorithmsDatas> queue = initQueue(dictionary.getDictionaryTree());
+
+        while(queue.peek() != null) {
+            AlgorithmsDatas datas = queue.poll();
+
+            Tree<Character> currentPositionInTree = datas.getCurrentPositionInTree();
+            SolutionWord currentWord = datas.getCurrentWord();
+            LinkedList<Integer[]> currentPathToGetTheWord = datas.getCurrentPathToGetTheCurrentWord();
+            Integer[] currentPositionInBoard = datas.getCurrentPositionInBoard();
+
+            if (currentWord.getLength() > 1 && currentPositionInTree.isTerminal()) {
+                currentWord.endWord(currentPathToGetTheWord, marblesBoard);
+                addWord(currentWord);
+            }
+
+
+            Integer[] pos = datas.getCurrentPositionInBoard();
+            Marble m = marblesBoard[pos[0]][pos[1]];
+
+            for (Tree<Character> child : currentPositionInTree.getListOfChilds().values()) {
+                Character c = child.getNodeValue();
+
+                /*  Plutôt que de parcourir tout les voisins, regarder les positions de la
+                    lettre dans le plateau, et vérifier si l'une des positions se situe dans
+                    le voisinage...
+                 */
+                for (Integer[] neighbour : m.getNeighbours()) {
+                    if (containsNeighbour(currentPathToGetTheWord, neighbour))
+                            continue;
+
+                    Character neighbourCharacter = marblesBoard[neighbour[0]][neighbour[1]].getLetter().getLetter();
+
+                    if (neighbourCharacter.equals('*') || neighbourCharacter.equals(c)) {
+                        SolutionWord nextWord = new SolutionWord(currentWord);
+                        nextWord.addLetter(child.getNodeValue());
+
+                        LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>(currentPathToGetTheWord);
+                        nextPath.add(neighbour);
+
+                        queue.add(new AlgorithmsDatas(child, nextWord, neighbour, nextPath));
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Initialise la map characterTable, utilisé pour savoir dans quelles cases
+     * se trouve une lettre.
+     * Une lettre se caractérise soit par sa propre lettre, soit par un joker.
+     *
+     * Par exemple :
+     *  Position de 'c' dans le plateau : (0,1) (1,0) (3,2) (1,4)
+     *  Position de '*' dans le plateau : (2,2) (3,4)
+     *  Cela ajoute dans characterTable :
+     *      {'c' : [(0, 1); (1, 0); (3, 2); (1, 4); (2,2); (3,4)] }
+     *
+     * @see Tree
+     */
     private void fillCharacterTable() {
         for (int i = 0; i < marblesBoard.length; i++) {
             for (int j = 0; j < marblesBoard[i].length; j++) {
@@ -189,13 +290,24 @@ public class SolveByDictionary extends Solver {
                         addCharacterToCharacterTable((char)charCode, new Integer[]{i, j});
                     }
                     continue;
-                } else {
+                } else if (c.equals('-')) {
+                    /* does nothing here */
+                }
+                else {
                     addCharacterToCharacterTable(c, new Integer[]{i, j});
                 }
             }
         }
     }
 
+    /**
+     * Ajoute la clé c dans characterTable, lié à la liste de sa position.
+     * Si la clé existe déjà, alors on ajoute la position à la liste.
+     * Sinon on créer une nouvelle liste avec la position.
+     *
+     * @param c the key
+     * @param position value to add in the list
+     */
     private void addCharacterToCharacterTable(Character c, Integer[] position) {
         if (characterTable.containsKey(c)) {
             characterTable.get(c).add(position);
@@ -207,6 +319,11 @@ public class SolveByDictionary extends Solver {
         }
     }
 
+    /**
+     * @param path path to test
+     * @param neighbour
+     * @return true if the neighbour exists
+     */
     private boolean containsNeighbour(LinkedList<Integer[]> path, Integer[] neighbour) {
         for (Integer[] i : path) {
             if (i[0].equals(neighbour[0]) && i[1].equals(neighbour[1]))

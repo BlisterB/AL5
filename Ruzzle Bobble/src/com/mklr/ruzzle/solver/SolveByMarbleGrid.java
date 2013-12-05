@@ -12,19 +12,34 @@ import com.mklr.ruzzle.data.RuzzleDictionary;
 import com.mklr.ruzzle.engine.Board;
 import com.mklr.ruzzle.engine.Marble;
 
+/**
+ * The class which implements the grid algorithm.
+ */
 public class SolveByMarbleGrid extends Solver {
-    RuzzleDictionary dictionary;
-    Marble[][] marblesBoard;
 
-    private BinaryTree<String> __words = new BinaryTree<String>();
+    /**
+     * Dictionary words
+     */
+    private RuzzleDictionary dictionary;
+
+    /**
+     * Board where we seek the words
+     */
+    private Marble[][] marblesBoard;
 
 
+    /**
+     * Create the solver according to the board and the algorithm type.
+     * @param b
+     * @param algorithmType
+     */
     public SolveByMarbleGrid(Board b, byte algorithmType) {
         super(algorithmType);
 
         this.dictionary = b.getDico();
         marblesBoard = b.getGrid();
     }
+
 
     public void solve() {
         solve(Solver.SORT_BY_WORD_LENGTH);
@@ -56,6 +71,10 @@ public class SolveByMarbleGrid extends Solver {
         sort(sortType);
     }
 
+    /**
+     * Sort the words list.
+     * @param sortType
+     */
     public void sort(byte sortType) {
         byte initialSortType = SolutionWord.SORT_TYPE;
         SolutionWord.changeSortType(sortType);
@@ -120,6 +139,41 @@ public class SolveByMarbleGrid extends Solver {
         }
     }
 
+    /**
+     * Initialize the queue for the dfs algorithm according
+     * to the marble given.
+     *
+     * @param startMarble
+     * @return the initialized queue.
+     */
+    private Queue<AlgorithmsDatas> initQueue(Integer[] startMarble) {
+        Queue<AlgorithmsDatas> queue = new LinkedList<AlgorithmsDatas>();
+
+        Marble m = marblesBoard[startMarble[0]][startMarble[1]];
+
+        LinkedList<Integer[]> path = new LinkedList<Integer[]>();
+        path.add(startMarble);
+
+        if (m.getLetter().getLetter() == '*') {
+            for (int i = 97; i <= 122; i++) {
+                char c = (char)i;
+
+                SolutionWord sw = new SolutionWord();
+                sw.addLetter(c);
+
+                queue.add(new AlgorithmsDatas(dictionary.getDictionaryTree().getChild(c), sw, startMarble, path));
+            }
+        } else if (m.getLetter().getLetter() == '-') {
+            /* Does nothing here ... */
+        } else {
+            SolutionWord sw = new SolutionWord();
+            sw.addLetter(m);
+
+            queue.add(new AlgorithmsDatas(dictionary.getDictionaryTree().getChild(m.getLetter().getLetter()), sw, startMarble, path));
+        }
+
+        return queue;
+    }
 
     private void bfs(Integer[] startMarble) {
         Queue<AlgorithmsDatas> queue = initQueue(startMarble);
@@ -172,35 +226,11 @@ public class SolveByMarbleGrid extends Solver {
         }
     }
 
-    private Queue<AlgorithmsDatas> initQueue(Integer[] startMarble) {
-        Queue<AlgorithmsDatas> queue = new LinkedList<AlgorithmsDatas>();
-
-        Marble m = marblesBoard[startMarble[0]][startMarble[1]];
-
-        LinkedList<Integer[]> path = new LinkedList<Integer[]>();
-        path.add(startMarble);
-
-        if (m.getLetter().getLetter() == '*') {
-            for (int i = 97; i <= 122; i++) {
-                char c = (char)i;
-
-                SolutionWord sw = new SolutionWord();
-                sw.addLetter(c);
-
-                queue.add(new AlgorithmsDatas(dictionary.getDictionaryTree().getChild(c), sw, startMarble, path));
-            }
-        } else if (m.getLetter().getLetter() == '-') {
-            /* Does nothing here ... */
-        } else {
-            SolutionWord sw = new SolutionWord();
-            sw.addLetter(m);
-
-            queue.add(new AlgorithmsDatas(dictionary.getDictionaryTree().getChild(m.getLetter().getLetter()), sw, startMarble, path));
-        }
-
-        return queue;
-    }
-
+    /**
+     * @param path path to test
+     * @param neighbour
+     * @return true if the neighbour exists
+     */
     private boolean containsNeighbour(LinkedList<Integer[]> path, Integer[] neighbour) {
     	for (Integer[] i : path) {
     		if (i[0].equals(neighbour[0]) && i[1].equals(neighbour[1]))

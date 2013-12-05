@@ -6,16 +6,37 @@ import java.util.LinkedList;
 import com.mklr.ruzzle.data.Letter;
 import com.mklr.ruzzle.engine.Marble;
 
+/**
+ * Stock needed informations about the word.
+ */
 public class SolutionWord 
         implements Comparator<SolutionWord>, Comparable<SolutionWord> {
 
+    /**
+     * The sort type use to sort the word list after performing the algorithm.
+     */
     public static byte SORT_TYPE = Solver.SORT_BY_WORD_LENGTH;
 
+
+    /**
+     * The path used to get the word.
+     */
     private LinkedList<Integer[]> solutionPath;
+
+    /**
+     * The current word.
+     */
     private String word;
+
+    /**
+     * Word's length.
+     */
     private int length;
+
+    /**
+     * Word's score.
+     */
     private int score;
-    private int wordMultiplicator = 1;
 
     public SolutionWord() {
     	word = "";
@@ -27,7 +48,6 @@ public class SolutionWord
     	this.word = s.word;
     	this.length = s.length;
     	this.score = s.score;
-    	this.wordMultiplicator = s.wordMultiplicator;
     }
 
     /**
@@ -58,12 +78,11 @@ public class SolutionWord
         this.score = score;
     }
 
+    /**
+     * @return the solutionPath
+     */
     public LinkedList<Integer[]> getSolutionPath() {
         return solutionPath;
-    }
-
-    public void setSolutionPath(LinkedList<Integer[]> solutionPath) {
-        this.solutionPath = solutionPath;
     }
 
     @Override
@@ -97,24 +116,31 @@ public class SolutionWord
         }
         return false;
     }
-    
+
+    /**
+     * add the letter to the current word according to the marble's letter
+     * @param m
+     */
     public void addLetter(Marble m) {
-    	Letter l = m.getLetter();
-    	Character letter = l.getLetter();
-    	word += letter;
-    	++length;
+    	addLetter(m.getLetter().getLetter());
     }
 
-    public void addLetter(Letter l) {
-        word += l.getLetter();
-        ++length;
-    }
-
+    /**
+     * add the letter to the current word
+     * @param c
+     */
     public void addLetter(Character c) {
         word += c;
         ++length;
     }
-    
+
+    /**
+     * End the word, and calculate the score.
+     * Marble can have bonuses. (2 * the score of letter...)
+     * According to the length of the word, it gives an extra bonus (max 25)
+     * @param path
+     * @param gameBoard
+     */
     public void endWord(LinkedList<Integer[]> path, Marble[][] gameBoard) {
     	int multiplicator = 1;
         int tmp_score = 0;
@@ -176,6 +202,11 @@ public class SolutionWord
         return solution + "\n\n";
     }
 
+
+    /**
+     * Change the sort type.
+     * @param newSort
+     */
     public static void changeSortType(byte newSort) {
         SORT_TYPE = newSort;
     }

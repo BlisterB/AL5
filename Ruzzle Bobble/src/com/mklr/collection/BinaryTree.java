@@ -107,32 +107,27 @@ public class BinaryTree<T extends Comparable<T>> implements BasicTree<T>
 
     @Override
     public boolean childExist(T valueToSearch) {
-        BinaryTree<T> curPos = this;
-
-        if (curPos.nodeValue == null)
+        if (nodeValue == null)
             return false;
 
-        while (true) {
-            int res = valueToSearch.compareTo(curPos.nodeValue);
-            if (res < 0) {
-                if (curPos.leftNode == null) {
-                    return false;
-                } else {
-                    curPos = curPos.leftNode;
-                    continue;
-                }
-            } else if (res == 0) {
-                return true;
+        int res = valueToSearch.compareTo(nodeValue);
+        if (res < 0) {
+            if (leftNode == null) {
+                return false;
             } else {
-                if (curPos.rightNode == null) {
-                    return false;
-                } else {
-                    curPos = curPos.rightNode;
-                    continue;
-                }
+                return leftNode.childExist(valueToSearch);
+            }
+        } else if (res == 0) {
+            return true;
+        } else {
+            if (rightNode == null) {
+                return false;
+            } else {
+                return rightNode.childExist(valueToSearch);
             }
         }
     }
+
 
     @Override
     public BasicTree<T> getChild(T neededChild) {
@@ -141,3 +136,5 @@ public class BinaryTree<T extends Comparable<T>> implements BasicTree<T>
     }
 
 }
+
+
