@@ -19,13 +19,8 @@ public class Marble {
     public static final byte WORD_COUNT_DOUBLE      = 4;
     public static final byte WORD_COUNT_TRIPLE      = 8;
     
-    public static final byte WHITE_STATE    = 0;
-    public static final byte GREY_STATE     = 1;
-    public static final byte BLACK_STATE    = 2;
-    
     private Letter letter;
     private byte bonus;
-    private byte state;
     private ArrayList<Integer[]> neighbours;
 
     public Marble() {
@@ -43,7 +38,6 @@ public class Marble {
     public Marble(Letter letter, byte bonus, ArrayList<Integer[]> neighbours) {
         this.letter     = letter;
         this.bonus      = bonus;
-        this.state      = WHITE_STATE;
         this.neighbours = neighbours;
     }
 
@@ -73,20 +67,6 @@ public class Marble {
      */
     public void setBonus(byte bonus) {
         this.bonus = bonus;
-    }
-
-    /**
-     * @return the state
-     */
-    public byte getState() {
-        return state;
-    }
-
-    /**
-     * @param state the state to set
-     */
-    public void setState(byte state) {
-        this.state = state;
     }
 
     /**

@@ -293,6 +293,8 @@ public class Board extends AbstractGrid<Marble>{
                 }
                 if (!exist) {
                     tGrid[r_first][r_second] = new Marble(new Letter(special, 0));
+                    if (special == '*')
+                        addNeighbours(r_first, r_second);
                     return;
                 }
             }
