@@ -197,7 +197,7 @@ public class SolutionWord
 
     @Override
     public String toString() {
-        String solution =  "\n" + word + "\t\tLength: " + length + "\tScore: " + score + "" + "\npath : "; 
+        String solution =  "\n" + word + "\t\tLength: " + length + "\tScore: " + score + "" + "\npath : ";
         for (Integer[] i : solutionPath) {
         	solution += ("[" + i[0] + "][" + i[1] + "], ");
         }

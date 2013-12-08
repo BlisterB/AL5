@@ -67,21 +67,13 @@ public class RuzzleBobble {
 		//Lancement de l ecran de titre
 		engine.setGameTitle();
 
-        int i = 1;
         while (!allFinished()) {
             try {
                 Thread.sleep(1000);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println("i : " + i + "\n");
-            i++;
         }
-
-        /*
-         * TODO : Vérifier si tout les dictionnaires ont bien été
-         * initialisé avant de lancer l'engine.
-         */
 
         engine.dictAreLoaded();
 	}

@@ -50,16 +50,12 @@ public class SolveByMarbleGrid extends Solver {
         }
 
         long beg = System.currentTimeMillis();
-        for (int i = 0; i < marblesBoard.length; i++) {
-            for (int j = 0; j < marblesBoard[i].length; j++){
-                if ((algorithmType & Solver.DEPTH_FIRST_SEARCH) == Solver.DEPTH_FIRST_SEARCH) {
-                    dfs(new AlgorithmsDatas(dictionary.getDictionaryTree(), new SolutionWord(),
-                            new Integer[]{i, j}, new LinkedList<Integer[]>()));
-                } else {
-                    bfs(new Integer[]{i, j});
-                }
-            }
+        if (algorithmType == Solver.DEPTH_FIRST_SEARCH) {
+            initDfs();
+        } else {
+            initBfs();
         }
+
         wordsList = new ArrayList<SolutionWord>(__tmp_wordsList.values());
         long end = System.currentTimeMillis();
 
@@ -69,6 +65,40 @@ public class SolveByMarbleGrid extends Solver {
         sort(sortType);
     }
 
+    /**
+     * Lance le dfs sur chacune des cases du plateau.
+     */
+    private void initDfs() {
+        for (int i = 0; i < marblesBoard.length; i++) {
+            for (int j = 0; j < marblesBoard[i].length; j++) {
+                Letter l = marblesBoard[i][j].getLetter();
+
+                LinkedList<Integer[]> currentPath = new LinkedList<Integer[]>();
+                currentPath.add(new Integer[]{i, j});
+
+                if (l.getLetter() == '*'){
+                    for (int cpt = 97; cpt <= 122; cpt++) {
+                        char c = (char)cpt;
+
+                        SolutionWord currentWord = new SolutionWord();
+                        currentWord.addLetter(c);
+
+                        dfs(new AlgorithmsDatas(dictionary.getDictionaryTree().getChild(c), currentWord,
+                                new Integer[]{i, j}, currentPath));
+                    }
+                } else if (l.getLetter() == '-') {
+                    /* does nothing here */
+                    continue;
+                } else {
+                    SolutionWord currentWord = new SolutionWord();
+                    currentWord.addLetter(l.getLetter());
+
+                    dfs(new AlgorithmsDatas(dictionary.getDictionaryTree().getChild(l.getLetter()), currentWord,
+                            new Integer[]{i, j}, currentPath));
+                }
+            }
+        }
+    }
 
     /**
      * Cet algorithme est lancé pour chaque case du plateau.
@@ -77,7 +107,7 @@ public class SolveByMarbleGrid extends Solver {
      * position dans l'arbre possède bien un fils de la même lettre que celle
      * du voisin.
      * Si oui, alors on met à jours les données, et on relance le dfs pour
-     * ce voisin avec les données précédemment mise à jour.
+     * ce voisin avec les données précédemment mises à jour.
      *
      * Si le voisin possède un joker, alors tout les fils de la position courante
      * dans l'arbre doivent être testée sans faute.
@@ -88,9 +118,6 @@ public class SolveByMarbleGrid extends Solver {
      * @param datas
      */
     private void dfs(AlgorithmsDatas datas) {
-        if (datas.getCurrentWord().getLength() > dictionary.getMaxLength())
-            return;
-
         Tree<Character> currentPositionInTree =
                 datas.getCurrentPositionInTree();
         SolutionWord currentWord =
@@ -100,50 +127,59 @@ public class SolveByMarbleGrid extends Solver {
         Integer[] currentPositionInBoard =
                 datas.getCurrentPositionInBoard();
 
-        if (currentPositionInTree.isTerminal()) {
+        if (datas.getCurrentWord().getLength() > 1 &&
+                currentPositionInTree.isTerminal()) {
             currentWord.endWord(currentPathToGetTheWord, marblesBoard);
             addWord(currentWord);
         }
 
-        Marble currentMarble =
-                marblesBoard[currentPositionInBoard[0]][currentPositionInBoard[1]];
-        Letter currentLetterInMarble = currentMarble.getLetter();
+        Marble currentMarble = marblesBoard[currentPositionInBoard[0]][currentPositionInBoard[1]];
 
-        LinkedList<Integer[]> nextPath =
-                new LinkedList<Integer[]>(currentPathToGetTheWord);
-        nextPath.add(currentPositionInBoard);
+        for (Integer[] neighbour : currentMarble.getNeighbours()) {
+            Marble neighbourMarble = marblesBoard[neighbour[0]][neighbour[1]];
+            Letter neighbourLetter = neighbourMarble.getLetter();
 
-        if (currentLetterInMarble.getLetter() == '*') {
-            for (Tree<Character> child : currentPositionInTree.getListOfChilds().values()) {
-                SolutionWord nextWord = new SolutionWord(currentWord);
-                nextWord.addLetter(child.getNodeValue());
+            if (containsNeighbour(currentPathToGetTheWord, neighbour))
+                continue;
 
-                for (Integer[] neighbour : currentMarble.getNeighbours()) {
-                    if (!containsNeighbour(nextPath, neighbour)) {
-                        dfs(new AlgorithmsDatas(child, nextWord, neighbour, nextPath));
-                    }
-                }
-            }
-        } else if (currentLetterInMarble.getLetter() == '-') {
-            return;
-        } else {
-            Tree<Character> child =
-                    currentPositionInTree.getChild(currentLetterInMarble.getLetter());
-            if (child == null)
-                return;
 
-            SolutionWord nextWord = new SolutionWord(currentWord);
-            nextWord.addLetter(currentMarble);
+            LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>(currentPathToGetTheWord);
+            nextPath.add(neighbour);
 
-            for (Integer[] neighbour : currentMarble.getNeighbours()) {
-                if (!containsNeighbour(nextPath, neighbour)) {
+            if (neighbourLetter.getLetter() == '*') {
+                for (Tree<Character> child : currentPositionInTree.getListOfChilds().values()) {
+                    SolutionWord nextWord = new SolutionWord(currentWord);
+                    nextWord.addLetter(child.getNodeValue());
+
                     dfs(new AlgorithmsDatas(child, nextWord, neighbour, nextPath));
                 }
-            }
+            } else if (neighbourLetter.getLetter() == '-') {
+                /* does nothing here */
+                continue;
+            } else {
+                Tree<Character> child = currentPositionInTree.getChild(neighbourLetter.getLetter());
+                if (child == null)
+                    continue;
 
+                SolutionWord nextWord = new SolutionWord(currentWord);
+                nextWord.addLetter(neighbourMarble);
+
+                dfs(new AlgorithmsDatas(child, nextWord, neighbour, nextPath));
+            }
         }
     }
 
+
+    /**
+     * Lance le bfs sur chaque case.
+     */
+    private void initBfs() {
+        for (int i = 0; i < marblesBoard.length; i++) {
+            for (int j = 0; j < marblesBoard[i].length; j++) {
+                bfs(new Integer[]{i, j});
+            }
+        }
+    }
 
     /**
      * Initialise la file de l'algorithme BFS.
@@ -213,11 +249,11 @@ public class SolveByMarbleGrid extends Solver {
                 Marble neighbourMarble = marblesBoard[neighbour[0]][neighbour[1]];
                 Letter l = neighbourMarble.getLetter();
 
-                LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>(currentPathToGetTheWord);
-                nextPath.add(neighbour);
-
                 if (containsNeighbour(currentPathToGetTheWord, neighbour))
                     continue;
+
+                LinkedList<Integer[]> nextPath = new LinkedList<Integer[]>(currentPathToGetTheWord);
+                nextPath.add(neighbour);
 
                 if (l.getLetter() == '*') {
                     for (Tree<Character> child : currentPositionInTree.getListOfChilds().values()) {

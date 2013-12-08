@@ -89,7 +89,7 @@ public class TestDictionnary {
         System.out.println("====== SOLVER : MARBLE GRID DFS ======");
         Solver solver = new SolveByMarbleGrid(b, Solver.DEPTH_FIRST_SEARCH);
         //long beg = new Date().getTime();
-        solver.solve(Solver.SORT_BY_SCORE);
+        solver.solve(Solver.SORT_BY_WORD_LENGTH);
         //long end = new Date().getTime();
         //System.out.println(solver.getWordsList());
         System.out.println("====== SOLVER : MARBLE GRID DFS ======");
