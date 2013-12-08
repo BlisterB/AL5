@@ -11,20 +11,42 @@ import com.mklr.ruzzle.data.Letter;
 import com.mklr.graphics.engine.Option;
 
 /**
- * Create the board for the ruzzle game.
- * The board is an hexagon. The default value is 2.
+ * Créer le plateau nécessaire pour jouer.
+ * La taille est fixée à 2 pour ce jeu.
  * @author Loic Runarvot
  * @author Mehdi Khelifi
  */
 public class Board extends AbstractGrid<Marble>{
-    private String lang;
-    private RuzzleDictionary dico;
-
-    private Character[][] board = null;
-    private Option boardOption = null;
 
     /**
-     * Create the board with row size, the langage and the dictionary.
+     *  Langue du dictionnaire.
+     */
+    private String lang;
+
+    /**
+     *  Dictionnaire associé au plateau.
+     */
+    private RuzzleDictionary dico;
+
+
+    /**
+     *  Plateau associé aux options. Si celui ci est nul, alors un plateau
+     *  aléatoire est généré. Sinon un plateau correspondant aux lettres
+     *  donnés sera crée.
+     */
+    private Character[][] board = null;
+
+    /**
+     *  Option lié au plateau.
+     *  Contient le tableau de caractère pour créer le plateau, un tableau
+     *  des bonus, et enfin le dictionnaire ainsi que sa langue.
+     */
+    private Option boardOption = null;
+
+
+
+    /**
+     * Créer un plateau en fonction de son dictionnaire et sa langue.
      * @param lang
      * @param dico
      */
@@ -34,6 +56,11 @@ public class Board extends AbstractGrid<Marble>{
         this.lang = lang;
     }
 
+
+    /**
+     *  Créer un plateau en fonction des options donnés par l'utilisateur.
+     *  @param o
+     */
     public Board(Option o) {
         super(2);
 
@@ -42,6 +69,7 @@ public class Board extends AbstractGrid<Marble>{
         lang = o.getLang();
         boardOption = o;
     }
+
 
     /**
      * @return the row
@@ -85,13 +113,20 @@ public class Board extends AbstractGrid<Marble>{
         this.dico = dico;
     }
 
+    /**
+     *  @return le plateau
+     */
     public Marble[][] getBoard() {
         return super.getGrid();
     }
 
+
     /**
-     * Initialize the board.
-     * MUST BE CALLED BEFORE PLAYING THE GAME !!
+     *  Fonction qui initialise le plateau.
+     *  Celle ci doit être OBLIGATOIREMENT APPELEE AVANT de lancer
+     *  le jeu.
+     *  Elle s'occupe de générer le tableau de jeu (aléatoirement ou non,
+     *  selon les options de l'utilisateur).
      */
     public void init() {
         tGrid = new Marble[2 * row][];
@@ -107,8 +142,9 @@ public class Board extends AbstractGrid<Marble>{
         }
     }
 
+
     /**
-     *  Fill the grid.
+     *  Remplis la grille.
      */
     private void fillGrid() {
         Random r = new Random();
@@ -194,6 +230,11 @@ public class Board extends AbstractGrid<Marble>{
         }
     }
 
+    /**
+     * Remplis la grille selon un tableau de caractères, et les options
+     * données par l'utilisateur (bonus, ...)
+     * @param b
+     */
     private void fillGrid(Character[][] b) {
         for (int i = 0; i < b.length; i++) {
             for (int j = 0; j < b[i].length; j++) {
@@ -215,8 +256,9 @@ public class Board extends AbstractGrid<Marble>{
         tGrid[boardOption.bonus[3][0]][boardOption.bonus[3][1]].setBonus(Marble.WORD_COUNT_TRIPLE);
     }
 
+
     /**
-     * It adds every neighbours of the marble in the [i][j] pos.
+     * Fonction qui s'occupe d'ajouter les voisins de la case donné en argument.
      * @param i
      * @param j
      */
@@ -248,10 +290,10 @@ public class Board extends AbstractGrid<Marble>{
 
         tGrid[i][j].setNeighbours(newNeighbours);
     }
-    
+
+
     /**
-     * It returns a boolean to say if the current case is a neighbour of
-     * the current marble.
+     * Fonction qui vérifie si la case voisine est bien une case voisine.
      * @param tline
      * @param line
      * @param cpt

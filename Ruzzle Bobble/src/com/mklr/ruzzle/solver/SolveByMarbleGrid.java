@@ -1,11 +1,9 @@
 package com.mklr.ruzzle.solver;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import com.mklr.collection.BinaryTree;
 import com.mklr.collection.Tree;
 import com.mklr.ruzzle.data.Letter;
 import com.mklr.ruzzle.data.RuzzleDictionary;
@@ -13,23 +11,23 @@ import com.mklr.ruzzle.engine.Board;
 import com.mklr.ruzzle.engine.Marble;
 
 /**
- * The class which implements the grid algorithm.
+ * Classe implémentant l'algorithme de parcour dans la grille.
  */
 public class SolveByMarbleGrid extends Solver {
 
     /**
-     * Dictionary words
+     * Dictionnaire des mots.
      */
     private RuzzleDictionary dictionary;
 
     /**
-     * Board where we seek the words
+     * Plateau dans lequel les mots sont recherchés.
      */
     private Marble[][] marblesBoard;
 
 
     /**
-     * Create the solver according to the board and the algorithm type.
+     * Créer le solveur selon le plateau et l'algorithme choisi.
      * @param b
      * @param algorithmType
      */
@@ -71,17 +69,24 @@ public class SolveByMarbleGrid extends Solver {
         sort(sortType);
     }
 
-    /**
-     * Sort the words list.
-     * @param sortType
-     */
-    public void sort(byte sortType) {
-        byte initialSortType = SolutionWord.SORT_TYPE;
-        SolutionWord.changeSortType(sortType);
-        Collections.sort(wordsList, new SolutionWord());
-        SolutionWord.changeSortType(initialSortType);
-    }
 
+    /**
+     * Cet algorithme est lancé pour chaque case du plateau.
+     *
+     * Il va tester chacun des voisins de la case courant, et vérifier si la
+     * position dans l'arbre possède bien un fils de la même lettre que celle
+     * du voisin.
+     * Si oui, alors on met à jours les données, et on relance le dfs pour
+     * ce voisin avec les données précédemment mise à jour.
+     *
+     * Si le voisin possède un joker, alors tout les fils de la position courante
+     * dans l'arbre doivent être testée sans faute.
+     *
+     * Si le voisin possède une case vide, alors ce n'est pas la peine de
+     * continuer sur ce chemin.
+     *
+     * @param datas
+     */
     private void dfs(AlgorithmsDatas datas) {
         if (datas.getCurrentWord().getLength() > dictionary.getMaxLength())
             return;
@@ -139,12 +144,19 @@ public class SolveByMarbleGrid extends Solver {
         }
     }
 
+
     /**
-     * Initialize the queue for the dfs algorithm according
-     * to the marble given.
+     * Initialise la file de l'algorithme BFS.
+     * Pour chaque case du tableau, on ajoute la lettre dans un objet de
+     * donnée.
+     * Si la case contient un joker, alors on ajoute toutes les lettres de
+     * l'alphabet.
+     * Si la case est vide on ne fait rien.
+     *
+     * La file initialisée est ensuite renvoyée.
      *
      * @param startMarble
-     * @return the initialized queue.
+     * @return la file initialisée.
      */
     private Queue<AlgorithmsDatas> initQueue(Integer[] startMarble) {
         Queue<AlgorithmsDatas> queue = new LinkedList<AlgorithmsDatas>();
@@ -175,6 +187,10 @@ public class SolveByMarbleGrid extends Solver {
         return queue;
     }
 
+    /**
+     *
+     * @param startMarble
+     */
     private void bfs(Integer[] startMarble) {
         Queue<AlgorithmsDatas> queue = initQueue(startMarble);
 

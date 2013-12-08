@@ -1,72 +1,80 @@
 package com.mklr.ruzzle.solver;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.TreeMap;
 
 /**
- * Abstract class use as a template for the two differents algorithms
- * (ie. by dictionary and by grid) use in this project.
+ * Classe abstraite utilisée comme template pour les deux algorithmes
+ * proposés dans le projet.
  */
 public abstract class Solver {
 
     /**
-     * Constant use to set the algorithm to BFS.
+     * Constante utilisée pour affecter l'algorithme BFS au solver.
      */
     public static final byte BREADTH_FIRST_SEARCH = 0;
 
     /**
-     * Constant use to set the algorithm to DFS.
+     * Constante utilisée pour affecter l'algorithme DFS au solver.
      */
     public static final byte DEPTH_FIRST_SEARCH = 1;
 
 
 
     /**
-     * Constant use to sort the word list by name (ie lexicographically).
+     * Constante utilisée pour trier les mots lexicographiquement.
      */
     public static final byte SORT_BY_NAME = 0;
 
     /**
-     * Constant use to sort by the word's score.
+     * Constante utilisée pour trier les mots par leur score.
      */
     public static final byte SORT_BY_SCORE = 1;
 
     /**
-     * Constatnt use to sort by the word's length.
+     * Constante utilisées pour trier les mots par leur taille.
      */
     public static final byte SORT_BY_WORD_LENGTH = 2;
 
 
 
     /**
-     * It contains the value of the algorithm to use.
+     * Contient al type d'algorithme utilisé.
      * (ie : BFS or DFS)
      */
     protected byte algorithmType;
 
     /**
-     * The time used by algorithms to find each words.
+     * Le temps utilisé par l'algorithme pour trouver tout les mots.
      */
     protected double timer;
 
     /**
-     * The number of words found by algorithms.
+     * Le nombre de mots trouvé.
      */
     protected long wordCount;
 
     /**
-     * List of words found by the algorithm.
+     * La liste des mots trouvés par l'algorithme.
+     * Ils sont par défaut trié par ordre lexicographique.
      * @see SolutionWord
      */
     protected ArrayList<SolutionWord> wordsList;
 
 
     /**
-     * Temporary tree which contains each words found by the algorithm.
-     * It's usefull to save the each SolutionWord in this tree because it allows to
-     * find if the word already exist (at a complexity of O(log n)), and to switch
-     * SolutionWord if needed (new SolutionWord as an higher score for exemple...) at
-     * low cost.
+     * Arbre temporaire permettant de sauvegarder l'état des mots avant
+     * la fin de l'algorihtme.
+     *
+     * En effet, le fait de passer par un arbre, permet de stocker les mots
+     * par ordre lexicographique, et donc une plus grande rapidité pour
+     * vérifier si le mot existe déjà (par rapport à la liste ci dessus).
+     * (de l'ordre O(log n) pour la recherche).
+     *
+     * De plus, si le mot existe déjà mais que le nouveau a un plus grand sore
+     * que le second, cela permet son remplacement immédiat, sans reparcourir
+     * quoi que ce soit.
      * @see SolutionWord
      */
     protected TreeMap<String, SolutionWord> __tmp_wordsList;
@@ -80,10 +88,9 @@ public abstract class Solver {
     }
 
     /**
-     * Create a solver with the algorithm given. It could only be
-     * value given by constants 'BREADTH_FIRST_SEARCH' and 'DEPTH_FIRST_SEARCH'.
-     * After creating the solver (initialized to an empty solver first), the function
-     * solve has to be called.
+     * Créer un Solver selon l'algorithme donné.
+     * Après sa création, la fonction '.solve()' doit être appelé par le
+     * solver.
      * @param algorithmType the type of algorithm
      */
     protected Solver(byte algorithmType) {
@@ -97,36 +104,34 @@ public abstract class Solver {
     }
 
     /**
-     * Function to call to solve the grid.
-     * It will call the default sortType (ie. BY_NAME).
+     * Résoud l'algorithme.
+     * Trie par défaut dans l'ordre lexicographique.
      */
     public abstract void solve();
 
     /**
-     * Function to call to solve the grid.
-     * It will sort the word list to the given sort type.
+     * Résoud l'algorithme et trie selon l'argument.
      * @param sortType
      */
     public abstract void solve(byte sortType);
 
-
-    /**
+/**
      * @see SolutionWord
-     * @return the words' list
+     * @return La liste des mots.
      */
     public ArrayList<SolutionWord> getWordsList() {
         return wordsList;
     }
 
     /**
-     * @return the number of words found
+     * @return Le nombre de mots trouvé.
      */
     public long getWordCount() {
         return wordCount;
     }
 
     /**
-     * @return the time it tooks to perform the algorithm
+     * @return Le temps pris par l'algorithme.
      */
     public double getTimer() {
         return timer;
@@ -134,11 +139,11 @@ public abstract class Solver {
 
 
     /**
-     * Add the word given to the temporary list.
-     * If the word already exist, it will compare the word score,
-     * and add the higher one.
+     * Ajoute le mot courant à l'arbre temporaire.
+     * Si le mot existe déjà, mais que le mot courant a un score plus élevé,
+     * alors on remplace.
      * @see SolutionWord
-     * @param currentWord the word to add
+     * @param currentWord le mot à ajouter
      */
     protected void addWord(SolutionWord currentWord) {
         if (__tmp_wordsList.containsKey(currentWord.getWord())) {
@@ -149,5 +154,17 @@ public abstract class Solver {
         } else {
             __tmp_wordsList.put(currentWord.getWord(), currentWord);
         }
+    }
+
+    /**
+     * Trie les mots selon le type choisi
+     * (ie. par la taille, lexicographique, ou par le score)
+     * @param sortType
+     */
+    public void sort(byte sortType) {
+        byte initialSortType = SolutionWord.SORT_TYPE;
+        SolutionWord.changeSortType(sortType);
+        Collections.sort(wordsList, new SolutionWord());
+        SolutionWord.changeSortType(initialSortType);
     }
 }

@@ -7,34 +7,34 @@ import com.mklr.ruzzle.data.Letter;
 import com.mklr.ruzzle.engine.Marble;
 
 /**
- * Stock needed informations about the word.
+ * Les informations essentiels du mots.
  */
 public class SolutionWord 
         implements Comparator<SolutionWord>, Comparable<SolutionWord> {
 
     /**
-     * The sort type use to sort the word list after performing the algorithm.
+     * Le type de tri effectué à la fin de la recherche des mots.
      */
     public static byte SORT_TYPE = Solver.SORT_BY_WORD_LENGTH;
 
 
     /**
-     * The path used to get the word.
+     * Le chemin parcouru pour retrouver le mot.
      */
     private LinkedList<Integer[]> solutionPath;
 
     /**
-     * The current word.
+     * Le mot courant.
      */
     private String word;
 
     /**
-     * Word's length.
+     * La taille du mot courant.
      */
     private int length;
 
     /**
-     * Word's score.
+     * Le score du mot courant.
      */
     private int score;
 
@@ -51,35 +51,35 @@ public class SolutionWord
     }
 
     /**
-     * @return the word
+     * @return le mot.
      */
     public String getWord() {
         return word;
     }
 
     /**
-     * @return the length
+     * @return la taille du mot.
      */
     public int getLength() {
         return length;
     }
 
     /**
-     * @return the score
+     * @return le score du mot.
      */
     public int getScore() {
         return score;
     }
 
     /**
-     * @param score the score to set
+     * @param score le nouveau score.
      */
     public void setScore(int score) {
         this.score = score;
     }
 
     /**
-     * @return the solutionPath
+     * @return le chemin parcouru.
      */
     public LinkedList<Integer[]> getSolutionPath() {
         return solutionPath;
@@ -118,7 +118,7 @@ public class SolutionWord
     }
 
     /**
-     * add the letter to the current word according to the marble's letter
+     * Ajoute la lettre au mot courant selon la case selectionnée.
      * @param m
      */
     public void addLetter(Marble m) {
@@ -126,7 +126,7 @@ public class SolutionWord
     }
 
     /**
-     * add the letter to the current word
+     * Ajoute la lettre au mot courant selon le Character donné.
      * @param c
      */
     public void addLetter(Character c) {
@@ -135,9 +135,10 @@ public class SolutionWord
     }
 
     /**
-     * End the word, and calculate the score.
-     * Marble can have bonuses. (2 * the score of letter...)
-     * According to the length of the word, it gives an extra bonus (max 25)
+     * Fini le mot et calcule le score.
+     * Les case peuvent contenir des bonus (par exemple lettre compte double,
+     * mot compte double, ...)
+     * Selon la taille du mot, un bonus supplémentaire est ajouté.
      * @param path
      * @param gameBoard
      */
@@ -194,6 +195,7 @@ public class SolutionWord
     	}
     }
 
+    @Override
     public String toString() {
         String solution =  "\n" + word + "\t\tLength: " + length + "\tScore: " + score + "" + "\npath : "; 
         for (Integer[] i : solutionPath) {
@@ -204,7 +206,7 @@ public class SolutionWord
 
 
     /**
-     * Change the sort type.
+     * Change le type de tri.
      * @param newSort
      */
     public static void changeSortType(byte newSort) {

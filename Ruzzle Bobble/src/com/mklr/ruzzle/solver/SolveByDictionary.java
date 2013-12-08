@@ -79,18 +79,6 @@ public class SolveByDictionary extends Solver {
         sort(sortType);
     }
 
-    /**
-     * Tri la liste des mots.
-     * @param sortType
-     */
-    public void sort(byte sortType) {
-        byte initialSortType = SolutionWord.SORT_TYPE;
-        SolutionWord.changeSortType(sortType);
-        Collections.sort(wordsList, new SolutionWord());
-        SolutionWord.changeSortType(initialSortType);
-    }
-
-
 
     /**
      * Initialisation de l'algorithme DFS.
@@ -153,6 +141,8 @@ public class SolveByDictionary extends Solver {
 
             for (Integer[] neighbour : m.getNeighbours()) {
                 Character neighbourCharacter = marblesBoard[neighbour[0]][neighbour[1]].getLetter().getLetter();
+                if (containsNeighbour(currentPathToGetTheWord, neighbour))
+                    continue;
 
                 if (neighbourCharacter.equals('*') || neighbourCharacter.equals(c)) {
                     SolutionWord nextWord = new SolutionWord(currentWord);
@@ -164,8 +154,6 @@ public class SolveByDictionary extends Solver {
                     dfs(new AlgorithmsDatas(child, nextWord, neighbour, nextPath));
                 }
 
-                if (containsNeighbour(currentPathToGetTheWord, neighbour))
-                    continue;
             }
         }
     }
@@ -305,8 +293,8 @@ public class SolveByDictionary extends Solver {
      * Si la clé existe déjà, alors on ajoute la position à la liste.
      * Sinon on créer une nouvelle liste avec la position.
      *
-     * @param c the key
-     * @param position value to add in the list
+     * @param c la clé
+     * @param position la valeur à ajouter dans la liste
      */
     private void addCharacterToCharacterTable(Character c, Integer[] position) {
         if (characterTable.containsKey(c)) {
@@ -320,9 +308,9 @@ public class SolveByDictionary extends Solver {
     }
 
     /**
-     * @param path path to test
+     * @param path le chemin a tester
      * @param neighbour
-     * @return true if the neighbour exists
+     * @return true si le voisin existe
      */
     private boolean containsNeighbour(LinkedList<Integer[]> path, Integer[] neighbour) {
         for (Integer[] i : path) {

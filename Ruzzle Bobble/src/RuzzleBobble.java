@@ -78,6 +78,11 @@ public class RuzzleBobble {
             i++;
         }
 
+        /*
+         * TODO : Vérifier si tout les dictionnaires ont bien été
+         * initialisé avant de lancer l'engine.
+         */
+
         engine.dictAreLoaded();
 	}
 }
