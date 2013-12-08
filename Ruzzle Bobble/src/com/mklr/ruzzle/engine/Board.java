@@ -1,8 +1,6 @@
 package com.mklr.ruzzle.engine;
 
 import java.util.ArrayList;
-
-import java.util.Locale;
 import java.util.Random;
 
 import com.mklr.collection.AbstractGrid;
