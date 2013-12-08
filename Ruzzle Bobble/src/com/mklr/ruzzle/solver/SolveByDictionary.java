@@ -231,10 +231,6 @@ public class SolveByDictionary extends Solver {
             for (Tree<Character> child : currentPositionInTree.getListOfChilds().values()) {
                 Character c = child.getNodeValue();
 
-                /*  Plutôt que de parcourir tout les voisins, regarder les positions de la
-                    lettre dans le plateau, et vérifier si l'une des positions se situe dans
-                    le voisinage...
-                 */
                 for (Integer[] neighbour : m.getNeighbours()) {
                     if (containsNeighbour(currentPathToGetTheWord, neighbour))
                             continue;
