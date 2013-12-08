@@ -46,7 +46,7 @@ import com.mklr.graphics.engine.Engine;
 public class RuzzleDictionary implements Runnable {
     private final String dictionaryPath;
     private String lang;
-    private Tree<Character> dictionaryTree;
+    private final Tree<Character> dictionaryTree;
     private LetterSet letterSet;
     private int maxLength;
 
@@ -158,7 +158,7 @@ public class RuzzleDictionary implements Runnable {
              i++) {
             Character c = wordArray[i];
 
-            if (c.charValue() == '*') {
+            if (c == '*') {
                 char[] nextPart = new char[wordArray.length - i - 1];
 
                 for (int j = 0, k = i+1; j < nextPart.length; j++)

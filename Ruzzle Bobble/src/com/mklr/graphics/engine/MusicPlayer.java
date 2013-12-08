@@ -15,7 +15,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class MusicPlayer {
 	boolean play; //Defini si le thread de lecture doit continuer (false pour fermer le thread de lecture)
 	boolean loopContinuously; //Defini si la musique doit être jouée en boucle
-	private Sequencer sequencer = null;;
+	private Sequencer sequencer = null;
 	
 	public static final int MIDI = 1;
 	public static final int WAV = 2;

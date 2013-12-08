@@ -142,7 +142,7 @@ public class Engine implements Runnable{
 		return stage;
 	}
 	/**
-	 * @param sequence the sequence to set
+	 * @param stage the stage to set
 	 */
 	public void setSequence(Stage stage) {
 		this.stage = stage;

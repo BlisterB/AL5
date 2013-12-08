@@ -6,18 +6,14 @@ import com.mklr.graphics.engine.Engine;
 import com.mklr.ruzzle.data.RuzzleDictionary;
 
 public class Game {
-	private Engine engine;
-    private Board gameBoard;
-    private RuzzleDictionary gameDictionary;
+	private final RuzzleDictionary gameDictionary;
 
-    private ArrayList<String> wordsGiven;
+    private final ArrayList<String> wordsGiven;
     private String lastWord;
 
     private int score;
 
     public Game(Engine e, Board b) {
-        engine = e;
-        gameBoard = b;
         gameDictionary = b.getDico();
 
         lastWord = "";
@@ -61,14 +57,6 @@ public class Game {
         return (wordScore * wordMultiplicator);
     }
 
-	//options : langue
-	//tester les mots
-	
-	//f isReady qui appelle gameIsReady dans l'engine
-	
-	//f getScore qui recoit la chaine de caractere et renvoie le score
-	// -1 si le mot n'existe pas... > 0 sinon
-    
 	/**
 	 * @return the score
 	 */

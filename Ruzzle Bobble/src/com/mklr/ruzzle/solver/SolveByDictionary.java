@@ -22,12 +22,12 @@ public class SolveByDictionary extends Solver {
     /**
      *  Le dictionnaire des mots existant.
      */
-    private RuzzleDictionary dictionary;
+    private final RuzzleDictionary dictionary;
 
     /**
      *  Plateau dans lequel rechercher les mots.
      */
-    private Marble[][] marblesBoard;
+    private final Marble[][] marblesBoard;
 
     /**
      * Cet objet est utilisé pour "mapper" les caractères telle que chaque
@@ -37,7 +37,7 @@ public class SolveByDictionary extends Solver {
      * Exemple :
      *   {'c' : [liste de position (i, j) dans le plateau pour le caractère c]}
      */
-    private HashMap<Character, ArrayList<Integer[]>> characterTable;
+    private final HashMap<Character, ArrayList<Integer[]>> characterTable;
 
 
 
@@ -273,7 +273,6 @@ public class SolveByDictionary extends Solver {
                     for (int charCode = 97; charCode < 123; charCode++) {
                         addCharacterToCharacterTable((char)charCode, new Integer[]{i, j});
                     }
-                    continue;
                 } else if (c.equals('-')) {
                     /* does nothing here */
                 }

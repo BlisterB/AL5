@@ -18,12 +18,12 @@ public class SolveByMarbleGrid extends Solver {
     /**
      * Dictionnaire des mots.
      */
-    private RuzzleDictionary dictionary;
+    private final RuzzleDictionary dictionary;
 
     /**
      * Plateau dans lequel les mots sont recherchés.
      */
-    private Marble[][] marblesBoard;
+    private final Marble[][] marblesBoard;
 
 
     /**
@@ -88,7 +88,6 @@ public class SolveByMarbleGrid extends Solver {
                     }
                 } else if (l.getLetter() == '-') {
                     /* does nothing here */
-                    continue;
                 } else {
                     SolutionWord currentWord = new SolutionWord();
                     currentWord.addLetter(l.getLetter());
@@ -155,7 +154,6 @@ public class SolveByMarbleGrid extends Solver {
                 }
             } else if (neighbourLetter.getLetter() == '-') {
                 /* does nothing here */
-                continue;
             } else {
                 Tree<Character> child = currentPositionInTree.getChild(neighbourLetter.getLetter());
                 if (child == null)
@@ -242,7 +240,7 @@ public class SolveByMarbleGrid extends Solver {
                 currentWord.endWord(currentPathToGetTheWord, marblesBoard);
                 addWord(currentWord);
             }
-;
+
             Marble m = marblesBoard[currentPositionInBoard[0]][currentPositionInBoard[1]];
 
             for (Integer[] neighbour : m.getNeighbours()) {

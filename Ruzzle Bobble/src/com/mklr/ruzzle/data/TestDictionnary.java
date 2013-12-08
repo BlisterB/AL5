@@ -173,7 +173,7 @@ public class TestDictionnary {
             try {
                 bf.write(sw.toString());
             } catch (IOException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                e.printStackTrace();
             }
         }
 
@@ -183,7 +183,7 @@ public class TestDictionnary {
             try {
                 bf2.write(sw.toString());
             } catch (IOException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                e.printStackTrace();
             }
         }
 

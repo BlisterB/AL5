@@ -35,7 +35,7 @@ public class Stage {
 	 //////////////////////////////////////////////////////////////////	
 	
 	/** Fonction appelée avant chaque raffraichissement de l'image, a redefinir pour mettre a jour des informations a l'ecran */
-	public void update(){};
+	public void update(){}
 	
 	/** Fonction liées aux interaction avec les autres methode, elle prend en parametre un entier representant une action particuliere 
 	 * pour l'objet (clic sur un bouton valider, fin d'un timer etc) et permet de definir des actions associées */

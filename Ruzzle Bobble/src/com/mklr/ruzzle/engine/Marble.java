@@ -55,7 +55,7 @@ public class Marble {
     }
 
     /**
-     * @param l the l to set
+     * @param letter the l to set
      */
     public void setLetter(Letter letter) {
         this.letter = letter;

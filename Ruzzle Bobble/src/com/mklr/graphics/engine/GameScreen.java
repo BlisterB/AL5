@@ -165,7 +165,7 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
 	}
 
 	/**
-	 * @param sequence the sequence to set
+	 * @param stage the stage to set
 	 */
 	public void setStage(Stage stage) {
 		this.stage = stage;
