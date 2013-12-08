@@ -148,70 +148,20 @@ public class Board extends AbstractGrid<Marble>{
      */
     private void fillGrid() {
         Random r = new Random();
-        int[][] jokers = new int[2][];
-        int[][] blackMarble = new int[2][];
-
-        for (int i = 0; i < jokers.length; i++) {
-            do {
-                int r_first = r.nextInt(2 * row);
-                int r_second = r.nextInt(tGrid[r_first].length);
-
-                if (i == 1) {
-                    if (jokers[0][0] == r_first && jokers[0][1] == r_second) {
-                        continue;
-                    } else {
-                        jokers[1] = new int[]{r_first, r_second};
-                        break;
-                    }
-                } else {
-                    jokers[i] = new int[]{r_first, r_second};
-                    break;
-                }
-            } while(true);
-        }
-
-        do {
-            int r_first = r.nextInt(2 * row);
-            int r_second = r.nextInt(tGrid[r_first].length);
-
-            if ((jokers[0][0] != r_first && jokers[0][1] != r_second)
-                    || (jokers[1][0] != r_first && jokers[1][1] != r_second)) {
-                blackMarble[0] = new int[]{r_first, r_second};
-                break;
-            }
-        } while(true);
-
-        do {
-            int r_first = r.nextInt(2 * row);
-            int r_second = r.nextInt(tGrid[r_first].length);
-
-            if ((jokers[0][0] != r_first && jokers[0][1] != r_second)
-                    || (jokers[1][0] != r_first && jokers[1][1] != r_second)
-                    || (blackMarble[0][0] != r_first && blackMarble[0][1] != r_second)) {
-                blackMarble[1] = new int[]{r_first, r_second};
-                break;
-            }
-        } while(true);
-
-
         for (int i = 0; i < tGrid.length; i++) {
             for (int j = 0; j < tGrid[i].length; j++) {
-
-                if ((jokers[0][0] == i && jokers[0][1] == j)
-                        || (jokers[1][0] == i && jokers[1][1] == j)) {
-                    tGrid[i][j] = new Marble(new Letter('*', 0));
-                } else if ((blackMarble[0][0] == i && blackMarble[0][1] == j)
-                        || (blackMarble[1][0] == i && blackMarble[1][1] == j)) {
-                    tGrid[i][j] = new Marble(new Letter('-', 0));
-                } else {
-                    int random = r.nextInt(10000);
-                    double randomLetterValue = ((double)random)/100.0;
-                    tGrid[i][j] = new Marble(dico.getLetterSet().getLetterByPercentage(randomLetterValue));
-                }
+                int random = r.nextInt(10000);
+                double randomLetterValue = ((double)random)/100.0;
+                tGrid[i][j] = new Marble(dico.getLetterSet().getLetterByPercentage(randomLetterValue));
 
                 addNeighbours(i, j);
             }
         }
+
+        addSpecialMarble('*');
+        addSpecialMarble('*');
+        addSpecialMarble('-');
+        addSpecialMarble('-');
 
         for (byte bonus :
                 new byte[]{Marble.LETTER_COUNT_DOUBLE,
@@ -291,7 +241,6 @@ public class Board extends AbstractGrid<Marble>{
         tGrid[i][j].setNeighbours(newNeighbours);
     }
 
-
     /**
      * Fonction qui vérifie si la case voisine est bien une case voisine.
      * @param tline
@@ -319,6 +268,35 @@ public class Board extends AbstractGrid<Marble>{
                 }
             }
         }
+    }
+
+    /**
+     * Ajoute les cases spéciales aléatoirement.
+     * @param special
+     */
+    private void addSpecialMarble(char special) {
+        Random r = new Random();
+
+        do {
+            boolean exist = false;
+            int r_first = r.nextInt(2 * row);
+            int r_second = r.nextInt(tGrid[r_first].length);
+
+            Marble m = tGrid[r_first][r_second];
+            if (m.getLetter().getLetter() != special) {
+                for (Integer[] neighbour : m.getNeighbours()) {
+                    if (tGrid[neighbour[0]][neighbour[1]].getLetter().getLetter() == special)
+                    {
+                        exist = true;
+                        break;
+                    }
+                }
+                if (!exist) {
+                    tGrid[r_first][r_second] = new Marble(new Letter(special, 0));
+                    return;
+                }
+            }
+        } while(true);
     }
 
     @Override
