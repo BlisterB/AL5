@@ -140,6 +140,7 @@ public class GameScreen extends JPanel implements MouseMotionListener, MouseList
 			        		//Si s est le sprite d'une lettre
 			        		if(s instanceof LetterSprite){
 			        			if(lastSpritePointed instanceof LetterSprite || lastSpritePointed == null)
+			        				//Si s n'est pas une case '-' alors on rajoute le char au mot et on le defini comme le dernier sprite pointé par la souris
 			        				if(((LetterSprite)s).getLetter() != '-')
 				        				if(((LetterSprite)s).addLettertoCurrentWorld((LetterSprite)lastSpritePointed))
 				        					lastSpritePointed = s;
