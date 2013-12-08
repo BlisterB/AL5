@@ -154,8 +154,7 @@ public class RuzzleDictionary implements Runnable {
         Tree<Character> cur_pos = beg;
 
         char[] wordArray = word.toCharArray();
-        for (int i = 0; i < wordArray.length;
-             i++) {
+        for (int i = 0; i < wordArray.length; i++) {
             Character c = wordArray[i];
 
             if (c == '*') {
@@ -308,8 +307,7 @@ public class RuzzleDictionary implements Runnable {
             }
         } catch (Exception e) {
             success = false;
-            System.out.println("Le fichier de configuration de la langue "
-                    + "anglaise n'est pas disponible : "
+            System.out.println("Le fichier de configuration n'existe pas : "
                     + e.getMessage());
         } finally {
             if (!success) {
