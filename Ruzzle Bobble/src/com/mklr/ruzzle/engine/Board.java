@@ -160,6 +160,8 @@ public class Board extends AbstractGrid<Marble>{
         addSpecialMarble('*');
         addSpecialMarble('-');
         addSpecialMarble('-');
+        addSpecialMarble('-');
+        addSpecialMarble('-');
 
         for (byte bonus :
                 new byte[]{Marble.LETTER_COUNT_DOUBLE,
