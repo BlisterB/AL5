@@ -1,9 +1,9 @@
 package com.mklr.ruzzle.data;
 
 /**
- * This class represent a letter.
- * When created, it could be set the value (ie. the score given by the current
- * letter), and the percentage of use in the langage.
+ * Cette classe représente une lettre.
+ * A la création, on peut lui associé un score, et un pourcentage d'utilisation
+ * dans la langue du dictionnaire.
  * @author Loic Runarvot
  * @author Mehdi Khelifi
  */
@@ -13,8 +13,7 @@ public class Letter {
     private double[] percentage;
 
     /**
-     * Create the letter with the primitive type char, and the given
-     * value.
+     * Créer la lettre selon la lettre donnée, et son score.
      * @param letter the letter given as a character
      * @param value the score given by the current letter
      */
@@ -23,7 +22,8 @@ public class Letter {
     }
     
     /**
-     * Create the letter with the object and the given value.
+     * Créer la lettre selont la lettre donnée et le score.
+     * Par défaut, le pourcentage donné est de 0.
      * @param letter the letter
      * @param value the score given by the current letter
      */
@@ -32,8 +32,7 @@ public class Letter {
     }
 
     /**
-     * Create the letter with the primitive type, the given value, 
-     * and the percentage.
+     * Créer la lettre selon la lettre donnée, le score, et le pourcentage.
      * @param letter the letter
      * @param value the score given by the current letter
      * @param percentage the percentage
@@ -43,7 +42,7 @@ public class Letter {
     }
 
     /**
-     * Create the letter with the object, the given value, and the percentage.
+     * Créer la lettre selon la lettre donnée, le score, et le pourcentage
      * @param letter the letter
      * @param value the score given by the current letter
      * @param percentage the percentage

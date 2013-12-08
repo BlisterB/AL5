@@ -3,7 +3,14 @@ package com.mklr.ruzzle.data;
 import java.util.HashMap;
 
 /**
- * This class represent a Set of letters.
+ * Cette classe représente un ensemble d'objet Lettre.
+ *
+ * Pour que cette création se fasse de manière optimale, selon la langue
+ * choisi, un fichier dans ${RUZZLE_BOBBLE}/config/lang/${LANG}.set
+ *
+ * Il doit être écrit de la manière suivante :
+ *     lettre:score:pourcentage
+ *
  * @author Loic Runarvot
  * @author Mehdi Khelifi
  */
@@ -53,6 +60,11 @@ public class LetterSet extends HashMap<Character, Letter>
         return result;
     }
 
+    /**
+     * Retourne la lettre selon la valeur donnée.
+     * @param percentage
+     * @return
+     */
     public Letter getLetterByPercentage(double percentage) {
         for (Letter l : values()) {
             double[] letterPercentages = l.getPercentage();
