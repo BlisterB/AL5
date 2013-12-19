@@ -186,9 +186,11 @@ public class GameStage extends Stage {
 		if(i == TIMMER_END)
 			timeOut();
 		if(i == VALIDATE){
-			timer.pause();
+			if(timer != null)
+				timer.pause();
 			DisplayWordsWindow w = new DisplayWordsWindow(null, engine, board);
-			timer.startTimmer();
+			if(timer != null)
+				timer.startTimmer();
 		}
 	}
 	
