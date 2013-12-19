@@ -44,6 +44,10 @@ public class MusicPlayer {
 			        //Lancement de la lecture
 			        sequencer.open();
 			        sequencer.start();
+			        if(play == false){
+			        	sequencer.stop();
+			        	sequencer.close();
+			        }
 			        //On boucle la musique indefiniment
 			        if(loopContinuously)
 			        	sequencer.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
@@ -59,6 +63,7 @@ public class MusicPlayer {
 	 //////////////////////////////////////////////////////////////////	
 	/** Ferme le lecteur MIDI */
 	public void close(){
+		play = false;
 		if(sequencer != null && sequencer.isRunning()){
 			sequencer.stop();
 			sequencer.close();
